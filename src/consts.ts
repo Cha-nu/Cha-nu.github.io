@@ -1,8 +1,15 @@
-// 블로그 이름과 소개는 여기서 바꾸면 전체에 반영된다. 실명은 쓰지 않는다 (AGENTS.md 참고).
-export const SITE_TITLE = '게임 개발 노트';
-export const SITE_DESCRIPTION = '게임을 만들며 부딪힌 문제를 직접 재 보고 풀어 본 기록';
+// 사이트 이름과 소개는 여기서 바꾸면 전체에 반영된다. 실명·연락처는 쓰지 않는다 (AGENTS.md 0장).
 export const AUTHOR = 'Cha-nu';
 export const GITHUB_URL = 'https://github.com/Cha-nu';
+
+/** 포트폴리오: cha-nu.github.io/ */
+export const PORTFOLIO_TITLE = 'Cha-nu';
+export const PORTFOLIO_DESCRIPTION = '게임 프로젝트 포트폴리오';
+export const TECH_STACK = ['Unreal Engine 5 · C++', 'Unity · C#', 'Spring · Java', 'AWS', 'MySQL'];
+
+/** 게임 기술 블로그: cha-nu.github.io/blog/ */
+export const SITE_TITLE = '게임 개발 노트';
+export const SITE_DESCRIPTION = '프로젝트를 만들며 무엇을 요구받았고, 어떻게 생각했고, 무엇이 나왔는지 남기는 개발일지';
 
 export const CATEGORIES = {
   'game-math': { title: '게임 수학', description: '벡터, 회전, 보간, 좌표계' },

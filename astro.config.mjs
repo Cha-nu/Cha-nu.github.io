@@ -15,6 +15,18 @@ export default defineConfig({
   site: SITE,
   base: BASE,
   trailingSlash: 'ignore',
+  // 블로그를 /blog 아래로 옮기기 전에 공개된 주소를 새 주소로 보낸다
+  redirects: {
+    '/posts': '/blog/posts',
+    '/posts/flight-theory-1': '/blog/posts/flight-theory-1',
+    '/posts/flight-theory-2': '/blog/posts/flight-theory-2',
+    '/posts/flight-theory-3': '/blog/posts/flight-theory-3',
+    '/devlog': '/blog/devlog',
+    '/tags': '/blog/tags',
+    '/series/flight-theory': '/blog/series/flight-theory',
+    '/category/physics': '/blog/category/physics',
+    '/rss.xml': '/blog/rss.xml',
+  },
   integrations: [sitemap()],
   markdown: {
     // Astro 7 기본 처리기(Sätteri) 대신 remark/rehype 처리기를 써서 수식(KaTeX)과 이미지 경로 플러그인을 붙인다

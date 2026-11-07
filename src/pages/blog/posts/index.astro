@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import EntryList from '../../components/EntryList.astro';
-import { CATEGORIES, type CategoryKey } from '../../consts';
-import { getPosts, categoryUrl } from '../../lib/posts';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import EntryList from '../../../components/EntryList.astro';
+import { CATEGORIES, type CategoryKey } from '../../../consts';
+import { getPosts, categoryUrl } from '../../../lib/posts';
 const posts = await getPosts();
 const counts = Object.fromEntries(Object.keys(CATEGORIES).map((k) => [k, posts.filter((p) => p.data.category === k).length]));
 ---

@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import EntryList from '../../components/EntryList.astro';
-import { CATEGORIES, CATEGORY_KEYS, type CategoryKey } from '../../consts';
-import { getPosts, categoryUrl, url } from '../../lib/posts';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import EntryList from '../../../components/EntryList.astro';
+import { CATEGORIES, CATEGORY_KEYS, type CategoryKey } from '../../../consts';
+import { getPosts, categoryUrl, blogUrl } from '../../../lib/posts';
 export function getStaticPaths() {
   return CATEGORY_KEYS.map((category) => ({ params: { category } }));
 }
@@ -13,7 +13,7 @@ const posts = (await getPosts()).filter((p) => p.data.category === category);
 <BaseLayout title={info.title} description={info.description}>
   <section class="hero"><h1>{info.title}</h1><p>{info.description}</p></section>
   <nav class="chips">
-    <a class="chip" href={url('posts/')}>전체</a>
+    <a class="chip" href={blogUrl('posts/')}>전체</a>
     {CATEGORY_KEYS.map((k) => <a class={k === category ? 'chip active' : 'chip'} href={categoryUrl(k)}>{CATEGORIES[k].title}</a>)}
   </nav>
   {posts.length ? <EntryList posts={posts} showCategory={false} /> : <p class="empty">아직 이 분야의 글이 없습니다.</p>}

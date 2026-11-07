@@ -1,6 +1,6 @@
 import rss from '@astrojs/rss';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import { getPosts, getDevlogs } from '../lib/posts';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { getPosts, getDevlogs } from '../../lib/posts';
 
 export async function GET(context) {
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');

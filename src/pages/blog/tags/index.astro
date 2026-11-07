@@ -1,6 +1,6 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getAllTags, url } from '../../lib/posts';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getAllTags, url } from '../../../lib/posts';
 const tags = await getAllTags();
 ---
 <BaseLayout title="태그">

@@ -17,7 +17,7 @@ const facts = [
   ['기술', d.stack.join(', ')],
 ].filter(([, v]) => v);
 ---
-<BaseLayout title={d.title} description={d.summary} image={d.cover}>
+<BaseLayout title={d.title} description={d.summary} image={d.cover} section="portfolio">
   <header class="post-head">
     <span class="badge">프로젝트</span>
     <h1>{d.title}</h1>
@@ -30,7 +30,7 @@ const facts = [
 
   {devlogs.length > 0 && (
     <section>
-      <h2 class="section-h">개발일지 {devlogs.length}개</h2>
+      <h2 class="section-h">기술 블로그의 개발일지 {devlogs.length}개</h2>
       <ol class="timeline">
         {devlogs.map((g) => (
           <li><span class="meta">{formatDate(g.data.pubDate)}</span><a href={devlogUrl(g)}>{g.data.title}</a><div class="desc">{g.data.description}</div></li>
@@ -40,7 +40,7 @@ const facts = [
   )}
   {posts.length > 0 && (
     <section>
-      <h2 class="section-h">이 프로젝트에서 나온 글</h2>
+      <h2 class="section-h">기술 블로그의 관련 글</h2>
       <EntryList posts={posts} />
     </section>
   )}

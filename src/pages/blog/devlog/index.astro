@@ -1,7 +1,7 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import EntryList from '../../components/EntryList.astro';
-import { getDevlogs, getProjects } from '../../lib/posts';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import EntryList from '../../../components/EntryList.astro';
+import { getDevlogs, getProjects } from '../../../lib/posts';
 const devlogs = await getDevlogs();
 const projectTitles = Object.fromEntries((await getProjects()).map((p) => [p.id, p.data.title]));
 ---

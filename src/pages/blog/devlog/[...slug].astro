@@ -1,7 +1,7 @@
 ---
 import { render } from 'astro:content';
-import DevlogLayout from '../../layouts/DevlogLayout.astro';
-import { getDevlogs } from '../../lib/posts';
+import DevlogLayout from '../../../layouts/DevlogLayout.astro';
+import { getDevlogs } from '../../../lib/posts';
 export async function getStaticPaths() {
   return (await getDevlogs()).map((devlog) => ({ params: { slug: devlog.id }, props: { devlog } }));
 }

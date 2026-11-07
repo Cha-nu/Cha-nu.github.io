@@ -17,13 +17,16 @@ export function asset(src?: string) {
   return /^https?:\/\//.test(src) ? src : url(src);
 }
 
-export const postUrl = (p: Post) => url(`posts/${p.id}/`);
-export const devlogUrl = (d: Devlog) => url(`devlog/${d.id}/`);
-export const projectUrl = (p: Project) => url(`projects/${p.id}/`);
-export const categoryUrl = (c: CategoryKey) => url(`category/${c}/`);
+/** 기술 블로그(/blog) 안의 경로 */
+export const blogUrl = (path = '') => url(`blog/${path.replace(/^\//, '')}`);
+export const postUrl = (p: Post) => blogUrl(`posts/${p.id}/`);
+export const devlogUrl = (d: Devlog) => blogUrl(`devlog/${d.id}/`);
+export const categoryUrl = (c: CategoryKey) => blogUrl(`category/${c}/`);
 export const tagSlug = (t: string) => t.trim().toLowerCase().replace(/\s+/g, '-');
-export const tagUrl = (t: string) => url(`tags/${tagSlug(t)}/`);
-export const seriesUrl = (s: string) => url(`series/${s}/`);
+export const tagUrl = (t: string) => blogUrl(`tags/${tagSlug(t)}/`);
+export const seriesUrl = (s: string) => blogUrl(`series/${s}/`);
+/** 포트폴리오(/) 안의 경로 */
+export const projectUrl = (p: Project) => url(`projects/${p.id}/`);
 export const categoryTitle = (c: CategoryKey) => CATEGORIES[c].title;
 
 const visible = ({ data }: { data: { draft: boolean } }) => import.meta.env.DEV || !data.draft;
@@ -39,7 +42,11 @@ export async function getSeriesPosts(series: string) {
     .filter((p) => p.data.series === series)
     .sort((a, b) => (a.data.seriesOrder ?? 0) - (b.data.seriesOrder ?? 0));
 }
+// 개발일지가 하나도 없을 때 빈 컬렉션 경고가 빌드마다 쌓이지 않게 파일이 있는지 먼저 본다
+const HAS_DEVLOGS = Object.keys(import.meta.glob('../content/devlogs/**/*.md')).length > 0;
+
 export async function getDevlogs() {
+  if (!HAS_DEVLOGS) return [];
   return (await getCollection('devlogs', visible)).sort((a, b) => byDateDesc(a, b) || b.id.localeCompare(a.id));
 }
 /** 한 프로젝트의 개발일지 (오래된 순) */

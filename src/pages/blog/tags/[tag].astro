@@ -1,7 +1,7 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import EntryList from '../../components/EntryList.astro';
-import { getAllTags, getPosts, getDevlogs, getProjects, tagSlug } from '../../lib/posts';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import EntryList from '../../../components/EntryList.astro';
+import { getAllTags, getPosts, getDevlogs, getProjects, tagSlug } from '../../../lib/posts';
 export async function getStaticPaths() {
   return (await getAllTags()).map((t) => ({ params: { tag: t.slug }, props: { name: t.name } }));
 }

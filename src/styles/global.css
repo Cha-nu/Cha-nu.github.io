@@ -162,3 +162,20 @@ a.badge:hover { text-decoration: none; filter: brightness(0.95); }
 .timeline .meta { display: block; font-size: 13px; color: var(--text-soft); }
 .timeline a { font-weight: 700; color: var(--text); }
 .timeline .desc { color: var(--text-soft); font-size: 14.5px; }
+
+/* portfolio */
+.brand-sub { font-weight: 500; color: var(--text-soft); font-size: 13px; margin-left: 6px; letter-spacing: 0.02em; }
+.nav-switch { border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; }
+.nav-switch:hover { border-color: var(--accent); color: var(--accent) !important; text-decoration: none; }
+.is-portfolio .wrap { max-width: 960px; }
+.is-portfolio .hero h1 { font-size: 40px; }
+.stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.chip.static { cursor: default; }
+.chip.static:hover { border-color: var(--line); color: var(--text); }
+.cta { display: flex; gap: 10px; margin-top: 22px; }
+.btn { display: inline-block; border: 1px solid var(--line); border-radius: 10px; padding: 8px 16px; font-weight: 600; color: var(--text); background: var(--bg); }
+.btn:hover { border-color: var(--accent); text-decoration: none; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.primary:hover { filter: brightness(1.05); }
+.is-portfolio .project-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+@media (max-width: 640px) { .is-portfolio .hero h1 { font-size: 30px; } .site-header .wrap { gap: 6px; } .brand-sub { display: none; } }

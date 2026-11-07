@@ -21,7 +21,12 @@
 
 - **Astro 7** 정적 사이트, **GitHub Pages**로 배포 (`.github/workflows/deploy.yml`)
 - Markdown + KaTeX 수식(`remark-math`, `rehype-katex`), Shiki 코드 강조(라이트/다크)
-- 주소: 저장소가 `Cha-nu.github.io`면 `https://cha-nu.github.io/`. 다른 이름이면 하위 경로로 자동 설정된다.
+- 한 저장소, 사이트 두 개:
+  - **포트폴리오** `https://cha-nu.github.io/` — 프로젝트 소개. 페이지는 `src/pages/index.astro`, `src/pages/projects/`. `BaseLayout`에 `section="portfolio"`를 넘긴다.
+  - **게임 기술 블로그** `https://cha-nu.github.io/blog/` — **개발일지가 주력**, 지식 글(비행 이론 등)은 그대로 둔다. 페이지는 모두 `src/pages/blog/` 아래. `section="blog"`(기본값).
+- 저장소 이름이 `Cha-nu.github.io`가 아니면 하위 경로(base)가 자동으로 붙는다.
+- 링크는 직접 문자열로 만들지 말고 `src/lib/posts.ts`의 헬퍼를 쓴다: `url()`(포트폴리오 쪽), `blogUrl()`, `postUrl()`, `devlogUrl()`, `categoryUrl()`, `tagUrl()`, `seriesUrl()`, `projectUrl()`, `asset()`(이미지).
+- 예전 주소(`/posts/...`, `/devlog`, `/tags` 등)는 `astro.config.mjs`의 `redirects`로 `/blog/...`에 넘긴다. 블로그 페이지 주소를 옮기면 여기에도 리다이렉트를 추가해 외부 링크가 깨지지 않게 한다.
 
 ```bash
 npm install
@@ -35,7 +40,12 @@ src/
     posts/       지식 글 (게임 수학, 물리, 알고리즘, 언리얼, CS)
     devlogs/     개발일지
     projects/    프로젝트 소개
-  consts.ts      블로그 이름, 카테고리, 시리즈 정의
+  pages/
+    index.astro  포트폴리오 첫 화면
+    projects/    포트폴리오 프로젝트 페이지
+    blog/        기술 블로그 전체 (첫 화면, devlog, posts, tags, category, series, rss)
+  lib/posts.ts   주소 헬퍼와 글 목록 함수
+  consts.ts      포트폴리오/블로그 이름, 기술 스택, 카테고리, 시리즈 정의
   content.config.ts  각 글 종류의 frontmatter 규칙 (여기가 정답)
 public/
   images/<글-또는-프로젝트>/   그림
@@ -48,11 +58,13 @@ templates/       새 글을 시작할 때 복사하는 틀
 
 ## 2. 무엇을 쓸지 고르기
 
+**기술 블로그에 새로 쓰는 글은 기본이 개발일지다.** 사용자가 "글", "기록", "정리"라고만 하면 개발일지로 쓰고, 프로젝트와 무관한 개념 설명을 명시적으로 원할 때만 지식 글로 쓴다. 포트폴리오 쪽 프로젝트 페이지는 사용자가 프로젝트 정보를 바꾸라고 할 때만 고친다.
+
 | 종류 | 위치 | 언제 | 틀 |
 | --- | --- | --- | --- |
-| 지식 글 | `src/content/posts/` | 개념이나 기법을 설명할 때. 프로젝트를 몰라도 읽힌다 | `templates/post.md` |
-| 개발일지 | `src/content/devlogs/` | 특정 프로젝트에서 무엇을 요구받고, 무엇을 했고, 어떻게 풀었는지 기록할 때 | `templates/devlog.md` |
-| 프로젝트 | `src/content/projects/` | 프로젝트 하나를 소개하는 대표 페이지. 개발일지와 글이 여기로 모인다 | `templates/project.md` |
+| 개발일지 (기본) | `src/content/devlogs/` → `/blog/devlog/<id>/` | 특정 프로젝트에서 무엇을 요구받고, 무엇을 했고, 어떻게 풀었는지 기록할 때 | `templates/devlog.md` |
+| 지식 글 | `src/content/posts/` → `/blog/posts/<id>/` | 개념이나 기법을 설명할 때. 프로젝트를 몰라도 읽힌다 | `templates/post.md` |
+| 프로젝트 | `src/content/projects/` → `/projects/<id>/` (포트폴리오) | 프로젝트 하나를 소개하는 대표 페이지. 기술 블로그의 개발일지와 글이 여기로 모인다 | `templates/project.md` |
 
 - 개발일지를 쓰다가 일반화할 만한 기법이 나오면 지식 글로 따로 쓰고, 지식 글 frontmatter의 `project:`로 연결한다.
 - 카테고리는 다섯 개뿐이다: `game-math`(게임 수학), `physics`(게임 물리), `algorithm`(알고리즘), `unreal`(언리얼 엔진), `cs`(CS 지식). 새 카테고리는 사용자와 합의한 뒤 `src/consts.ts`에 추가한다.

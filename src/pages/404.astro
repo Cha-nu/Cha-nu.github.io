@@ -2,9 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { url } from '../lib/posts';
 ---
-<BaseLayout title="페이지를 찾을 수 없음">
+<BaseLayout title="페이지를 찾을 수 없음" section="portfolio">
   <section class="hero">
     <h1>페이지를 찾을 수 없습니다</h1>
-    <p><a href={url()}>글 목록으로 돌아가기</a></p>
+    <p><a href={url()}>포트폴리오</a> · <a href={url('blog/')}>기술 블로그</a></p>
   </section>
 </BaseLayout>

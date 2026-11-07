@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EntryList from '../../components/EntryList.astro';
+import { SITE_TITLE, SITE_DESCRIPTION, SERIES, CATEGORIES, type CategoryKey } from '../../consts';
+import { getPosts, getSeriesPosts, getDevlogs, getProjects, postUrl, seriesUrl, categoryUrl, blogUrl, url } from '../../lib/posts';
+
+const posts = await getPosts();
+const devlogs = await getDevlogs();
+const projects = await getProjects();
+const projectTitles = Object.fromEntries(projects.map((p) => [p.id, p.data.title]));
+const series = await Promise.all(Object.entries(SERIES).map(async ([key, info]) => ({ key, info, posts: await getSeriesPosts(key) })));
+---
+<BaseLayout section="blog">
+  <section class="hero">
+    <h1>{SITE_TITLE}</h1>
+    <p>{SITE_DESCRIPTION}</p>
+    <nav class="chips" style="margin-top:18px">
+      {(Object.keys(CATEGORIES) as CategoryKey[]).map((k) => <a class="chip" href={categoryUrl(k)}>{CATEGORIES[k].title}</a>)}
+    </nav>
+  </section>
+
+  <div class="section-title">개발일지 {devlogs.length > 0 && <a href={blogUrl('devlog/')}>전체 보기</a>}</div>
+  {devlogs.length > 0
+    ? <EntryList devlogs={devlogs.slice(0, 6)} projectTitles={projectTitles} />
+    : <p class="empty">첫 개발일지를 준비하고 있습니다. 그동안 <a href={url('projects/')}>포트폴리오의 프로젝트</a>를 둘러보세요.</p>}
+
+  {series.filter((s) => s.posts.length).map(({ key, info, posts: sp }) => (
+    <>
+      <div class="section-title">지식 글 시리즈</div>
+      <section class="series-card">
+        <h2><a href={seriesUrl(key)}>{info.title}</a></h2>
+        <p>{info.description}</p>
+        <ul class="post-list">
+          {sp.map((p) => (
+            <li><span class="badge">{p.data.seriesOrder}편</span><a class="title" href={postUrl(p)}>{p.data.title}</a><div class="desc">{p.data.description}</div></li>
+          ))}
+          {info.upcoming?.map((u) => <li class="upcoming">{u} (준비 중)</li>)}
+        </ul>
+      </section>
+    </>
+  ))}
+
+  {posts.length > 0 && (
+    <>
+      <div class="section-title">최근 글 <a href={blogUrl('posts/')}>전체 보기</a></div>
+      <EntryList posts={posts.slice(0, 6)} />
+    </>
+  )}
+</BaseLayout>
