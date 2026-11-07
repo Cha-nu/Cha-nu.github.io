@@ -1,0 +1,37 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import ArticleMeta from '../components/ArticleMeta.astro';
+import Toc from '../components/Toc.astro';
+import Video from '../components/Video.astro';
+import { getEntry } from 'astro:content';
+import { getProjectDevlogs, devlogUrl, projectUrl, type Devlog } from '../lib/posts';
+import type { MarkdownHeading } from 'astro';
+
+interface Props { devlog: Devlog; headings: MarkdownHeading[] }
+const { devlog, headings } = Astro.props;
+const { title, description, pubDate, tags, cover, video } = devlog.data;
+const project = await getEntry(devlog.data.project);
+const siblings = await getProjectDevlogs(devlog.data.project.id);
+const idx = siblings.findIndex((d) => d.id === devlog.id);
+const prev = idx > 0 ? siblings[idx - 1] : undefined;
+const next = idx >= 0 && idx < siblings.length - 1 ? siblings[idx + 1] : undefined;
+---
+<BaseLayout title={title} description={description} image={cover ?? project?.data.cover} type="article">
+  <article>
+    <header class="post-head">
+      <span class="badge">개발일지</span>
+      {project && <a class="badge muted" href={projectUrl(project)}>{project.data.title} · {idx + 1}번째 기록</a>}
+      <h1>{title}</h1>
+      <ArticleMeta pubDate={pubDate} body={devlog.body} tags={tags} />
+    </header>
+    {video && <Video src={video} title={title} />}
+    <Toc headings={headings} />
+    <div class="prose"><slot /></div>
+    {(prev || next) && (
+      <nav class="post-nav" aria-label="이전·다음 개발일지">
+        {prev && <a class="prev" href={devlogUrl(prev)}><small>← 이전 기록</small>{prev.data.title}</a>}
+        {next && <a class="next" href={devlogUrl(next)}><small>다음 기록 →</small>{next.data.title}</a>}
+      </nav>
+    )}
+  </article>
+</BaseLayout>

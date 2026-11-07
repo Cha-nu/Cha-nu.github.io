@@ -1,0 +1,20 @@
+from lib2d import *
+from model3 import *
+V,om_a,om_g,n_a,n_g=np.load("dog.npy")
+fig,ax=plt.subplots(figsize=(11.5,6.4),dpi=150);fig.subplots_adjust(left=0.08,right=0.8,top=0.8,bottom=0.12);clean(ax)
+vs=np.sqrt(2*W/(rho*S*CLA*np.radians(12)))
+ax.axvspan(50,vs,color="#f4f4f4",zorder=0);ax.text((50+vs)/2,2.5,"1G도\n못 냄",ha="center",fontsize=10.5,color="#777")
+ax.plot(V[V>=vs],om_a[V>=vs],color=RED,lw=2.6,alpha=0.85)
+m=V>=vs;ax.plot(V[m],om_g[m],color=BLUE,lw=3.4)
+i=np.argmax(om_g);vc,wc=V[i],om_g[i]
+ax.plot(vc,wc,"o",color=BLUE,ms=8);ax.axvline(vc,color=BLUE,lw=1,alpha=0.4)
+ax.annotate(f"코너 속도 {vc:.0f} m/s\n최대 선회율 {wc:.1f}°/s",(vc,wc),(95,33),fontsize=12.5,color=BLUE,fontweight="bold",arrowprops=dict(arrowstyle="-",color=BLUE,lw=0.9))
+j=np.argmin(abs(V-300));ax.plot(300,om_a[j],"o",color=RED);ax.annotate(f"G 리미터가 없으면\n300 m/s에서 {om_a[j]:.0f}°/s ({n_a[j]:.1f}G)",(300,om_a[j]),(220,om_a[j]+4),fontsize=11,color=RED,arrowprops=dict(arrowstyle="-",color=RED,lw=0.8))
+ax.text(402,om_g[-1],"받음각 + G 리미터",color=BLUE,fontsize=11.5,fontweight="bold",va="center")
+ax.text(402,om_a[-1] if om_a[-1]<45 else 44,"받음각 리미터만",color=RED,fontsize=11.5,fontweight="bold",va="center")
+ax.text(212,4,ha="right",s="← 받음각 한계 구간",fontsize=10.5,color="#555")
+ax.text(219,4,s="G 한계 구간 →",fontsize=10.5,color="#555")
+ax.set_xlim(50,400);ax.set_ylim(0,45);ax.set_xlabel("속도 (m/s)",color="#444");ax.set_ylabel("최대 선회율 (°/s)",color="#444");ax.grid(axis="y",color="#eee")
+fig.text(0.08,0.93,f"두 한계가 만나는 {vc:.0f} m/s에서 가장 빨리 돈다: 코너 속도의 탄생",fontsize=15,fontweight="bold")
+fig.text(0.08,0.875,"예제 기체 · 순간 최대 선회율 ω = g·√(n²−1) / V · α 최대 12°, G 최대 9 · 지속 선회(추력으로 속도 유지)와는 다름",fontsize=10.5,color="#555")
+fig.savefig("fig/07_turn_rate_corner.png",facecolor="white");plt.close(fig);trim("fig/07_turn_rate_corner.png")

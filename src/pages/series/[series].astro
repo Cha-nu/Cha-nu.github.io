@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SERIES } from '../../consts';
+import { getSeriesPosts, postUrl, formatDate } from '../../lib/posts';
+export function getStaticPaths() {
+  return Object.keys(SERIES).map((series) => ({ params: { series } }));
+}
+const { series } = Astro.params;
+const info = SERIES[series!];
+const posts = await getSeriesPosts(series!);
+---
+<BaseLayout title={info.title} description={info.description}>
+  <section class="hero"><h1>{info.title}</h1><p>{info.description}</p></section>
+  <ol class="series-list">
+    {posts.map((p) => (
+      <li>
+        <a class="title" href={postUrl(p)}>{p.data.title}</a>
+        <div class="desc">{p.data.description}</div>
+        <div class="meta">{formatDate(p.data.pubDate)}</div>
+      </li>
+    ))}
+    {info.upcoming?.map((u) => <li class="upcoming">{u} (준비 중)</li>)}
+  </ol>
+</BaseLayout>

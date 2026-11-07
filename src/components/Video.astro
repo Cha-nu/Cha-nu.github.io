@@ -1,0 +1,15 @@
+---
+// mp4(로컬, /videos/...) 또는 YouTube 주소를 받아 알맞게 보여준다
+import { asset } from '../lib/posts';
+interface Props { src: string; title?: string; poster?: string }
+const { src, title = '영상', poster } = Astro.props;
+const yt = src.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
+---
+{yt ? (
+  <div class="video-frame">
+    <iframe src={`https://www.youtube-nocookie.com/embed/${yt[1]}`} title={title} loading="lazy"
+      allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
+  </div>
+) : (
+  <video class="video" src={asset(src)} poster={asset(poster)} controls preload="metadata" playsinline></video>
+)}

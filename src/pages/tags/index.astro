@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllTags, url } from '../../lib/posts';
+const tags = await getAllTags();
+---
+<BaseLayout title="태그">
+  <section class="hero"><h1>태그</h1><p>글과 개발일지에 붙은 태그 {tags.length}개</p></section>
+  <nav class="chips">{tags.map((t) => <a class="chip" href={url(`tags/${t.slug}/`)}>#{t.name} <span>{t.count}</span></a>)}</nav>
+</BaseLayout>

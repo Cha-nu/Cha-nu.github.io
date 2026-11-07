@@ -1,0 +1,47 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Video from '../../components/Video.astro';
+import EntryList from '../../components/EntryList.astro';
+import { getProjects, getProjectDevlogs, getPosts, devlogUrl, formatDate, asset } from '../../lib/posts';
+export async function getStaticPaths() {
+  return (await getProjects()).map((project) => ({ params: { id: project.id }, props: { project } }));
+}
+const { project } = Astro.props;
+const d = project.data;
+const { Content } = await render(project);
+const devlogs = await getProjectDevlogs(project.id);
+const posts = (await getPosts()).filter((p) => p.data.project?.id === project.id);
+const facts = [
+  ['기간', d.period], ['상태', d.status], ['팀', d.team], ['맡은 부분', d.role], ['엔진', d.engine],
+  ['기술', d.stack.join(', ')],
+].filter(([, v]) => v);
+---
+<BaseLayout title={d.title} description={d.summary} image={d.cover}>
+  <header class="post-head">
+    <span class="badge">프로젝트</span>
+    <h1>{d.title}</h1>
+    <p class="lead">{d.summary}</p>
+  </header>
+  {d.video ? <Video src={d.video} title={d.title} poster={d.cover} /> : d.cover && <img class="cover" src={asset(d.cover)} alt={d.title} />}
+  <table class="facts">{facts.map(([k, v]) => <tr><th>{k}</th><td>{v}</td></tr>)}</table>
+  {d.links.length > 0 && <p class="links">{d.links.map((l) => <a class="chip" href={l.url}>{l.label} ↗</a>)}</p>}
+  <div class="prose"><Content /></div>
+
+  {devlogs.length > 0 && (
+    <section>
+      <h2 class="section-h">개발일지 {devlogs.length}개</h2>
+      <ol class="timeline">
+        {devlogs.map((g) => (
+          <li><span class="meta">{formatDate(g.data.pubDate)}</span><a href={devlogUrl(g)}>{g.data.title}</a><div class="desc">{g.data.description}</div></li>
+        ))}
+      </ol>
+    </section>
+  )}
+  {posts.length > 0 && (
+    <section>
+      <h2 class="section-h">이 프로젝트에서 나온 글</h2>
+      <EntryList posts={posts} />
+    </section>
+  )}
+</BaseLayout>

@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EntryList from '../../components/EntryList.astro';
+import { getDevlogs, getProjects } from '../../lib/posts';
+const devlogs = await getDevlogs();
+const projectTitles = Object.fromEntries((await getProjects()).map((p) => [p.id, p.data.title]));
+---
+<BaseLayout title="개발일지" description="요구사항, 한 일, 아이디어, 결과를 남기는 프로젝트 기록">
+  <section class="hero"><h1>개발일지</h1><p>무엇을 만들어야 했고, 어떻게 생각했고, 무엇이 나왔는지</p></section>
+  {devlogs.length ? <EntryList devlogs={devlogs} projectTitles={projectTitles} /> : <p class="empty">첫 개발일지를 준비하고 있습니다.</p>}
+</BaseLayout>

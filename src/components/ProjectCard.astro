@@ -1,0 +1,14 @@
+---
+import { projectUrl, asset, type Project } from '../lib/posts';
+interface Props { project: Project }
+const { project } = Astro.props;
+const d = project.data;
+---
+<a class="project-card" href={projectUrl(project)}>
+  {d.cover ? <img src={asset(d.cover)} alt="" loading="lazy" /> : <div class="ph">{d.title}</div>}
+  <div class="body">
+    <div class="row"><strong>{d.title}</strong><span class={`status s-${d.status}`}>{d.status}</span></div>
+    <p>{d.summary}</p>
+    <div class="meta">{d.period}{d.engine && ` · ${d.engine}`}</div>
+  </div>
+</a>

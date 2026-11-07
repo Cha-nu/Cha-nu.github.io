@@ -1,0 +1,75 @@
+---
+import 'katex/dist/katex.min.css';
+import '../styles/global.css';
+import { SITE_TITLE, SITE_DESCRIPTION, AUTHOR, GITHUB_URL } from '../consts';
+import { url } from '../lib/posts';
+
+interface Props { title?: string; description?: string; image?: string; type?: 'website' | 'article' }
+const { title, description = SITE_DESCRIPTION, image, type = 'website' } = Astro.props;
+const fullTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = image ? new URL(url(image), Astro.site).toString() : undefined;
+const year = new Date().getFullYear();
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href={url('rss.xml')} />
+    <link rel="sitemap" href={url('sitemap-index.xml')} />
+    <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+    <script is:inline>
+      try {
+        const t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href={url()}>{SITE_TITLE}</a>
+        <nav class="nav">
+          <a href={url('posts/')}>글</a>
+          <a href={url('devlog/')}>개발일지</a>
+          <a href={url('projects/')}>프로젝트</a>
+          <a href={url('tags/')}>태그</a>
+          {GITHUB_URL && <a href={GITHUB_URL}>GitHub</a>}
+          <button class="theme-btn" type="button" id="theme-btn" aria-label="다크 모드 전환">테마</button>
+        </nav>
+      </div>
+    </header>
+    <main class="wrap">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">© {year} {AUTHOR} · <a href={url('rss.xml')}>RSS</a> · Astro로 만들고 GitHub Pages로 배포</div>
+    </footer>
+    <script is:inline>
+      document.getElementById('theme-btn')?.addEventListener('click', () => {
+        const root = document.documentElement;
+        const dark = root.dataset.theme
+          ? root.dataset.theme === 'dark'
+          : matchMedia('(prefers-color-scheme: dark)').matches;
+        const next = dark ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try { localStorage.setItem('theme', next); } catch {}
+      });
+      // 본문 그림을 누르면 원본 크기로 새 탭에서 연다
+      document.querySelectorAll('.prose img').forEach((img) => {
+        img.addEventListener('click', () => window.open(img.currentSrc || img.src, '_blank', 'noopener'));
+      });
+    </script>
+  </body>
+</html>

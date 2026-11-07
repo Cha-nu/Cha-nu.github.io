@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EntryList from '../components/EntryList.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { SITE_TITLE, SITE_DESCRIPTION, SERIES, CATEGORIES, type CategoryKey } from '../consts';
+import { getPosts, getSeriesPosts, getDevlogs, getProjects, postUrl, seriesUrl, categoryUrl, url } from '../lib/posts';
+
+const posts = await getPosts();
+const devlogs = await getDevlogs();
+const projects = await getProjects();
+const projectTitles = Object.fromEntries(projects.map((p) => [p.id, p.data.title]));
+const series = await Promise.all(Object.entries(SERIES).map(async ([key, info]) => ({ key, info, posts: await getSeriesPosts(key) })));
+---
+<BaseLayout>
+  <section class="hero">
+    <h1>{SITE_TITLE}</h1>
+    <p>{SITE_DESCRIPTION}</p>
+    <nav class="chips" style="margin-top:18px">
+      {(Object.keys(CATEGORIES) as CategoryKey[]).map((k) => <a class="chip" href={categoryUrl(k)}>{CATEGORIES[k].title}</a>)}
+    </nav>
+  </section>
+
+  {series.filter((s) => s.posts.length).map(({ key, info, posts: sp }) => (
+    <>
+      <div class="section-title">연재 중인 시리즈</div>
+      <section class="series-card">
+        <h2><a href={seriesUrl(key)}>{info.title}</a></h2>
+        <p>{info.description}</p>
+        <ul class="post-list">
+          {sp.map((p) => (
+            <li><span class="badge">{p.data.seriesOrder}편</span><a class="title" href={postUrl(p)}>{p.data.title}</a><div class="desc">{p.data.description}</div></li>
+          ))}
+          {info.upcoming?.map((u) => <li class="upcoming">{u} (준비 중)</li>)}
+        </ul>
+      </section>
+    </>
+  ))}
+
+  {projects.length > 0 && (
+    <>
+      <div class="section-title">프로젝트 <a href={url('projects/')}>전체 보기</a></div>
+      <div class="project-grid">{projects.slice(0, 4).map((p) => <ProjectCard project={p} />)}</div>
+    </>
+  )}
+
+  <div class="section-title">최근 기록 <a href={url('posts/')}>글 전체</a>{devlogs.length > 0 && <a href={url('devlog/')}>개발일지 전체</a>}</div>
+  <EntryList posts={posts.slice(0, 6)} devlogs={devlogs.slice(0, 4)} projectTitles={projectTitles} />
+</BaseLayout>

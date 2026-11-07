@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+
+# research outputs
+research/**/fig/
+research/**/*.npy
+research/**/*.json
+research/**/*.csv
+__pycache__/
