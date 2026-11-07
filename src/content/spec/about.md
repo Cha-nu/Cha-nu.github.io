@@ -12,15 +12,20 @@ GAS 기반 전투, Steam 온라인 멀티플레이, 게임 물리처럼 **"왜 �
 
 ## 기술 스택
 
-| 분야 | 사용 기술 |
-| --- | --- |
-| **Game** | Unreal Engine 5 · C++ · GAS · Chaos Physics · CommonUI · Enhanced Input · Niagara |
-| **Network** | Online Subsystem Steam · Seamless Travel · Unity Netcode for GameObjects · Relay / Lobby |
-| **Engine · Tool (보조)** | Unity · C# · Godot · Blender |
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=unreal,cpp,unity,cs,godot,blender,git,github&perline=8" alt="Unreal Engine, C++, Unity, C#, Godot, Blender, Git, GitHub 아이콘" />
+</p>
 
-그 밖의 경험: Spring · Java · AWS · MySQL (웹 백엔드 프로젝트)
+| 분야 | 기술 |
+| --- | --- |
+| **주력** | **Unreal Engine 5 · C++** |
+| 게임플레이 | GAS · Enhanced Input · Chaos Physics |
+| UI · 연출 | CommonUI · Niagara |
+| 멀티플레이 | Online Subsystem · Seamless Travel · Host Migration |
+| 그 밖의 엔진 · 툴 | Unity · C# · Godot · Blender |
+
+그 밖의 경험: Spring · Java · AWS · MySQL (웹 백엔드 프로젝트), C, Python
 
 ## 링크
 
 - GitHub: [Cha-nu](https://github.com/Cha-nu)
-- RSS: [/rss.xml](/rss.xml)
