@@ -23,6 +23,12 @@
   --breakpoint-xl: 1920px;
 }
 
+/* 다크 모드 배너 전환(사용자 요청). Banner.astro가 두 장을 만들고 여기서 하나만 보인다. */
+:root:not(.dark) .banner-theme-dark,
+:root.dark .banner-theme-light {
+  display: none !important;
+}
+
 /* 确保平滑滚动，并稳定滚动条宽度以避免布局左右抖动 */
 html {
   scroll-behavior: smooth;

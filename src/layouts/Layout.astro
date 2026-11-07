@@ -287,7 +287,9 @@ const bannerOffset =
 				transform: translateY(var(--banner-height-extend));
 			}
 
-			.enable-banner #banner {
+			/* 다크 배너(.banner-dark-img)도 #banner와 같은 높이를 쓴다(사용자 요청으로 추가) */
+			.enable-banner #banner,
+			.enable-banner .banner-dark-img {
 				height: var(--banner-height-home);
 				transform: translateY(0);
 			}

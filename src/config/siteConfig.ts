@@ -126,6 +126,12 @@ export const siteConfig: SiteConfig = {
 			mobile: ["/assets/banner/mobile.webp"], // 移动横幅图片
 		}, // 使用本地横幅图片
 
+		// 다크 모드일 때 쓰는 배너(사용자 요청). 단일 이미지 모드에서만 쓴다.
+		darkSrc: {
+			desktop: "/assets/banner/desktop-dark.webp",
+			mobile: "/assets/banner/mobile-dark.webp",
+		},
+
 		position: "center", // 等同于 object-position，仅支持 'top', 'center', 'bottom'。默认为 'center'
 
 		carousel: {

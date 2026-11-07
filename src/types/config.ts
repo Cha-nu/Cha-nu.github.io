@@ -120,6 +120,11 @@ export interface SiteConfig {
 					desktop?: string | string[];
 					mobile?: string | string[];
 			  };
+		// 다크 모드 배너(이 저장소에서 추가). 없으면 src를 그대로 쓴다.
+		darkSrc?: {
+			desktop?: string;
+			mobile?: string;
+		};
 		position?: "top" | "center" | "bottom";
 		carousel?: {
 			enable: boolean;

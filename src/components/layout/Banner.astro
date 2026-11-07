@@ -172,6 +172,7 @@ const bannerFormats = getImageFormats();
 				define:vars={{
 					desktopImages: bannerImages.desktop,
 					mobileImages: bannerImages.mobile,
+					darkImages: siteConfig.banner.darkSrc ?? null,
 					position: siteConfig.banner.position,
 				}}
 			>
@@ -206,26 +207,37 @@ const bannerFormats = getImageFormats();
 
 					if (!desktopSrc && !mobileSrc) return;
 
-					const picture = document.createElement("picture");
-					picture.className = "block h-full w-full";
-					if (mobileSrc) {
-						const mobileSource = document.createElement("source");
-						mobileSource.media = "(max-width: 767px)";
-						mobileSource.srcset = mobileSrc;
-						picture.appendChild(mobileSource);
-					}
+					// 라이트/다크 배너를 둘 다 만들고 CSS(.banner-theme-*)로 하나만 보인다(사용자 요청).
+					// 지금 테마가 아닌 쪽은 lazy라서, 숨겨진 동안에는 내려받지 않는다.
+					const isDark = document.documentElement.classList.contains("dark");
+					const buildPicture = (dSrc, mSrc, themeClass, active, withId) => {
+						const picture = document.createElement("picture");
+						picture.className = "block h-full w-full " + themeClass;
+						if (mSrc) {
+							const mobileSource = document.createElement("source");
+							mobileSource.media = "(max-width: 767px)";
+							mobileSource.srcset = mSrc;
+							picture.appendChild(mobileSource);
+						}
+						const image = document.createElement("img");
+						if (withId) image.id = "banner";
+						else image.classList.add("banner-dark-img");
+						image.alt = "Banner image of the blog";
+						image.className =
+							"object-cover h-full w-full transition duration-700 opacity-100";
+						image.src = dSrc || mSrc;
+						image.loading = active ? "eager" : "lazy";
+						image.fetchPriority = active ? "high" : "low";
+						image.style.objectPosition = position;
+						picture.appendChild(image);
+						container.appendChild(picture);
+					};
 
-					const image = document.createElement("img");
-					image.id = "banner";
-					image.alt = "Banner image of the blog";
-					image.className =
-						"object-cover h-full w-full transition duration-700 opacity-100";
-					image.src = desktopSrc || mobileSrc;
-					image.loading = "eager";
-					image.fetchPriority = "high";
-					image.style.objectPosition = position;
-					picture.appendChild(image);
-					container.appendChild(picture);
+					const hasDark = darkImages && (darkImages.desktop || darkImages.mobile);
+					buildPicture(desktopSrc, mobileSrc, hasDark ? "banner-theme-light" : "", !hasDark || !isDark, true);
+					if (hasDark) {
+						buildPicture(darkImages.desktop || desktopSrc, darkImages.mobile || mobileSrc, "banner-theme-dark", isDark, false);
+					}
 				})();
 			</script>
 		</div>
