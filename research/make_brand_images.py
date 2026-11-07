@@ -1,4 +1,4 @@
-"""블로그 배너·아바타 생성 스크립트.
+"""블로그 배너 생성 스크립트. (avatar()는 예전 임시 아바타용으로 남겨 둠)
 
 배너는 비행 이론 3편의 2D 점질량 모델과 같은 방식(고정 타임스텝, 받음각 기반 양력,
 실속 후 양력 감소)으로 여러 궤적을 적분해 그린 것이다. 장식용이라 계수는 보기 좋게 고른 값이다.
@@ -79,6 +79,5 @@ def avatar(path, size=512):
 os.makedirs(f"{OUT}/banner", exist_ok=True); os.makedirs(f"{OUT}/home", exist_ok=True)
 draw(2400, 1100, f"{OUT}/banner/desktop.webp")
 draw(1080, 1920, f"{OUT}/banner/mobile.webp", n=10)
-for name in ("avatar.webp", "home.webp", "default-logo.webp"):
-    avatar(f"{OUT}/home/{name}")
+# 아바타·아이콘은 사용자가 준 로고(public/assets/home)를 쓴다. 여기서 덮어쓰지 않는다.
 print("done")

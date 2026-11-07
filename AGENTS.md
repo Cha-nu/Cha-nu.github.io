@@ -43,7 +43,8 @@ src/
 public/
   images/<글-또는-프로젝트>/   그림
   videos/<프로젝트>/           mp4
-  assets/banner, assets/home   배너·아바타 (research/make_brand_images.py 로 생성)
+  assets/banner                배너 (research/make_brand_images.py 로 생성)
+  assets/home, favicon/        로고·아바타·파비콘 (사용자가 준 로고. 바꿀 때는 원본을 받아 다시 만든다)
 research/        수치와 그림을 만든 스크립트
 templates/       새 글을 시작할 때 복사하는 틀
 ```
