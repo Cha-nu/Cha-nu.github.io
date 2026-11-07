@@ -12,7 +12,6 @@ import icon from "astro-icon";
 import { pluginLanguageLogo } from "ec-lang-logo";
 import "katex/dist/contrib/mhchem.mjs";
 import { oddmisc } from "oddmisc";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeCodeGroup from "rehype-code-group";
 import rehypeComponents from "rehype-components";
 import rehypeKatex from "rehype-katex";
@@ -270,24 +269,7 @@ export default defineConfig({
 						},
 					},
 				],
-				[
-					rehypeAutolinkHeadings,
-					{
-						behavior: "append",
-						properties: {
-							className: ["anchor"],
-						},
-						content: {
-							type: "element",
-							tagName: "span",
-							properties: {
-								className: ["anchor-icon"],
-								"data-pagefind-ignore": true,
-							},
-							children: [{ type: "text", value: "#" }],
-						},
-					},
-				],
+				// 소제목 옆 # 링크는 왼쪽 목차로 이동할 수 있어 뺐다 (rehypeAutolinkHeadings 제거)
 				[
 					rehypeMarkdownImages,
 					{
