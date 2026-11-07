@@ -118,7 +118,19 @@ const favicons: Favicon[] =
 	}}
 >
 	// Load the theme from local storage
-	const theme = localStorage.getItem("theme") || DEFAULT_THEME;
+	// 직접 고른 테마가 없으면 기기 설정(prefers-color-scheme)을 따른다(사용자 요청).
+	const systemDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
+	const theme =
+		localStorage.getItem("theme") || (systemDark && systemDark.matches ? DARK_MODE : LIGHT_MODE) || DEFAULT_THEME;
+	// 직접 고른 적이 없으면, 기기 설정이 바뀔 때도 따라간다.
+	if (systemDark && !window.__systemThemeListener) {
+		window.__systemThemeListener = true;
+		systemDark.addEventListener("change", (e) => {
+			if (localStorage.getItem("theme")) return;
+			document.documentElement.classList.toggle("dark", e.matches);
+			document.documentElement.setAttribute("data-theme", e.matches ? "github-dark" : "github-light");
+		});
+	}
 	let isDark = false;
 	switch (theme) {
 		case LIGHT_MODE:

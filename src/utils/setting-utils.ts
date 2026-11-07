@@ -117,7 +117,11 @@ export function setTheme(theme: LIGHT_DARK_MODE): void {
 }
 
 export function getStoredTheme(): LIGHT_DARK_MODE {
-	return (localStorage.getItem("theme") as LIGHT_DARK_MODE) || DEFAULT_THEME;
+	// 직접 고른 테마가 없으면 기기 설정을 따른다(사용자 요청). HeadTags.astro와 같은 규칙.
+	const stored = localStorage.getItem("theme") as LIGHT_DARK_MODE | null;
+	if (stored) return stored;
+	if (window.matchMedia?.("(prefers-color-scheme: dark)").matches) return DARK_MODE;
+	return DEFAULT_THEME;
 }
 
 export function getStoredWallpaperMode(): WALLPAPER_MODE {
