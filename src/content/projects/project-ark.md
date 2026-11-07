@@ -1,0 +1,44 @@
+---
+title: "Project: ARK"
+summary: "파라곤 적 3종이 4초마다 밀려오는 웨이브를 막아내는 UE5.4 C++ TPS 서바이벌"
+period: "2025.11 ~ 2026.01 (약 2개월)"
+status: 완료
+team: "2인"
+role: "TPS 이동 · 무기 3종 · 적 AI · 전투 피드백 · 스폰과 클리어"
+engine: "Unreal Engine 5.4"
+stack: ["C++", "AnimNotify", "NavMesh", "Niagara"]
+cover: https://i.ytimg.com/vi/ANB4t7hArCU/hqdefault.jpg
+video: https://www.youtube.com/watch?v=ANB4t7hArCU
+links:
+  - { label: "GitHub", url: "https://github.com/Cha-nu/Project-Ark" }
+order: 50
+---
+
+## 어떤 프로젝트인가
+
+어두운 Sci-Fi 도시에서 파라곤 적 3종(근접 Crunch · 중거리 Wraith · 포격 Howitzer)이 4초마다 밀려오는 웨이브를 사격·저격·유탄으로 막아내는 TPS 서바이벌입니다. 투사체, 히트스캔, 범위 데미지, 근접 판정을 한 게임에 전부 구현해 보는 것이 목표였습니다.
+
+## 내가 맡은 것
+
+- 평상시 걷기와 `Shift` 달리기를 구분한 TPS 이동
+- 기본 Bullet, Q 범위 공격, E 관통 사격의 서로 다른 전투 감각
+- 공격 모션의 실제 타격 프레임과 판정을 연결하는 `AnimNotify`
+- 근접·중거리·원거리 적의 역할별 추적과 공격
+- Q/E 쿨다운 아이콘, 크로스헤어 반동, Niagara 타격 피드백
+- 적 스폰, 처치 수 집계, 전원 처치 후 클리어 레벨 전환
+
+## 핵심 기능
+
+| 기능 | 요약 |
+| --- | --- |
+| 판정 방식별 무기 시스템 | 유탄(투사체)·저격(히트스캔)·근접 3종의 서로 다른 충돌·데미지 처리 |
+| Bullet 시스템 | 실제 Projectile 기반 기본탄이 생성부터 비행, 충돌, 소멸까지 명확한 생명주기를 공유 |
+| 적 AI 로직 | 근접·중거리·원거리 세 역할이 공통 베이스에서 파생되어 각자의 전투 거리를 유지 |
+| 방향별 피격 연출 | 내적·외적으로 공격 방향을 판정해 Front/Back/Left/Right 몽타주를 자동 재생 |
+
+## 트러블슈팅
+
+| 문제 | 원인과 해결 |
+| --- | --- |
+| Bullet 터널링 | 고속탄이 충돌체를 건너뜀. 충돌체 크기 확대, 검사 스텝 간격 축소, 관통 저격의 라인 트레이스(히트스캔) 전환으로 해결 |
+| 적 AI 일렬 뭉침 | 적들이 한 지점으로 몰림. 개체별 랜덤 각도 + 전방 트레이스 회피로 산개 |
