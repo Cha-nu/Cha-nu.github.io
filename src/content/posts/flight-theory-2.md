@@ -5,7 +5,7 @@ description: "레일 위를 미끄러지던 비행기에 무게를 주는 법. �
 image: /images/flight-2/02_four_forces.png
 tags: ["Unreal Engine", "비행", "물리", "고정 타임스텝"]
 category: 게임 물리
-draft: false
+draft: true
 ---
 
 > **게임 비행 이론 시리즈** — [1편 롤·피치·요](/posts/flight-theory-1/) · **2편 양력·항력·추력·중력** · [3편 실속](/posts/flight-theory-3/) · 4편 조종면과 토크, 안정성 (준비 중)

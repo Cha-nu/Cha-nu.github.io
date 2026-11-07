@@ -81,8 +81,9 @@ const pages = [
 	},
 	{
 		// 원래 테마 데모의 About 페이지 검사를 수식이 있는 실제 글로 바꿨다.
+		// 비행 이론 글을 draft로 내려서 수식이 있는 다른 공개 글로 바꿨다.
 		name: "Post page",
-		htmlPath: "posts/flight-theory-1/index.html",
+		htmlPath: "posts/augmented-alkagi-tech-drag-flick-physics/index.html",
 		requiredMarkup: [["katex", "rendered KaTeX math"]],
 		requiredRules: [
 			[".custom-md", "Markdown layout styles"],

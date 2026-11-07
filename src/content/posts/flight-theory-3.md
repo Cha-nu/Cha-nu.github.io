@@ -5,7 +5,7 @@ description: "당기면 당길수록 도는 비행기의 끝. 실속 곡선, 받
 image: /images/flight-3/07_turn_rate_corner.png
 tags: ["Unreal Engine", "비행", "실속", "조종 법칙"]
 category: 게임 물리
-draft: false
+draft: true
 ---
 
 > **게임 비행 이론 시리즈** — [1편 롤·피치·요](/posts/flight-theory-1/) · [2편 양력·항력·추력·중력](/posts/flight-theory-2/) · **3편 실속** · 4편 조종면과 토크, 안정성 (준비 중)
