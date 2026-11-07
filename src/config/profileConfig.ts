@@ -15,10 +15,5 @@ export const profileConfig: ProfileConfig = {
 			icon: "fa7-brands:github",
 			url: "https://github.com/Cha-nu",
 		},
-		{
-			name: "RSS",
-			icon: "fa7-solid:rss",
-			url: "/rss.xml",
-		},
 	],
 };

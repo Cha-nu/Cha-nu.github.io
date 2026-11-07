@@ -95,40 +95,27 @@ function assertRenderedFixture(root, label, { feed = false } = {}) {
 	}
 }
 
-const [pageHtml, rssXml, atomXml] = await Promise.all([
+// RSS 피드를 없애서(사용자 요청) Atom 피드만 검사한다.
+const [pageHtml, atomXml] = await Promise.all([
 	readFile(FIXTURE_PAGE, "utf8"),
-	readFile("dist/rss.xml", "utf8"),
 	readFile("dist/atom.xml", "utf8"),
 ]);
 
-for (const [label, xml] of [
-	["RSS", rssXml],
-	["Atom", atomXml],
-]) {
-	assert.equal(XMLValidator.validate(xml), true, `${label} is not strict XML`);
-}
+assert.equal(XMLValidator.validate(atomXml), true, "Atom is not strict XML");
 
 const parser = new XMLParser({
 	ignoreAttributes: false,
 	cdataPropName: "__cdata",
 });
-const rss = parser.parse(rssXml);
 const atom = parser.parse(atomXml);
-const rssItem = entries(rss.rss.channel.item).find(
-	(item) => item.title === FIXTURE_TITLE,
-);
 const atomEntry = entries(atom.feed.entry).find(
 	(item) => item.title === FIXTURE_TITLE,
 );
-assert.ok(rssItem, "RSS fixture item is missing");
 assert.ok(atomEntry, "Atom fixture entry is missing");
 
-const rssContent = rssItem["content:encoded"];
 const atomContent = atomEntry.content.__cdata;
-assert.equal(rssContent.trim(), atomContent.trim(), "RSS and Atom content diverged");
 
 assertRenderedFixture(parse(pageHtml), "page");
-assertRenderedFixture(parse(rssContent), "RSS", { feed: true });
 assertRenderedFixture(parse(atomContent), "Atom", { feed: true });
 
 console.log("Content pipeline build output verified.");

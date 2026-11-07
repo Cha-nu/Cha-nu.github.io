@@ -51,12 +51,7 @@ if (footerConfig.enable) {
 		<div class="mb-2">
 			&copy; <span id="copyright-year">{currentYear}</span>
 			{profileConfig.name}. All Rights Reserved. /
-			<a
-				class="transition link text-[var(--primary)] font-medium"
-				href={url("rss/")}
-				onclick={`event.preventDefault(); navigateToPage('${url("rss/")}')`}
-				>RSS</a
-			> /
+			<!-- RSS 피드를 없애서(사용자 요청) RSS 링크를 뺐다. Atom 피드는 남겨 둔다. -->
 			<a
 				class="transition link text-[var(--primary)] font-medium"
 				href={url("atom/")}
