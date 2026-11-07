@@ -41,13 +41,3 @@ order: 20
 | 고양이 스킬 시스템 | 캐릭터 클래스는 하나, 스킬 구성은 TMap 데이터로 분리해 새 고양이 추가를 데이터 한 줄로 |
 | 쿨다운 하이브리드 & 충전형 대시 | 쿨다운 수치는 GA, 태그는 스킬별 GE에 두고, 대시는 어트리뷰트 + Cost GE + ASC 타이머로 3회 충전 |
 | CommonUI 3레이어 Activation Stack | 위젯이 입력 모드·포커스를 스스로 선언하고 활성화 스택이 적용·복원을 대신 |
-
-## 트러블슈팅
-
-| 문제 | 원인과 해결 |
-| --- | --- |
-| 강퇴된 플레이어가 같은 방에 다시 입장 | `KickPlayer`는 연결만 끊을 뿐 정책 상태를 기억하지 않음 |
-| 리슨 호스트는 BeginPlay가 possession보다 먼저 온다 | Seamless Travel 후 로컬 판정 코드가 자기 폰을 잘못 처리 |
-| EndAbility가 재충전 타이머를 전부 죽인다 | `ClearAllTimersForObject(this)`가 대시 재충전 타이머까지 삭제 |
-| 스턴 한 번에 패시브가 영구 취소 | 스턴 콜백의 `CancelAllAbilities()`가 grant-once 패시브까지 취소 |
-| 유령 세션 & 재접속 실패 | NetDriver 연결과 Steam 로비 멤버십을 같은 상태로 취급 |

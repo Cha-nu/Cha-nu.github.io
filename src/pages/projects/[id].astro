@@ -28,7 +28,12 @@ const related = (await getSortedPosts()).filter(
 	(p) => p.data.project === project.id,
 );
 const devlogs = related.filter((p) => p.data.category === "개발일지");
-const others = related.filter((p) => p.data.category !== "개발일지");
+const troubles = related.filter((p) => p.data.category === "트러블슈팅");
+const others = related.filter(
+	(p) => p.data.category !== "개발일지" && p.data.category !== "트러블슈팅",
+);
+// 글 제목 앞의 "[프로젝트명] " 접두어는 프로젝트 페이지 안에서는 중복이라 뗀다.
+const shortTitle = (t: string) => t.replace(/^\[[^\]]*\]\s*/, "");
 
 // YouTube 주소에서 영상 id를 뽑아 nocookie 임베드로 쓴다.
 const youtubeId = d.video?.match(
@@ -140,6 +145,24 @@ const fmt = (date: Date) =>
 									</li>
 								))}
 						</ol>
+					</section>
+				)
+			}
+
+			{
+				troubles.length > 0 && (
+					<section class="mt-10">
+						<h2 class="project-section-title">
+							트러블슈팅 {troubles.length}건
+						</h2>
+						<ul class="project-timeline">
+							{troubles.map((p) => (
+								<li>
+									<a href={getPostUrl(p)}>{shortTitle(p.data.title)}</a>
+									<p>{p.data.description}</p>
+								</li>
+							))}
+						</ul>
 					</section>
 				)
 			}

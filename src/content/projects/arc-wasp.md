@@ -34,10 +34,3 @@ ARC Raiders의 정찰 드론 "Wasp"를 조종해, 물자를 훔쳐 달아나는 
 | 목표 지향 AI | Searching → MovingToItem → Escaping 상태 머신으로 훔치고 도주하는 지상형·비행형 적 2종 |
 | DataTable 기반 확률 스폰 | 웨이브마다 박스 수·적 구성 비율이 달라지는 난이도 곡선을 데이터로 관리 |
 | 라운드 진행, 난이도 곡선과 HUD | GameState가 물자·적·시간·점수를 통합 관리하고 GameInstance와 UMG를 연결 |
-
-## 트러블슈팅
-
-| 문제 | 원인과 해결 |
-| --- | --- |
-| 이동 시 벽을 뚫고 지나감 | RootComponent로 쓴 `USceneComponent`(DefaultSceneRoot)에 충돌 볼륨이 없어 속도와 무관하게 통과 |
-| 비행 적의 지형 회피 | NavMesh는 지상 보행 기준 2D 경로만 제공해 비행 폰에 그대로 쓸 수 없었음 |
