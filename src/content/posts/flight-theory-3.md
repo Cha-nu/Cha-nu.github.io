@@ -1,6 +1,6 @@
 ---
 title: "게임 비행 이론 3편: 실속"
-published: 2026-11-07
+published: 2026-11-07T11:00:00+09:00
 description: "당기면 당길수록 도는 비행기의 끝. 실속 곡선, 받음각 리미터, G 리미터, 그리고 코너 속도."
 image: /images/flight-3/07_turn_rate_corner.png
 tags: ["Unreal Engine", "비행", "실속", "조종 법칙"]
