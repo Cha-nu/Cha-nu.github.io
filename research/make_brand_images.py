@@ -2,7 +2,7 @@
 
 배너는 비행 이론 3편의 2D 점질량 모델과 같은 방식(고정 타임스텝, 받음각 기반 양력,
 실속 후 양력 감소)으로 여러 궤적을 적분해 그린 것이다. 장식용이라 계수는 보기 좋게 고른 값이다.
-색은 사이트 테마(oklch hue 220)에서 뽑았다: 배경 #070f11 → #004357, 강조 #00b1da.
+색은 사이트 테마(oklch hue 240)에서 뽑았다: 배경 #080e13 → #003f60, 강조 #37a8ec.
 """
 import numpy as np
 import matplotlib
@@ -13,7 +13,7 @@ from PIL import Image
 import io, os
 
 OUT = os.path.join(os.path.dirname(__file__), "..", "public", "assets")
-BG0, BG1, ACC = "#070f11", "#004357", "#00b1da"
+BG0, BG1, ACC = "#080e13", "#003f60", "#37a8ec"
 rng = np.random.default_rng(7)
 
 def trajectory(v0, pitch_cmd, steps=900, dt=1/60):
