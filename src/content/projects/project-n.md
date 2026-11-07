@@ -1,6 +1,7 @@
 ---
 title: "Project N"
 summary: "중앙 깃발을 먼저 세우거나 최후의 1인이 되면 승리하는 Unity NGO 기반 2D 탑뷰 PvP"
+start: "2026-08"
 period: "2026.08.03 ~ 2026.08.10 (1주 집중 개발)"
 status: 완료
 team: "2인 (프로그래머 2, 기여도 약 70%)"

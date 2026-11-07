@@ -10,7 +10,7 @@
 1. **실명을 쓰지 않는다.** 블로그, 커밋 메시지, 이미지, 메타데이터 어디에도 운영자의 실명을 넣지 않는다. 작성자 표기는 `Cha-nu`(GitHub 아이디)만 쓴다. 다른 사람(팀원, 동료)의 이름도 본인이 공개를 허락한 경우가 아니면 역할로만 쓴다. ("클라이언트 팀원", "기획자")
 2. **수치는 직접 낸 것만 쓴다.** 실험·벤치마크 수치는 `research/`에 있는 스크립트로 직접 돌린 값이어야 한다. 기억이나 추측으로 숫자를 만들지 않는다. 외부에서 가져온 사실은 출처 링크를 단다.
 3. **과장하거나 단순화했으면 그렇다고 쓴다.** 오차를 키워 그린 그림, 실제 데이터가 아닌 단순화 모델은 본문과 그림 안에 모두 표시한다.
-4. **`npm run build`가 통과하기 전에는 끝난 게 아니다.** 빌드 경고도 확인한다.
+4. **`pnpm build`가 통과하기 전에는 끝난 게 아니다.** 빌드 경고도 확인한다.
 5. **새 글은 `draft: true`로 시작한다.** 사용자가 검토하고 공개하라고 할 때 `false`로 바꾼다.
 6. **`main`에 push하면 바로 배포된다.** 사용자가 배포를 요청했을 때만 push한다.
 7. **모르는 건 묻는다.** 개발일지의 요구사항이나 결과처럼 사용자만 아는 내용은 지어내지 말고 질문한다.
@@ -19,57 +19,59 @@
 
 ## 1. 저장소 한눈에
 
-- **Astro 7** 정적 사이트, **GitHub Pages**로 배포 (`.github/workflows/deploy.yml`)
-- Markdown + KaTeX 수식(`remark-math`, `rehype-katex`), Shiki 코드 강조(라이트/다크)
-- 한 저장소, 사이트 두 개:
-  - **포트폴리오** `https://cha-nu.github.io/` — 프로젝트 소개. 페이지는 `src/pages/index.astro`, `src/pages/projects/`. `BaseLayout`에 `section="portfolio"`를 넘긴다.
-  - **게임 기술 블로그** `https://cha-nu.github.io/blog/` — **개발일지가 주력**, 지식 글(비행 이론 등)은 그대로 둔다. 페이지는 모두 `src/pages/blog/` 아래. `section="blog"`(기본값).
-- 저장소 이름이 `Cha-nu.github.io`가 아니면 하위 경로(base)가 자동으로 붙는다.
-- 링크는 직접 문자열로 만들지 말고 `src/lib/posts.ts`의 헬퍼를 쓴다: `url()`(포트폴리오 쪽), `blogUrl()`, `postUrl()`, `devlogUrl()`, `categoryUrl()`, `tagUrl()`, `seriesUrl()`, `projectUrl()`, `asset()`(이미지).
-- 예전 주소(`/posts/...`, `/devlog`, `/tags` 등)는 `astro.config.mjs`의 `redirects`로 `/blog/...`에 넘긴다. 블로그 페이지 주소를 옮기면 여기에도 리다이렉트를 추가해 외부 링크가 깨지지 않게 한다.
+- **Astro 7 + [Mizuki](https://github.com/matsuzaka-yuki/Mizuki) 테마**(Apache-2.0, 원본 Fuwari는 MIT. `LICENSE`, `LICENSE.MIT`, `THIRD_PARTY_NOTICES.md`는 지우지 않는다)
+- **GitHub Pages**로 배포 (`.github/workflows/deploy.yml`). 주소 `https://cha-nu.github.io/`
+- 패키지 매니저는 **pnpm만** 쓴다. (`package.json`의 `packageManager`, `preinstall`이 npm/yarn을 막는다)
+- 수식 KaTeX, 코드 Expressive Code, 검색 Pagefind, UI 언어 한국어(`src/i18n/languages/ko.ts`)
 
 ```bash
-npm install
-npm run dev      # http://localhost:4321  (draft도 보임)
-npm run build    # dist/  (draft는 빠짐)
+pnpm install
+pnpm dev         # http://localhost:4321  (draft도 보임)
+pnpm build       # dist/  (draft 빠짐, 검색 색인·검사 스크립트까지 돈다)
 ```
 
 ```text
 src/
   content/
-    posts/       지식 글 (게임 수학, 물리, 알고리즘, 언리얼, CS)
-    devlogs/     개발일지
-    projects/    프로젝트 소개
-  pages/
-    index.astro  포트폴리오 첫 화면
-    projects/    포트폴리오 프로젝트 페이지
-    blog/        기술 블로그 전체 (첫 화면, devlog, posts, tags, category, series, rss)
-  lib/posts.ts   주소 헬퍼와 글 목록 함수
-  consts.ts      포트폴리오/블로그 이름, 기술 스택, 카테고리, 시리즈 정의
-  content.config.ts  각 글 종류의 frontmatter 규칙 (여기가 정답)
+    posts/       글 전부 (개발일지 + 지식 글). 주소 /posts/<파일이름>/
+    projects/    프로젝트 소개. 주소 /projects/<파일이름>/   ← 이 저장소에서 추가한 컬렉션
+    spec/about.md  소개 페이지 본문
+  content.config.ts  frontmatter 규칙 (여기가 정답)
+  config/        테마 설정 (사이트 이름, 메뉴, 사이드바, 배너, 기능 켜고 끄기)
+  pages/projects.astro, pages/projects/[id].astro   프로젝트 목록·상세 (이 저장소에서 바꾼 부분)
+  i18n/languages/ko.ts  한국어 UI 문구
 public/
   images/<글-또는-프로젝트>/   그림
   videos/<프로젝트>/           mp4
-research/<글>/   수치와 그림을 만든 스크립트
+  assets/banner, assets/home   배너·아바타 (research/make_brand_images.py 로 생성)
+research/        수치와 그림을 만든 스크립트
 templates/       새 글을 시작할 때 복사하는 틀
 ```
+
+**테마 설정에서 지킬 것**
+
+- 꺼 둔 기능(애니, 일기, 친구, 앨범, 장비, AI 도구, 스킬, 타임라인, 음악 플레이어, Live2D, 벚꽃, 라이선스 표시)은 사용자가 요청할 때만 켠다. `src/data/`의 해당 파일은 테마 예제 데이터라 쓰지 않는다.
+- 테마 기본 이미지(애니 배너, 아바타, 음악 커버)는 저작권이 불분명해 지웠다. 다시 넣지 않는다.
+- 테마 코드를 고칠 때는 최소한으로, 고친 곳에 한국어 주석으로 이유를 남긴다. 나중에 테마를 업데이트할 때 충돌 지점을 찾기 위해서다.
+- 예전 주소(`/blog/...`, `/devlog` 등)는 `astro.config.mjs`의 `redirects`로 넘긴다. 글 파일 이름(=주소)을 바꾸면 리다이렉트를 추가한다.
 
 ---
 
 ## 2. 무엇을 쓸지 고르기
 
-**기술 블로그에 새로 쓰는 글은 기본이 개발일지다.** 사용자가 "글", "기록", "정리"라고만 하면 개발일지로 쓰고, 프로젝트와 무관한 개념 설명을 명시적으로 원할 때만 지식 글로 쓴다. 포트폴리오 쪽 프로젝트 페이지는 사용자가 프로젝트 정보를 바꾸라고 할 때만 고친다.
+**새로 쓰는 글은 기본이 개발일지다.** 사용자가 "글", "기록", "정리"라고만 하면 개발일지로 쓰고, 프로젝트와 무관한 개념 설명을 명시적으로 원할 때만 지식 글로 쓴다.
 
-| 종류 | 위치 | 언제 | 틀 |
+| 종류 | 위치 → 주소 | 언제 | 틀 |
 | --- | --- | --- | --- |
-| 개발일지 (기본) | `src/content/devlogs/` → `/blog/devlog/<id>/` | 특정 프로젝트에서 무엇을 요구받고, 무엇을 했고, 어떻게 풀었는지 기록할 때 | `templates/devlog.md` |
-| 지식 글 | `src/content/posts/` → `/blog/posts/<id>/` | 개념이나 기법을 설명할 때. 프로젝트를 몰라도 읽힌다 | `templates/post.md` |
-| 프로젝트 | `src/content/projects/` → `/projects/<id>/` (포트폴리오) | 프로젝트 하나를 소개하는 대표 페이지. 기술 블로그의 개발일지와 글이 여기로 모인다 | `templates/project.md` |
+| 개발일지 (기본) | `src/content/posts/` → `/posts/<id>/`, `category: 개발일지`, `project:` 필수 | 특정 프로젝트에서 무엇을 요구받고, 무엇을 했고, 어떻게 풀었는지 기록할 때 | `templates/devlog.md` |
+| 지식 글 | `src/content/posts/` → `/posts/<id>/` | 개념이나 기법을 설명할 때. 프로젝트를 몰라도 읽힌다 | `templates/post.md` |
+| 프로젝트 | `src/content/projects/` → `/projects/<id>/` | 프로젝트 하나를 소개하는 대표 페이지. `project:`가 같은 글이 여기로 모인다 | `templates/project.md` |
 
-- 개발일지를 쓰다가 일반화할 만한 기법이 나오면 지식 글로 따로 쓰고, 지식 글 frontmatter의 `project:`로 연결한다.
-- 카테고리는 다섯 개뿐이다: `game-math`(게임 수학), `physics`(게임 물리), `algorithm`(알고리즘), `unreal`(언리얼 엔진), `cs`(CS 지식). 새 카테고리는 사용자와 합의한 뒤 `src/consts.ts`에 추가한다.
+- 카테고리는 여섯 개뿐이다: `개발일지`, `게임 수학`, `게임 물리`, `알고리즘`, `언리얼 엔진`, `CS 지식`. 표기를 정확히 맞춘다(카테고리는 문자열이라 오타가 새 카테고리가 된다). 새 카테고리는 사용자와 합의한 뒤 추가한다.
+- 날짜 필드는 `published`(필수), 고친 날은 `updated`. 커버 이미지는 `image`.
 - 세부 주제는 `tags`로 단다. 같은 태그는 같은 표기로 쓴다. (`Unreal Engine`, `GAS`, `쿼터니언`)
-- 순서가 있는 연재는 `series` + `seriesOrder`. 시리즈 키와 설명은 `src/consts.ts`의 `SERIES`에 먼저 등록한다.
+- 연재는 테마에 시리즈 기능이 없어서, 본문 맨 위에 시리즈 안내 줄(인용문)을 직접 넣는다. 형식은 `templates/post.md`와 비행 이론 글을 따른다. 새 편을 올리면 이전 편들의 안내 줄도 고친다.
+- 개발일지를 쓰다가 일반화할 만한 기법이 나오면 지식 글로 따로 쓰고, 지식 글에도 `project:`를 달아 연결한다.
 
 ---
 
@@ -124,7 +126,7 @@ templates/       새 글을 시작할 때 복사하는 틀
 6. **다음 할 일**: 체크박스 목록.
 
 - 사용자에게 먼저 확인할 것: 어느 프로젝트인지, 요구사항의 출처, 결과 영상·스크린샷이 있는지, 공개해도 되는 코드인지(회사·팀 코드는 공개 범위 확인).
-- 파일 이름: `src/content/devlogs/<프로젝트-id>-<YYYY-MM-DD>-<짧은-영문-설명>.md`
+- 파일 이름: `src/content/posts/<프로젝트-id>-<YYYY-MM-DD>-<짧은-영문-설명>.md`, `category: 개발일지`, `project: <프로젝트-id>`
 - 개발일지는 이야기 구조(4장)를 쓰지 않는다. 담백하게 쓴다.
 
 ---
@@ -132,6 +134,7 @@ templates/       새 글을 시작할 때 복사하는 틀
 ## 6. 프로젝트 페이지 쓰는 법
 
 - 파일 이름이 곧 id다. `src/content/projects/<project-id>.md` (영문 소문자, 하이픈)
+- `start`("YYYY-MM")와 `order`(작을수록 앞)를 꼭 넣는다. 목록 카드는 `cover`, 상세 페이지 상단은 `video`(YouTube)를 쓴다.
 - `summary`는 한 문장. `role`에는 **내가 맡은 부분**만 쓴다. 팀 전체 성과를 내 것처럼 쓰지 않는다.
 - 본문은 `templates/project.md`의 네 절(어떤 프로젝트인가, 내가 맡은 것, 기술적으로 어려웠던 점, 돌아보며)을 따른다.
 - 대표 영상이 있으면 `video`, 없으면 `cover` 이미지를 넣는다. 둘 다 없으면 사용자에게 요청한다.
@@ -145,7 +148,7 @@ templates/       새 글을 시작할 때 복사하는 틀
 
 - 그림: `public/images/<글-id 또는 devlog/프로젝트-id/날짜>/NN_설명.png` (`01_ue_axes.png`처럼 번호는 글에 나오는 순서)
 - 동영상: `public/videos/<프로젝트-id>/<날짜>-<설명>.mp4`
-- Markdown에서는 `/images/...`, `/videos/...`처럼 `/`로 시작하는 경로를 쓴다. 저장소 하위 경로는 빌드할 때 자동으로 붙는다.
+- Markdown에서는 `/images/...`, `/videos/...`처럼 `/`로 시작하는 경로를 쓴다. (사이트가 루트 주소라 그대로 동작한다.)
 
 **그림 만들기**
 
@@ -214,7 +217,7 @@ templates/       새 글을 시작할 때 복사하는 틀
 2. `templates/`의 틀을 복사해 `draft: true`로 만든다.
 3. 실험이 필요하면 `research/<글>/`에 스크립트를 쓰고 돌려 수치를 얻는다.
 4. 본문을 쓴다. 그림이 들어갈 자리를 먼저 정하고, 그림을 만든 뒤 직접 열어 확인한다.
-5. `npm run build`로 확인한다. `npm run dev`로 페이지를 열어 그림, 수식, 표, 모바일 폭을 확인한다.
+5. `pnpm build`로 확인한다. `pnpm dev`로 페이지를 열어 그림, 수식, 표, 모바일 폭을 확인한다.
 6. 0장의 규칙을 다시 대조한다. (실명, 수치 출처, 과장 표시)
 7. 사용자에게 요약과 함께 검토를 요청한다. 승인되면 `draft: false`로 바꾸고, 요청이 있을 때 커밋·push한다.
 
@@ -222,7 +225,7 @@ templates/       새 글을 시작할 때 복사하는 틀
 
 ## 12. 커밋과 배포
 
-- 커밋 메시지는 한국어로, 무엇을 했는지 한 줄. (`글: 게임 비행 이론 4편 초안`, `개발일지: ArcWasp 이동 시스템`, `사이트: 태그 페이지 추가`)
+- 커밋 메시지는 한국어로, 무엇을 했는지 한 줄. (`글: 게임 비행 이론 4편 초안`, `개발일지: ArcWasp 이동 시스템`, `사이트: 프로젝트 카드 정렬 수정`)
 - 커밋 작성자는 `Cha-nu`로 한다. 실명이 들어간 git 설정이 있으면 이 저장소에서만 바꾼다.
   ```bash
   git config user.name "Cha-nu"

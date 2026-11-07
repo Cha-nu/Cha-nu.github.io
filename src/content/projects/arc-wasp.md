@@ -1,6 +1,7 @@
 ---
 title: "ArcRaiders: Wasp"
 summary: "공격 드론 'Wasp'로 물자를 지키는 UE5 C++ 웨이브 디펜스"
+start: "2026-04"
 period: "2026.04 (1개월)"
 status: 완료
 team: "1인 개발"

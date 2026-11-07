@@ -1,13 +1,14 @@
 ---
 title: "게임 비행 이론 1편: 롤·피치·요"
+published: 2026-11-03
 description: "기체를 기울였을 뿐인데 조종이 엉뚱한 방향으로 새는 이유. 오일러 각에서 회전 행렬, 쿼터니언까지."
-pubDate: 2026-11-03
-category: physics
-series: flight-theory
-seriesOrder: 1
+image: /images/flight-1/02_roll_pitch_yaw.png
 tags: ["Unreal Engine", "비행", "쿼터니언"]
-cover: /images/flight-1/02_roll_pitch_yaw.png
+category: 게임 물리
+draft: false
 ---
+
+> **게임 비행 이론 시리즈** — **1편 롤·피치·요** · [2편 양력·항력·추력·중력](/posts/flight-theory-2/) · [3편 실속](/posts/flight-theory-3/) · 4편 조종면과 토크, 안정성 (준비 중)
 
 ## 들어가며: 기체를 기울였을 뿐인데
 

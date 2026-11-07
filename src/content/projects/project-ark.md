@@ -1,6 +1,7 @@
 ---
 title: "Project: ARK"
 summary: "파라곤 적 3종이 4초마다 밀려오는 웨이브를 막아내는 UE5.4 C++ TPS 서바이벌"
+start: "2025-11"
 period: "2025.11 ~ 2026.01 (약 2개월)"
 status: 완료
 team: "2인 (기여도 90%)"

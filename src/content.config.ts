@@ -1,59 +1,80 @@
-import { defineCollection, reference } from 'astro:content';
-import { glob } from 'astro/loaders';
-import { z } from 'astro/zod';
-import { CATEGORY_KEYS } from './consts';
+import { defineCollection } from "astro:content";
+import { glob } from "astro/loaders";
+import { z } from "astro/zod";
 
-/** 지식 글: 게임 수학, 물리, 알고리즘, 언리얼, CS */
-const posts = defineCollection({
-  loader: glob({ base: './src/content/posts', pattern: '**/*.md' }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    pubDate: z.coerce.date(),
-    updatedDate: z.coerce.date().optional(),
-    category: z.enum(CATEGORY_KEYS),
-    series: z.string().optional(),
-    seriesOrder: z.number().optional(),
-    tags: z.array(z.string()).default([]),
-    cover: z.string().optional(),
-    project: reference('projects').optional(),
-    draft: z.boolean().default(false),
-  }),
+import { postGlob } from "./loaders/post-loader";
+
+const postsCollection = defineCollection({
+	loader: postGlob({ pattern: "**/*.{md,mdx}", base: "./src/content/posts" }),
+	schema: z.object({
+		title: z.string(),
+		published: z.date(),
+		updated: z.date().optional(),
+		draft: z.boolean().optional().default(false),
+		description: z.string().optional().default(""),
+		image: z.string().optional().default(""),
+		tags: z.array(z.string()).optional().default([]),
+		category: z.string().optional().nullable().default(""),
+		lang: z.string().optional().default(""),
+		pinned: z.boolean().optional().default(false),
+		comment: z.boolean().optional().default(true),
+		priority: z.number().optional(),
+		author: z.string().optional().default(""),
+		sourceLink: z.string().optional().default(""),
+		licenseName: z.string().optional().default(""),
+		licenseUrl: z.string().optional().default(""),
+
+		/* Page encryption fields */
+		encrypted: z.boolean().optional().default(false),
+		password: z.string().optional().default(""),
+		passwordHint: z.string().optional().default(""),
+		hideHomeContent: z.boolean().optional(),
+
+		/* 관련 프로젝트 id (src/content/projects 파일 이름). 개발일지는 필수로 단다. */
+		project: z.string().optional(),
+
+		/* Posts alias */
+		alias: z.string().optional(),
+
+		/* Custom permalink - 自定义固定链接，优先级高于 alias */
+		permalink: z.string().optional(),
+
+		/* For internal use */
+		prevTitle: z.string().default(""),
+		prevSlug: z.string().default(""),
+		nextTitle: z.string().default(""),
+		nextSlug: z.string().default(""),
+		_publishedDateOnly: z.boolean(),
+		_updatedDateOnly: z.boolean(),
+	}),
 });
-
-/** 개발일지: 프로젝트를 만들며 남기는 기록 */
-const devlogs = defineCollection({
-  loader: glob({ base: './src/content/devlogs', pattern: '**/*.md' }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    pubDate: z.coerce.date(),
-    project: reference('projects'),
-    tags: z.array(z.string()).default([]),
-    cover: z.string().optional(),
-    video: z.string().optional(), // 대표 영상: /videos/... 의 mp4 또는 YouTube 주소
-    draft: z.boolean().default(false),
-  }),
+const specCollection = defineCollection({
+	loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/spec" }),
+	schema: z.object({}),
 });
-
-/** 프로젝트: 포트폴리오 카드와 상세 페이지 */
-const projects = defineCollection({
-  loader: glob({ base: './src/content/projects', pattern: '**/*.md' }),
-  schema: z.object({
-    title: z.string(),
-    summary: z.string(),
-    period: z.string(),             // 예: "2026.03 ~ 2026.06"
-    status: z.enum(['진행 중', '완료', '중단']).default('완료'),
-    team: z.string().optional(),     // 예: "개인", "4인 팀 (클라이언트 2)"
-    role: z.string().optional(),     // 내가 맡은 부분
-    engine: z.string().optional(),   // 예: "Unreal Engine 5.4"
-    stack: z.array(z.string()).default([]),
-    cover: z.string().optional(),
-    video: z.string().optional(),
-    links: z.array(z.object({ label: z.string(), url: z.string() })).default([]),
-    order: z.number().default(100),  // 작을수록 앞에
-    draft: z.boolean().default(false),
-  }),
+const projectsCollection = defineCollection({
+	loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
+	schema: z.object({
+		title: z.string(),
+		summary: z.string(),
+		period: z.string(), // 예: "2026.03 ~ 2026.06"
+		start: z.string(), // 정렬·카드용 시작 월, 예: "2026-03"
+		status: z.enum(["진행 중", "완료", "중단"]).default("완료"),
+		team: z.string().optional(),
+		role: z.string().optional(),
+		engine: z.string().optional(),
+		stack: z.array(z.string()).default([]),
+		cover: z.string().optional(),
+		video: z.string().optional(),
+		links: z
+			.array(z.object({ label: z.string(), url: z.string() }))
+			.default([]),
+		order: z.number().default(100), // 작을수록 앞
+		draft: z.boolean().default(false),
+	}),
 });
-
-export const collections = { posts, devlogs, projects };
+export const collections = {
+	posts: postsCollection,
+	projects: projectsCollection,
+	spec: specCollection,
+};

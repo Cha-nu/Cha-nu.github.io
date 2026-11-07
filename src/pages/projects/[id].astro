@@ -1,47 +1,227 @@
 ---
-import { render } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Video from '../../components/Video.astro';
-import EntryList from '../../components/EntryList.astro';
-import { getProjects, getProjectDevlogs, getPosts, devlogUrl, formatDate, asset } from '../../lib/posts';
+// 프로젝트 상세 페이지. 원본은 src/content/projects/<id>.md
+// 관련 글(개발일지 포함)은 posts frontmatter의 project: <id> 로 모인다.
+import { getCollection, render } from "astro:content";
+import { PageHeader } from "@components/features/page-header";
+import Markdown from "@components/misc/Markdown.astro";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+
+import { getSortedPosts } from "../../utils/content-utils";
+import { getPostUrl, url } from "../../utils/url-utils";
+
 export async function getStaticPaths() {
-  return (await getProjects()).map((project) => ({ params: { id: project.id }, props: { project } }));
+	const projects = await getCollection(
+		"projects",
+		({ data }) => import.meta.env.DEV || !data.draft,
+	);
+	return projects.map((project) => ({
+		params: { id: project.id },
+		props: { project },
+	}));
 }
+
 const { project } = Astro.props;
 const d = project.data;
 const { Content } = await render(project);
-const devlogs = await getProjectDevlogs(project.id);
-const posts = (await getPosts()).filter((p) => p.data.project?.id === project.id);
-const facts = [
-  ['기간', d.period], ['상태', d.status], ['팀', d.team], ['맡은 부분', d.role], ['엔진', d.engine],
-  ['기술', d.stack.join(', ')],
-].filter(([, v]) => v);
----
-<BaseLayout title={d.title} description={d.summary} image={d.cover} section="portfolio">
-  <header class="post-head">
-    <span class="badge">프로젝트</span>
-    <h1>{d.title}</h1>
-    <p class="lead">{d.summary}</p>
-  </header>
-  {d.video ? <Video src={d.video} title={d.title} poster={d.cover} /> : d.cover && <img class="cover" src={asset(d.cover)} alt={d.title} />}
-  <table class="facts">{facts.map(([k, v]) => <tr><th>{k}</th><td>{v}</td></tr>)}</table>
-  {d.links.length > 0 && <p class="links">{d.links.map((l) => <a class="chip" href={l.url}>{l.label} ↗</a>)}</p>}
-  <div class="prose"><Content /></div>
 
-  {devlogs.length > 0 && (
-    <section>
-      <h2 class="section-h">기술 블로그의 개발일지 {devlogs.length}개</h2>
-      <ol class="timeline">
-        {devlogs.map((g) => (
-          <li><span class="meta">{formatDate(g.data.pubDate)}</span><a href={devlogUrl(g)}>{g.data.title}</a><div class="desc">{g.data.description}</div></li>
-        ))}
-      </ol>
-    </section>
-  )}
-  {posts.length > 0 && (
-    <section>
-      <h2 class="section-h">기술 블로그의 관련 글</h2>
-      <EntryList posts={posts} />
-    </section>
-  )}
-</BaseLayout>
+const related = (await getSortedPosts()).filter(
+	(p) => p.data.project === project.id,
+);
+const devlogs = related.filter((p) => p.data.category === "개발일지");
+const others = related.filter((p) => p.data.category !== "개발일지");
+
+// YouTube 주소에서 영상 id를 뽑아 nocookie 임베드로 쓴다.
+const youtubeId = d.video?.match(
+	/(?:youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]{11})/,
+)?.[1];
+
+const facts = [
+	["기간", d.period],
+	["상태", d.status],
+	["팀", d.team],
+	["맡은 부분", d.role],
+	["엔진", d.engine],
+	["기술", d.stack.join(" · ")],
+].filter(([, v]) => v);
+
+const fmt = (date: Date) =>
+	date.toLocaleDateString("ko-KR", {
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+	});
+---
+
+<MainGridLayout title={d.title} description={d.summary}>
+	<script>
+		import("../../scripts/right-sidebar-layout.js");
+	</script>
+	<div
+		class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32"
+	>
+		<div class="card-base z-10 px-6 sm:px-9 py-6 relative w-full">
+			<a
+				href={url("/projects/")}
+				class="text-sm text-(--primary) hover:underline">← 프로젝트 목록</a
+			>
+			<PageHeader title={d.title} subtitle={d.summary} />
+
+			{
+				youtubeId ? (
+					<div class="project-video mb-6">
+						<iframe
+							src={`https://www.youtube-nocookie.com/embed/${youtubeId}`}
+							title={`${d.title} 플레이 영상`}
+							loading="lazy"
+							allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+							allowfullscreen
+						/>
+					</div>
+				) : (
+					d.cover && (
+						<img
+							class="w-full rounded-xl mb-6"
+							src={d.cover}
+							alt={d.title}
+						/>
+					)
+				)
+			}
+
+			<dl class="project-facts mb-6">
+				{
+					facts.map(([k, v]) => (
+						<>
+							<dt>{k}</dt>
+							<dd>{v}</dd>
+						</>
+					))
+				}
+			</dl>
+
+			{
+				d.links.length > 0 && (
+					<div class="flex flex-wrap gap-2 mb-6">
+						{d.links.map((l) => (
+							<a
+								href={l.url}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="btn-regular px-4 py-2 rounded-lg text-sm font-medium"
+							>
+								{l.label} ↗
+							</a>
+						))}
+					</div>
+				)
+			}
+
+			<Markdown class="markdown-content">
+				<Content />
+			</Markdown>
+
+			{
+				devlogs.length > 0 && (
+					<section class="mt-10">
+						<h2 class="project-section-title">
+							개발일지 {devlogs.length}개
+						</h2>
+						<ol class="project-timeline">
+							{devlogs
+								.slice()
+								.reverse()
+								.map((p, i) => (
+									<li>
+										<span class="text-xs text-black/50 dark:text-white/50">
+											{i + 1}번째 기록 · {fmt(p.data.published)}
+										</span>
+										<a href={getPostUrl(p)}>{p.data.title}</a>
+										<p>{p.data.description}</p>
+									</li>
+								))}
+						</ol>
+					</section>
+				)
+			}
+
+			{
+				others.length > 0 && (
+					<section class="mt-10">
+						<h2 class="project-section-title">관련 글</h2>
+						<ul class="project-timeline">
+							{others.map((p) => (
+								<li>
+									<a href={getPostUrl(p)}>{p.data.title}</a>
+									<p>{p.data.description}</p>
+								</li>
+							))}
+						</ul>
+					</section>
+				)
+			}
+		</div>
+	</div>
+</MainGridLayout>
+
+<style>
+	.project-video {
+		position: relative;
+		aspect-ratio: 16 / 9;
+		border-radius: 0.75rem;
+		overflow: hidden;
+		background: black;
+	}
+	.project-video iframe {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+	.project-facts {
+		display: grid;
+		grid-template-columns: max-content 1fr;
+		gap: 0.5rem 1.25rem;
+		padding: 1rem 1.25rem;
+		border-radius: 0.75rem;
+		background: color-mix(in oklch, var(--primary) 8%, transparent);
+	}
+	.project-facts dt {
+		font-weight: 600;
+		color: var(--primary);
+		white-space: nowrap;
+	}
+	.project-facts dd {
+		margin: 0;
+		color: var(--deep-text, inherit);
+		opacity: 0.85;
+	}
+	.project-section-title {
+		font-size: 1.25rem;
+		font-weight: 700;
+		margin-bottom: 0.75rem;
+		color: var(--primary);
+	}
+	.project-timeline {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		gap: 0.75rem;
+	}
+	.project-timeline li {
+		padding: 0.75rem 1rem;
+		border-left: 3px solid var(--primary);
+		border-radius: 0 0.5rem 0.5rem 0;
+		background: color-mix(in oklch, var(--primary) 5%, transparent);
+	}
+	.project-timeline a {
+		display: block;
+		font-weight: 600;
+	}
+	.project-timeline p {
+		margin: 0.25rem 0 0;
+		font-size: 0.875rem;
+		opacity: 0.7;
+	}
+</style>

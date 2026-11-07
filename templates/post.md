@@ -1,15 +1,15 @@
 ---
 title: "시리즈명 N편: 주제"
+published: 2026-01-01
 description: "목록·검색 결과에 보일 한두 문장. 무엇이 문제였고 무엇으로 풀었는지."
-pubDate: 2026-01-01
-category: game-math        # game-math | physics | algorithm | unreal | cs
-series: series-key         # 시리즈가 아니면 이 줄과 seriesOrder 삭제 (키는 src/consts.ts SERIES)
-seriesOrder: 1
+category: 게임 수학          # 게임 수학 | 게임 물리 | 알고리즘 | 언리얼 엔진 | CS 지식
 tags: ["Unreal Engine"]
-cover: /images/slug/01_xxx.png
-# project: project-id      # 이 글이 나온 프로젝트가 있으면 (src/content/projects/의 파일 이름)
-draft: true                # 다 쓰고 검수가 끝나면 false
+image: /images/slug/01_xxx.png
+# project: project-id       # 이 글이 나온 프로젝트가 있으면 (src/content/projects/의 파일 이름)
+draft: true                 # 다 쓰고 검수가 끝나면 false
 ---
+
+> **시리즈명** — [1편 제목](/posts/slug-1/) · **N편 제목** · (다음 편, 준비 중)
 
 ## 들어가며: (한 줄로 상황을 보여주는 제목)
 

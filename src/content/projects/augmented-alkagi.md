@@ -1,6 +1,7 @@
 ---
 title: "증강 알까기 (Augmented Alkagi)"
 summary: "뽑은 증강으로 내 알을 강화하는 UE5.8 C++ 1~4인 물리 알까기 대전 (AI · 핫시트 · Steam 온라인)"
+start: "2026-07"
 period: "2026.07 ~ 진행 중"
 status: 진행 중
 team: "1인 개발"

@@ -1,11 +1,11 @@
 ---
 title: "기능이나 작업 이름: 한 줄 결과"
+published: 2026-01-01
 description: "무엇을 왜 만들었고 결과가 어땠는지 한두 문장."
-pubDate: 2026-01-01
-project: project-id        # src/content/projects/ 의 파일 이름 (확장자 제외)
+category: 개발일지          # 개발일지는 항상 이 값
+project: project-id         # src/content/projects/ 의 파일 이름 (확장자 제외). 프로젝트 페이지에 "N번째 기록"으로 모인다
 tags: ["Unreal Engine"]
-cover: /images/devlog/project-id/2026-01-01/01_result.png
-video: /videos/project-id/2026-01-01-result.mp4   # 또는 YouTube 주소. 없으면 삭제
+image: /images/devlog/project-id/2026-01-01/01_result.png   # 목록 썸네일·글 커버. 없으면 삭제
 draft: true
 ---
 
