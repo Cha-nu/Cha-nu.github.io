@@ -42,3 +42,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## LevelUp font
+
+- Source: https://github.com/hada0127/hada-type-levelup (v2026.10.21)
+- License: SIL Open Font License 1.1 (https://openfontlicense.org)
+- Copyright 2026 Hada Type Foundry
+- Usage: site body font. The font files are not included in this repository; they are loaded from jsDelivr. `public/assets/css/levelup.css` is the upstream `css/levelup-subset.css` with the italic `@font-face` rules removed.

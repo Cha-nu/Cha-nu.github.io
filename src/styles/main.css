@@ -15,7 +15,8 @@
 
 /* Migrate from v3 config */
 @theme {
-  --font-sans: var(--font-body, ui-sans-serif), "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", "Noto Sans CJK KR", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /* 본문 글꼴을 LevelUp으로 바꿨다(사용자 요청). public/assets/css/levelup.css에서 불러온다. */
+  --font-sans: "LevelUp", var(--font-body, ui-sans-serif), "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", "Noto Sans CJK KR", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
   --breakpoint-md: 768px;
   --breakpoint-lg: 1280px;

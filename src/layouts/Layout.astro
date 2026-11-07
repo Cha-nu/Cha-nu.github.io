@@ -213,11 +213,20 @@ const bannerOffset =
 			}}
 		></style>
 
+		<!-- 본문 글꼴을 LevelUp(OFL 1.1)으로 바꿨다(사용자 요청). 글꼴 파일은 jsDelivr에서 받는다. -->
+		{customFontsEnabled && (
+			<>
+				<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+				<link rel="stylesheet" href="/assets/css/levelup.css" />
+			</>
+		)}
+
+		<!-- RSS 피드를 없애서(사용자 요청) 피드 자동 발견 링크를 Atom으로 바꿨다. -->
 		<link
 			rel="alternate"
-			type="application/rss+xml"
+			type="application/atom+xml"
 			title={profileConfig.name}
-			href={`${Astro.site}rss.xml`}
+			href={`${Astro.site}atom.xml`}
 		/>
 	</head>
 	<body

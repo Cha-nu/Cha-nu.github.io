@@ -49,7 +49,7 @@ export const siteConfig: SiteConfig = {
 	},
 
 	font: {
-		// custom 保持 ZenMaruGothic -> Loli -> 系统字体的显示顺序；system 不加载任何自定义字体
+		// custom: 본문 LevelUp(public/assets/css/levelup.css) + 코드 JetBrains Mono. system: 사용자 정의 글꼴을 불러오지 않는다
 		mode: "custom",
 	},
 
