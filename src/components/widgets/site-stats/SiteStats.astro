@@ -6,7 +6,7 @@ import I18nKey from "../../../i18n/i18nKey";
 import { i18n } from "../../../i18n/translation";
 import {
 	getCategoryList,
-	getSortedPosts,
+	getSortedBlogPosts,
 	getTagList,
 } from "../../../utils/content-utils";
 import WidgetLayout from "../common/WidgetLayout.astro";
@@ -22,7 +22,8 @@ const { class: className, style } = Astro.props;
 const siteStartDate = siteConfig.siteStartDate || "2025-01-01";
 
 // 获取所有文章
-const posts = await getSortedPosts();
+// 프로젝트 전용 글은 통계에서 뺀다(사용자 요청).
+const posts = await getSortedBlogPosts();
 const categories = await getCategoryList();
 const tags = await getTagList();
 

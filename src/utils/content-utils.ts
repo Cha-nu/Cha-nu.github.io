@@ -5,6 +5,20 @@ import { initPostIdMap } from "@utils/permalink-utils";
 import { comparePublishedDatesDescending } from "@utils/post-date-utils";
 import { getCategoryUrl, getPostUrl } from "@utils/url-utils";
 
+/*
+ * 프로젝트 전용 글(사용자 요청으로 블로그 목록에서 분리).
+ * 이 카테고리의 글은 홈 목록, 아카이브, 카테고리·태그 위젯, 사이트 통계에서 빠지고
+ * 프로젝트 상세 페이지(/projects/<id>/)에서만 모아 보인다. 글 페이지 자체는 그대로 만든다.
+ */
+export const PROJECT_ONLY_CATEGORIES = ["핵심 기술", "트러블슈팅"];
+
+export function isProjectOnlyPost(post: {
+	data: { category?: string | null };
+}): boolean {
+	const category = post.data.category?.trim();
+	return !!category && PROJECT_ONLY_CATEGORIES.includes(category);
+}
+
 // // Retrieve posts and sort them by publication date
 async function getRawSortedPosts() {
 	const allBlogPosts = await getCollection("posts", ({ data }) => {
@@ -49,16 +63,34 @@ async function getRawSortedPosts() {
 export async function getSortedPosts() {
 	const sorted = await getRawSortedPosts();
 
-	for (let i = 1; i < sorted.length; i++) {
-		sorted[i].data.nextSlug = sorted[i - 1].id;
-		sorted[i].data.nextTitle = sorted[i - 1].data.title;
+	// 이전/다음 글은 같은 묶음 안에서만 잇는다(사용자 요청으로 추가).
+	// 블로그 글은 블로그 글끼리, 프로젝트 전용 글은 같은 프로젝트의 프로젝트 전용 글끼리.
+	const groupKey = (post: CollectionEntry<"posts">) =>
+		isProjectOnlyPost(post) ? `project:${post.data.project ?? ""}` : "blog";
+	const groups = new Map<string, CollectionEntry<"posts">[]>();
+	for (const post of sorted) {
+		const key = groupKey(post);
+		if (!groups.has(key)) groups.set(key, []);
+		groups.get(key)?.push(post);
 	}
-	for (let i = 0; i < sorted.length - 1; i++) {
-		sorted[i].data.prevSlug = sorted[i + 1].id;
-		sorted[i].data.prevTitle = sorted[i + 1].data.title;
+
+	for (const group of groups.values()) {
+		for (let i = 1; i < group.length; i++) {
+			group[i].data.nextSlug = group[i - 1].id;
+			group[i].data.nextTitle = group[i - 1].data.title;
+		}
+		for (let i = 0; i < group.length - 1; i++) {
+			group[i].data.prevSlug = group[i + 1].id;
+			group[i].data.prevTitle = group[i + 1].data.title;
+		}
 	}
 
 	return sorted;
+}
+
+/** 블로그 목록에 보일 글만(프로젝트 전용 글 제외). 홈·통계에서 쓴다. */
+export async function getSortedBlogPosts() {
+	return (await getSortedPosts()).filter((post) => !isProjectOnlyPost(post));
 }
 export interface PostForList {
 	id: string;
@@ -72,7 +104,10 @@ export async function getSortedPostsList(): Promise<PostForList[]> {
 	initPostIdMap(sortedFullPosts);
 
 	// delete post.body，并预计算 URL
-	const sortedPostsList = sortedFullPosts.map((post) => ({
+	// 프로젝트 전용 글은 아카이브·카테고리 바·랜덤 글에서 뺀다(사용자 요청).
+	const sortedPostsList = sortedFullPosts
+		.filter((post) => !isProjectOnlyPost(post))
+		.map((post) => ({
 		id: post.id,
 		data: post.data,
 		url: getPostUrl(post),
@@ -86,8 +121,12 @@ export interface Tag {
 }
 
 export async function getTagList(): Promise<Tag[]> {
+	// 프로젝트 전용 글은 태그·카테고리 위젯에서 뺀다(사용자 요청).
 	const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
-		return import.meta.env.PROD ? data.draft !== true : true;
+		return (
+			(import.meta.env.PROD ? data.draft !== true : true) &&
+			!isProjectOnlyPost({ data })
+		);
 	});
 
 	const countMap: Record<string, number> = {};
@@ -115,8 +154,12 @@ export interface Category {
 }
 
 export async function getCategoryList(): Promise<Category[]> {
+	// 프로젝트 전용 글은 태그·카테고리 위젯에서 뺀다(사용자 요청).
 	const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
-		return import.meta.env.PROD ? data.draft !== true : true;
+		return (
+			(import.meta.env.PROD ? data.draft !== true : true) &&
+			!isProjectOnlyPost({ data })
+		);
 	});
 	const count: Record<string, number> = {};
 	allBlogPosts.forEach((post: { data: { category: string | null } }) => {
@@ -304,8 +347,13 @@ export async function getRelatedPosts(
 	});
 
 	// 排除自身和加密文章
+	// 블로그 글에는 프로젝트 전용 글을 추천하지 않는다(사용자 요청).
+	const currentIsProjectOnly = isProjectOnlyPost(currentPost);
 	const candidates = allPosts.filter(
-		(p) => p.id !== currentPost.id && !p.data.password,
+		(p) =>
+			p.id !== currentPost.id &&
+			!p.data.password &&
+			(currentIsProjectOnly || !isProjectOnlyPost(p)),
 	);
 
 	if (candidates.length === 0) return [];
