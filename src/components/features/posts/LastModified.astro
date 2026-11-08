@@ -49,8 +49,7 @@ const lastModified = updatedDate.toISOString();
 				const secs = seconds % 60;
 
 				const years = Math.floor(days / 365);
-				const months = Math.floor((days % 365) / 30);
-				const remainingDays = days % 30;
+				const months = Math.floor(days / 30);
 
 				const prefix = lastModifiedElement.dataset.prefix;
 				const yearKey = lastModifiedElement.dataset.year;
@@ -60,27 +59,23 @@ const lastModified = updatedDate.toISOString();
 				const minuteKey = lastModifiedElement.dataset.minute;
 				const secondKey = lastModifiedElement.dataset.second;
 
-				let runtimeString = prefix + " ";
+				// 가장 큰 단위 하나만 보여 준다 (사용자 요청). 예: "1일", "3달", "1년"
+				// 한국어라 숫자와 단위를 붙여 쓴다.
+				let amount;
 				if (years > 0) {
-					runtimeString += `${years} ${yearKey} `;
-				}
-				if (months > 0) {
-					runtimeString += `${months} ${monthKey} `;
-				}
-				if (remainingDays > 0) {
-					runtimeString += `${remainingDays} ${dayKey} `;
-				}
-				runtimeString += `${hours} ${hourKey} `;
-				if (minutes < 10) {
-					runtimeString += `0${minutes} ${minuteKey} `;
+					amount = `${years}${yearKey}`;
+				} else if (months > 0) {
+					amount = `${months}${monthKey}`;
+				} else if (days > 0) {
+					amount = `${days}${dayKey}`;
+				} else if (hours > 0) {
+					amount = `${hours}${hourKey}`;
+				} else if (minutes > 0) {
+					amount = `${minutes}${minuteKey}`;
 				} else {
-					runtimeString += `${minutes} ${minuteKey} `;
+					amount = `${secs}${secondKey}`;
 				}
-				if (secs < 10) {
-					runtimeString += `0${secs} ${secondKey}`;
-				} else {
-					runtimeString += `${secs} ${secondKey}`;
-				}
+				const runtimeString = `${prefix.trim()} ${amount}`;
 
 				document.getElementById("modifiedtime").innerHTML =
 					runtimeString;

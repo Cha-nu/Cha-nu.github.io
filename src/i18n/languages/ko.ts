@@ -329,7 +329,7 @@ export const ko: Translation = {
 	[Key.lastModifiedPrefix]: "마지막 수정 후 ",
 	[Key.lastModifiedOutdated]: "일부 내용은 오래되었을 수 있습니다",
 	[Key.year]: "년",
-	[Key.month]: "개월",
+	[Key.month]: "달",
 	[Key.day]: "일",
 	[Key.hour]: "시간",
 	[Key.minute]: "분",
