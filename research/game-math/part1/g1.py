@@ -1,0 +1,78 @@
+# 그림 01~04: 좌표계, 점과 벡터, 벡터 연산, 크기와 정규화
+from lib import *
+
+# 01 y-up vs y-down ---------------------------------------------------------
+fig, axs = plt.subplots(1, 2, figsize=(10, 4.6), dpi=150)
+for ax, ydown, name, sub in [(axs[0], False, "수학 좌표계 (y-up)", "위로 갈수록 y 증가 · 물리, 3D 엔진"),
+                             (axs[1], True, "화면 좌표계 (y-down)", "아래로 갈수록 y 증가 · 2D 화면, UI, 웹 캔버스")]:
+    grid(ax, (0, 5), (0, 4), ydown=ydown)
+    ax.plot([3, 3], [0, 2], color=LIGHT, lw=1.2, ls="--", zorder=2); ax.plot([0, 3], [2, 2], color=LIGHT, lw=1.2, ls="--", zorder=2)
+    dot(ax, (3, 2), RED, "P (3, 2)", off=(0.2, 0.0))
+    ax.text(-0.15, -0.15 if not ydown else -0.15, "O", fontsize=12, color="#555", ha="right", va="top" if not ydown else "bottom")
+    ax.set_title(name, fontsize=14, fontweight="bold", pad=22 if ydown else 10)
+    ax.text(2.5, -1.25 if not ydown else 5.6, sub, fontsize=10.5, color="#555", ha="center")
+fig.suptitle("같은 P (3, 2)가 왼쪽에서는 원점 위, 오른쪽에서는 원점 아래에 그려진다", fontsize=14.5, fontweight="bold", y=1.0)
+fn = "fig/01_y_up_vs_y_down.png"; fig.savefig(fn, facecolor="white", bbox_inches="tight"); trim(fn); plt.close(fig)
+
+# 02 점 - 점 = 벡터 ------------------------------------------------------------
+fig, ax = plt.subplots(figsize=(9, 5), dpi=150)
+grid(ax, (0, 10), (0, 5))
+A, B = np.array([2, 4]), np.array([5, 1]); v = B - A
+arr(ax, A, v, RED, lw=3)
+ax.text(*(A + v / 2 + [0.35, 0.3]), "v = B − A = (3, −3)", color=RED, fontsize=13, fontweight="bold", va="center")
+dot(ax, A, INK, "A (2, 4)", off=(-0.2, 0.35), ha="right"); dot(ax, B, INK, "B (5, 1)", off=(0.2, -0.3))
+# 같은 벡터를 다른 곳에 그려도 같은 벡터
+S = np.array([7, 4.5])
+arr(ax, S, v, RED, lw=2.2, ls="--")
+ax.text(*(S + v / 2 + [0.3, 0.35]), "같은 v (3, −3)", color=RED, fontsize=11.5, va="center")
+ax.text(8.6, 0.55, "벡터에는 위치가 없다.\n어디에 그려도 '오른쪽 3, 아래 3'", fontsize=10.5, color="#555", ha="center", va="center")
+fig.suptitle("A에서 B로 가는 이동은 B − A = (3, −3), 오른쪽 3칸·아래 3칸이다", fontsize=14, fontweight="bold", y=0.98)
+fn = "fig/02_point_minus_point.png"; fig.savefig(fn, facecolor="white", bbox_inches="tight"); trim(fn); plt.close(fig)
+
+# 03 덧셈, 뺄셈, 스칼라곱 ------------------------------------------------------
+fig, axs = plt.subplots(1, 3, figsize=(13.5, 5), dpi=150)
+ax = axs[0]; grid(ax, (0, 4), (0, 5))
+a, b = np.array([2, 1]), np.array([1, 3])
+arr(ax, (0, 0), a, BLUE, "a (2, 1)", off=(0.25, -0.35))
+arr(ax, a, b, GRAY, "b (1, 3)", off=(0.6, -0.4))
+arr(ax, (0, 0), a + b, RED, "a + b = (3, 4)", off=(-0.2, 0.4), ha="center")
+ax.set_title("덧셈: 두 이동을 이어서 한다", fontsize=13, fontweight="bold", pad=24)
+ax = axs[1]; grid(ax, (0, 4), (0, 5))
+a, b = np.array([3, 4]), np.array([1, 2])
+arr(ax, (0, 0), a, BLUE, "a (3, 4)", off=(0.2, 0.35))
+arr(ax, (0, 0), b, GRAY, "b (1, 2)", off=(-0.05, 0.35), ha="right")
+arr(ax, b, a - b, RED)
+ax.text(1.75, 3.35, "a − b = (2, 2)", color=RED, fontsize=13, fontweight="bold", ha="right", va="center")
+ax.set_title("뺄셈: b 끝에서 a 끝으로 가는 화살표", fontsize=13, fontweight="bold", pad=24)
+ax = axs[2]; grid(ax, (-3, 4), (-2, 3), labels=False)
+a = np.array([2, 1])
+arr(ax, (0, 0), 2 * a, GRAY, "2a = (4, 2)", off=(-0.1, 0.4), lw=2.2)
+arr(ax, (0, 0), a, BLUE, lw=3.2, z=7)
+ax.text(1.0, -0.45, "a (2, 1)", color=BLUE, fontsize=13, fontweight="bold", ha="left", va="center")
+arr(ax, (0, 0), -a, RED, "−a = (−2, −1)", off=(-0.2, -0.45))
+ax.set_title("스칼라곱: 방향선 위에서 길이만 바뀐다", fontsize=13, fontweight="bold")
+fig.suptitle("벡터 연산은 x, y 성분끼리 따로 계산한다", fontsize=14.5, fontweight="bold", y=1.09)
+fn = "fig/03_vector_ops.png"; fig.savefig(fn, facecolor="white", bbox_inches="tight"); trim(fn); plt.close(fig)
+
+# 04 크기와 정규화 -------------------------------------------------------------
+fig, axs = plt.subplots(1, 2, figsize=(11, 5.2), dpi=150, gridspec_kw={"width_ratios": [1, 1]})
+ax = axs[0]; grid(ax, (0, 4), (0, 5))
+v = np.array([3, 4])
+ax.plot([0, 3], [0, 0], color=GRAY, lw=3, zorder=3); ax.plot([3, 3], [0, 4], color=GRAY, lw=3, zorder=3)
+ax.add_patch(Polygon([(2.75, 0), (2.75, 0.25), (3, 0.25)], closed=False, fill=False, ec=GRAY, lw=1.2))
+arr(ax, (0, 0), v, RED, lw=3)
+ax.text(1.5, -0.75, "x 성분 3", ha="center", fontsize=12, color=GRAY, fontweight="bold")
+ax.text(3.25, 2, "y 성분 4", ha="left", fontsize=12, color=GRAY, fontweight="bold", va="center")
+ax.text(0.25, 4.6, r"$|v| = \sqrt{3^2 + 4^2}$", fontsize=14, color=RED, ha="left")
+ax.text(0.55, 4.0, r"$= \sqrt{25} = 5$", fontsize=14, color=RED, ha="left")
+ax.set_title("크기 = 직각삼각형의 빗변", fontsize=13, fontweight="bold", pad=24)
+ax = axs[1]; grid(ax, (-1, 4), (-1, 5), labels=False)
+t = np.linspace(0, 2 * np.pi, 200); ax.plot(np.cos(t), np.sin(t), color=BLUE, lw=1.3, ls="--", zorder=2)
+ax.text(-0.8, -1.25, "반지름 1인 원", fontsize=10.5, color=BLUE, ha="center")
+arr(ax, (0, 0), v, LIGHT, "v (3, 4), 길이 5", off=(0.0, 0.4), lw=2.4, fs=12)
+arr(ax, (0, 0), v / 5, RED, lw=3.4, ms=18, z=7)
+ax.text(0.85, 0.75, r"$\hat{v}$ = v / 5 = (0.6, 0.8)" + "\n길이 1", fontsize=12, color=RED, fontweight="bold", va="center")
+ax.set_title("정규화 = 같은 방향, 길이 1", fontsize=13, fontweight="bold")
+fig.suptitle("(3, 4)의 크기는 5, 5로 나누면 길이 1인 방향 (0.6, 0.8)이 남는다", fontsize=14.5, fontweight="bold", y=1.06)
+fn = "fig/04_length_normalize.png"; fig.savefig(fn, facecolor="white", bbox_inches="tight"); trim(fn); plt.close(fig)
+print("ok")
