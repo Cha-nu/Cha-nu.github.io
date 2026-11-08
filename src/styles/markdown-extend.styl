@@ -78,9 +78,11 @@
   img
     border-radius: 0.75rem
 
+  // 절 사이 구분선이 거의 안 보여서(투명도 8% 점선) 실선과 진한 색으로 바꿈. 사용자 요청
   hr
-    border-color: var(--line-divider)
-    border-style: dashed
+    border: 0
+    border-top: 1px solid var(--meta-divider)
+    margin: 2.5rem 0
 
   iframe
     border-radius: 0.75rem
