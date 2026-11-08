@@ -39,7 +39,8 @@ const cover = await resolvePostCoverSource(entry.data, {
 	imageApi: siteConfig.banner.imageApi,
 });
 const coverSrc = cover.src ?? "";
-const hasCover = Boolean(coverSrc);
+// 글 목록 카드에는 썸네일을 보이지 않는다(사용자 요청). 커버는 공유 미리보기(OG)에만 쓴다.
+const hasCover = false;
 const coverWidth = "28%";
 
 const { remarkPluginFrontmatter } = await render(entry);
