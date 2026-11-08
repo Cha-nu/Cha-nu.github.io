@@ -1,0 +1,76 @@
+/*
+ * Giscus 댓글 테마 (어두운 모드)
+ * 블로그(Mizuki 테마) 색에 맞추려고 만든 파일입니다. src/styles/variables.styl의 값을 옮겼습니다.
+ * Giscus는 iframe 안에서 돌아서 블로그의 CSS 변수를 읽지 못합니다. 그래서 색상(hue)을 기본값 240으로 고정했습니다.
+ * siteConfig.ts의 themeColor.hue를 바꾸면 아래 --hue도 같이 바꿉니다.
+ */
+@import url("https://giscus.app/themes/dark.css");
+
+main {
+	--hue: 240;
+
+	--color-fg-default: rgba(255, 255, 255, 0.9);
+	--color-fg-muted: rgba(255, 255, 255, 0.6);
+	--color-fg-subtle: rgba(255, 255, 255, 0.5);
+
+	--color-canvas-default: oklch(0.23 0.015 var(--hue));
+	--color-canvas-overlay: oklch(0.19 0.015 var(--hue));
+	--color-canvas-inset: oklch(0.17 0.015 var(--hue));
+	--color-canvas-subtle: oklch(0.19 0.015 var(--hue));
+
+	--color-border-default: rgba(255, 255, 255, 0.1);
+	--color-border-muted: rgba(255, 255, 255, 0.08);
+	--color-neutral-muted: oklch(0.33 0.035 var(--hue));
+
+	--color-accent-fg: oklch(0.75 0.1 var(--hue));
+	--color-accent-emphasis: oklch(0.6 0.12 var(--hue));
+	--color-accent-muted: oklch(0.43 0.045 var(--hue));
+	--color-accent-subtle: oklch(0.3 0.035 var(--hue));
+	--color-primer-shadow-inset: none;
+	--color-scale-gray-1: oklch(0.33 0.035 var(--hue));
+	--color-scale-blue-1: oklch(0.38 0.04 var(--hue));
+
+	--color-btn-text: oklch(0.75 0.1 var(--hue));
+	--color-btn-bg: oklch(0.33 0.035 var(--hue));
+	--color-btn-border: transparent;
+	--color-btn-shadow: none;
+	--color-btn-inset-shadow: none;
+	--color-btn-hover-bg: oklch(0.38 0.04 var(--hue));
+	--color-btn-hover-border: transparent;
+	--color-btn-active-bg: oklch(0.43 0.045 var(--hue));
+	--color-btn-active-border: transparent;
+	--color-btn-selected-bg: oklch(0.38 0.04 var(--hue));
+
+	--color-btn-primary-text: oklch(0.16 0.014 var(--hue));
+	--color-btn-primary-bg: oklch(0.75 0.14 var(--hue));
+	--color-btn-primary-border: transparent;
+	--color-btn-primary-shadow: none;
+	--color-btn-primary-inset-shadow: none;
+	--color-btn-primary-hover-bg: oklch(0.8 0.12 var(--hue));
+	--color-btn-primary-hover-border: transparent;
+	--color-btn-primary-selected-bg: oklch(0.7 0.14 var(--hue));
+	--color-btn-primary-selected-shadow: none;
+	--color-btn-primary-disabled-text: rgba(0, 0, 0, 0.5);
+	--color-btn-primary-disabled-bg: oklch(0.45 0.06 var(--hue));
+	--color-btn-primary-disabled-border: transparent;
+
+	--color-action-list-item-default-hover-bg: oklch(0.3 0.035 var(--hue));
+	--color-segmented-control-bg: oklch(0.17 0.015 var(--hue));
+	--color-segmented-control-button-bg: oklch(0.33 0.035 var(--hue));
+	--color-segmented-control-button-selected-border: transparent;
+
+	--color-social-reaction-bg-hover: oklch(0.33 0.035 var(--hue));
+	--color-social-reaction-bg-reacted-hover: oklch(0.38 0.04 var(--hue));
+}
+
+/* 블로그 카드처럼 모서리를 둥글게 */
+main .rounded-md,
+main .gsc-comment-box,
+main .gsc-comment > div {
+	border-radius: 0.75rem;
+}
+main .btn,
+main .gsc-social-reaction-summary-item,
+main .gsc-direct-reaction-button {
+	border-radius: 0.5rem;
+}

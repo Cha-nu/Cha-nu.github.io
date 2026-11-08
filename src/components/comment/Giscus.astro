@@ -5,8 +5,13 @@ interface Props {
 	path: string;
 }
 
+// 블로그 색에 맞춘 테마 파일(public/giscus/*.css)을 절대 주소로 넘긴다. Giscus가 iframe 밖 주소에서 CSS를 읽기 때문이다.
+const toAbsolute = (u?: string) =>
+	u ? new URL(u, Astro.site ?? Astro.url).href : undefined;
 const config = {
 	...commentConfig.giscus,
+	themeLight: toAbsolute(commentConfig.giscus?.themeLight),
+	themeDark: toAbsolute(commentConfig.giscus?.themeDark),
 	term: Astro.props.path,
 };
 ---
@@ -27,6 +32,12 @@ const config = {
 				: pathname;
 		}
 
+		// 사이트 밝기에 맞는 Giscus 테마를 고른다. 커스텀 테마가 있으면 그것을 쓴다.
+		function resolveTheme(isDark) {
+			if (isDark) return config.themeDark || "dark";
+			return config.themeLight || "light";
+		}
+
 		async function initGiscus() {
 			const container = document.getElementById(GISCUS_CONTAINER_ID);
 			if (!container) {
@@ -40,7 +51,7 @@ const config = {
 					document.documentElement
 						.getAttribute("data-theme")
 						?.includes("dark");
-				theme = isDark ? "dark" : "light";
+				theme = resolveTheme(isDark);
 			}
 
 			container.innerHTML = "";
@@ -149,7 +160,7 @@ const config = {
 						document.documentElement
 							.getAttribute("data-theme")
 							?.includes("dark");
-					const theme = isDark ? "dark" : "light";
+					const theme = resolveTheme(isDark);
 
 					const iframe = document.querySelector(
 						"iframe.giscus-frame",

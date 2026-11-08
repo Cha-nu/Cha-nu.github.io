@@ -296,6 +296,8 @@ export interface GiscusConfig {
 	emitMetadata: string;
 	inputPosition: string;
 	theme: string;
+	themeLight?: string; // 밝은 모드 커스텀 테마 CSS 경로 (이 저장소에서 추가)
+	themeDark?: string; // 어두운 모드 커스텀 테마 CSS 경로 (이 저장소에서 추가)
 	lang: string;
 	loading: string;
 }
