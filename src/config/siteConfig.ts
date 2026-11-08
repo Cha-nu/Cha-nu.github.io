@@ -122,7 +122,7 @@ export const siteConfig: SiteConfig = {
 	banner: {
 		// 支持单张图片或图片数组，当数组长度 > 1 时自动启用轮播
 		src: {
-			desktop: ["/assets/banner/desktop.webp"], // 桌面横幅图片
+			desktop: ["/assets/banner/desktop.png"], // 桌面横幅图片 (진짜 픽셀 격자로 줄인 그림, research/banner/pixelize_banner.py)
 			mobile: ["/assets/banner/mobile.webp"], // 移动横幅图片
 		}, // 使用本地横幅图片
 

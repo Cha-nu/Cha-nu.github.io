@@ -29,6 +29,13 @@
   display: none !important;
 }
 
+/* 데스크톱 라이트 배너는 334x119 픽셀 아트라서, 부드럽게 늘리지 않고 칸을 그대로 키운다(자글거림 해결). */
+@media (min-width: 768px) {
+  .banner-theme-light #banner {
+    image-rendering: pixelated;
+  }
+}
+
 /* 确保平滑滚动，并稳定滚动条宽度以避免布局左右抖动 */
 html {
   scroll-behavior: smooth;

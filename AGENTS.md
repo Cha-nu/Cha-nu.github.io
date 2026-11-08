@@ -43,7 +43,7 @@ src/
 public/
   images/<글-또는-프로젝트>/   그림
   videos/<프로젝트>/           mp4
-  assets/banner                배너 (사용자가 AI로 만든 픽셀 아트 하늘: 낮 desktop/mobile, 밤 *-dark. make_brand_images.py를 다시 돌리면 덮어쓰니 주의)
+  assets/banner                배너 (사용자가 AI로 만든 픽셀 아트 하늘: 낮 desktop/mobile, 밤 *-dark. 낮 desktop.png는 research/banner/pixelize_banner.py로 픽셀 격자를 되살린 그림. make_brand_images.py를 다시 돌리면 덮어쓰니 주의)
   assets/home, favicon/        로고·아바타·파비콘 (사용자가 준 로고. 바꿀 때는 원본을 받아 다시 만든다)
 research/        수치와 그림을 만든 스크립트
 practice/        이론편마다 내는 실습 과제와 보고서 틀 (블로그에 안 올라감, 14장)
