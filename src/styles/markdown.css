@@ -309,6 +309,23 @@
     padding-right: 3rem;
     box-sizing: border-box;
   }
+
+  /* 복습 질문(눌러서 답 보기)용 접기 상자. 테마에 details 스타일이 없어서 추가했다. */
+  details {
+    @apply my-3 rounded-xl px-4 py-3 bg-(--btn-regular-bg);
+
+    summary {
+      @apply cursor-pointer font-bold;
+    }
+
+    &[open] summary {
+      @apply mb-2;
+    }
+
+    > :last-child {
+      @apply mb-0;
+    }
+  }
 }
 
 /* 外部覆盖样式 */
