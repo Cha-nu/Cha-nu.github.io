@@ -1,7 +1,7 @@
 ---
 title: "[ArcRaiders: Wasp] 시야 기반 락온 & 타이머 공격 시퀀스"
 published: 2026-11-07
-description: "넓은 후보 탐색과 정밀 가림 판정을 분리하고, 화면 중심 우선순위와 이중 총구 타이머 시퀀스로 락온·연사를 구현했다."
+description: "넓은 후보 탐색과 정밀 가림 판정을 분리하고, 화면 중심 우선순위와 이중 총구 타이머 시퀀스로 락온·연사를 구현했습니다."
 category: 핵심 기술
 project: arc-wasp
 tags: ["Unreal Engine", "조작", "게임 수학"]
@@ -12,6 +12,7 @@ draft: false
 
 넓은 범위에서 적을 찾는 탐색과, 실제로 조준 가능한지 가려내는 정밀 판정을 한 번에 처리하면 매 프레임 비싼 라인 트레이스를 모든 후보에 날리게 됩니다.
 
+---
 ## 락온 파이프라인
 
 ```mermaid
@@ -32,6 +33,7 @@ float Score = FVector::DotProduct(CameraForward, ToTarget.GetSafeNormal());
 if (bHasLineOfSight && Score > BestScore) { BestScore = Score; LockedTarget = Candidate; }
 ```
 
+---
 ## 공격 시퀀스
 
 2.5초 준비 후 0.15초 간격으로 좌우 총구를 교대하며 8회 실행, 0.7초 간격을 두고 다시 8회를 실행해 총 16회를 쏩니다. 활성 타이머 검사로 중복 입력을 차단하고, 레이저는 Visibility Trace의 실제 충돌 거리만큼 길이를 조절합니다.

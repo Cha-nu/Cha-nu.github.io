@@ -1,7 +1,7 @@
 ---
 title: "[ArcRaiders: Wasp] 6DOF 드론 비행"
 published: 2026-11-07
-description: "속도 기반 기체 기울임(Tilt), 고도 제어, 호버링 사운드로 드론 조작감을 구현했다."
+description: "속도 기반 기체 기울임(Tilt), 고도 제어, 호버링 사운드로 드론 조작감을 구현했습니다."
 category: 핵심 기술
 project: arc-wasp
 tags: ["Unreal Engine", "비행", "Enhanced Input"]

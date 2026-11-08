@@ -1,7 +1,7 @@
 ---
 title: "[MeowTractive] Steam 온라인 아키텍처"
 published: 2026-11-07
-description: "리슨 서버 + Steam OSS로 인프라 없이 방 목록·재접속·초대를 처리하고, Widget→GameInstance→SessionSubsystem 3층으로 흐름과 I/O를 분리했다."
+description: "리슨 서버 + Steam OSS로 인프라 없이 방 목록·재접속·초대를 처리하고, Widget→GameInstance→SessionSubsystem 3층으로 흐름과 I/O를 분리했습니다."
 category: 핵심 기술
 project: meowtractive
 tags: ["Unreal Engine", "Online Subsystem Steam", "리슨 서버"]
@@ -12,6 +12,7 @@ draft: false
 
 <iframe src="https://www.youtube-nocookie.com/embed/w24qL32UedA" title="Steam 온라인 흐름" loading="lazy" style="width:100%;aspect-ratio:16/9;border:0;border-radius:12px" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+---
 ## 3층 구조
 
 위젯은 맵 전환 때 파괴되는 객체라 흐름의 주인이 될 수 없습니다. 그래서 <strong>Widget(표현) → GameInstance(Flow, 트래블 전담) → SessionSubsystem(I/O, IOnlineSession 래핑)</strong> 3층으로 책임을 잘랐습니다.
@@ -22,6 +23,7 @@ draft: false
 [I/O]     UMTSessionSubsystem — Create/Find/Join/Destroy/Update, 결과만 방송
 ```
 
+---
 ## 세션 순환
 
 방 생성 → 세션 광고(방이름·비번유무·모드·맵을 커스텀 키로 기록, 접속 없이 검색에 노출) → `ServerTravel("Lobby?listen")` → 로비에서 설정 변경 시 광고 갱신 → 매치 시작 시 `SetSessionJoinable(false)`로 검색 숨김/조인 거부 → 종료 후 다시 모집, 순서로 세션 하나가 순환합니다.
@@ -40,6 +42,7 @@ SteamDevAppId=480
   DriverClassNameFallback="/Script/OnlineSubsystemUtils.IpNetDriver")
 ```
 
+---
 ## 결정 정리
 
 | 결정 | 선택 | 이유 |

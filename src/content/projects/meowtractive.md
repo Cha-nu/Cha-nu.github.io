@@ -21,6 +21,7 @@ order: 20
 
 핵심 키워드: Steam 세션/리슨 서버 수명주기, GAS 매료·전투 파이프라인, CommonUI 3레이어 Activation Stack
 
+---
 ## 내가 맡은 것
 
 - Steam Online Subsystem + 리슨 서버 기반 세션 생성·매칭·초대 처리

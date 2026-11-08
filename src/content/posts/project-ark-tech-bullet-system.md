@@ -12,6 +12,7 @@ draft: false
 
 기본탄은 즉시 명중 판정보다 탄이 실제로 날아오는 것을 보고 피하거나 미리 조준하는 감각이 중요하다고 판단해, 히트스캔이 아닌 Actor 기반 Projectile로 구현했습니다. 탄속, Trail 표현, 충돌 판정 크기를 각각 독립적으로 조절할 수 있도록 하는 것이 설계 의도입니다.
 
+---
 ## Blueprint 구성
 
 `/Game/Developer/Bolt`를 기준으로 아래와 같은 컴포넌트 계층으로 구성했습니다.
@@ -24,6 +25,7 @@ Bolt (Actor)
 └─ ProjectileMovementComponent : 속도와 진행 방향 제어
 ```
 
+---
 ## 생명주기 흐름
 
 ```mermaid
@@ -36,6 +38,7 @@ flowchart LR
  F --> G["DestroyActor"]
 ```
 
+---
 ## 투사체 종류
 
 같은 생명주기를 공유하되, 발사 주체와 대상, 부가 표현만 다르게 구성한 세 가지 Blueprint를 사용합니다.
@@ -46,6 +49,7 @@ flowchart LR
 | EnemyBolt | 적 AI | 플레이어 캐릭터 | 적 발사체 기본형 |
 | EnemyBolt1 | 적 AI | 플레이어 캐릭터 | Bullet Trail Particle 추가 |
 
+---
 ## 충돌 처리 원칙
 
 - 자기 자신 및 비정상적인 대상(무효 액터 등)은 판정 초기 단계에서 제외합니다.
@@ -56,6 +60,7 @@ flowchart LR
 
 한편 E 스나이퍼 스킬은 이 Bullet 시스템에 포함되지 않습니다. 별도의 Actor를 스폰하지 않고 `LineTraceMultiByObjectType`을 사용하는 히트스캔 방식의 무기로 분리 구현되어 있습니다. (관련: [Bullet 터널링 문제](/posts/project-ark-ts-bullet-tunneling/))
 
+---
 ## 결과와 다음 단계
 
 세 가지 투사체가 하나의 생명주기와 충돌 처리 원칙을 공유하면서도 발사 주체와 부가 표현만 다르게 재사용 가능한 구조를 갖추었습니다. Trail과 실제 판정 범위가 분리되어 있어 시각적 과장 없이 정확한 충돌을 유지하고, DamageCauser/Instigator 관계가 유지되어 피격 방향과 처치 판정이 정확하게 동작하며, Impact 직후 즉시 파괴되는 구조 덕분에 중복 피해 문제 없이 안정적으로 동작했습니다.

@@ -1,7 +1,7 @@
 ---
 title: "[MeowTractive] 스턴 한 번에 패시브가 영구 취소"
 published: 2026-11-07
-description: "스턴 콜백의 CancelAllAbilities()가 grant-once 패시브까지 취소해 리스폰 전까지 돌아오지 않았다."
+description: "스턴 콜백의 CancelAllAbilities()가 grant-once 패시브까지 취소해 리스폰 전까지 돌아오지 않았습니다."
 category: 트러블슈팅
 project: meowtractive
 tags: ["Unreal Engine", "GAS", "리플리케이션"]
@@ -16,6 +16,7 @@ draft: false
 
 100% "스턴 직후"에만 재현돼 처음엔 GC(가비지 컬렉션)를 의심했지만, 참조 체인이 멀쩡하고 발생 패턴이 GC답지 않아(비주기적이 아니라 트리거와 1:1) 곧 기각했습니다.
 
+---
 ## 원인
 
 스턴 태그 콜백이 이동 잠금과 함께 `AbilitySystemComponent->CancelAllAbilities()`를 호출해, 시전 중이던 스킬뿐 아니라 <strong>grant-once 패시브까지 전부 취소</strong>했습니다.
@@ -35,6 +36,7 @@ void AMTPlayerCharacter::OnStunTagChanged(const FGameplayTag Tag, int32 NewCount
 
 `IsLocallyControlled()` 게이트 때문에 콜백이 <strong>피해자를 조작 중인 머신에서만</strong> 실행돼, 호스트가 맞으면 서버 권위 취소로 패시브가 진짜 죽고, 클라가 맞으면 클라 단독(비권위) 취소로 시전 중이던 스킬만 서버와 어긋납니다. "패키징에서만 재현"의 정체는 빌드가 아니라 <strong>호스트가 직접 맞았는가</strong>였습니다.
 
+---
 ## 해결
 
 취소의 범위를 줄이고(태그 한정), 권위를 바로잡았습니다(스킬 취소는 서버, 이동 잠금은 소유 클라).
@@ -50,6 +52,7 @@ void AMTPlayerCharacter::OnStunTagChanged(const FGameplayTag Tag, int32 NewCount
 UGA_EyeBeamRangePassive::UGA_EyeBeamRangePassive() { bIsCancelable = false; }
 ```
 
+---
 ## 결과
 
 스턴 전후로 패시브가 유지되고, 클라 피해자의 스킬 먹통 증상도 함께 해소됐습니다.
@@ -57,6 +60,6 @@ UGA_EyeBeamRangePassive::UGA_EyeBeamRangePassive() { bIsCancelable = false; }
 | 교훈 | 내용 |
 | --- | --- |
 | CancelAllAbilities는 산탄총 | 시전 중인 것만 끊고 싶으면 반드시 태그 필터(`CancelAbilities(&Tags)`) |
-| grant-once 패시브는 취소에 약하다 | 취소되면 영구 소멸 — `bIsCancelable=false`로 처음부터 보호 |
-| 태그 콜백은 머신마다 다르게 돈다 | 한 콜백 안에서도 "이 일의 권위는 어디인가"를 항목별로 분리 |
+| grant-once 패시브는 취소에 약합니다 | 취소되면 영구 소멸 — `bIsCancelable=false`로 처음부터 보호 |
+| 태그 콜백은 머신마다 다르게 돕니다 | 한 콜백 안에서도 "이 일의 권위는 어디인가"를 항목별로 분리 |
 | "패키징에서만"은 대부분 착시 | 진짜 변수는 빌드가 아니라 네트워크 역할(호스트/클라) |

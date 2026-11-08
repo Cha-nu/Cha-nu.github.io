@@ -1,7 +1,7 @@
 ---
 title: "[Project N] 게임 종료 경로 단일화"
 published: 2026-11-07
-description: "깃발 승리·최후의 1인·접속 해제가 모두 CompleteFlagWin 하나로 모여 승리 판정이 두 번 나지 않는다."
+description: "깃발 승리·최후의 1인·접속 해제가 모두 CompleteFlagWin 하나로 모여 승리 판정이 두 번 나지 않습니다."
 category: 핵심 기술
 project: project-n
 tags: ["Unity", "Netcode for GameObjects", "서버 권위"]
@@ -10,6 +10,7 @@ draft: false
 
 깃발 승리·최후의 1인·접속 해제가 모두 `CompleteFlagWin` 하나로 모여 승리 판정이 두 번 나지 않습니다.
 
+---
 ## 문제의식
 
 게임이 끝나는 경로가 세 갈래입니다.
@@ -20,6 +21,7 @@ draft: false
 
 각 경로가 직접 승리 UI를 띄우고 씬을 넘기면, 같은 프레임에 두 경로가 겹칠 때 <strong>승자가 두 번 선언되거나 로비 복귀가 두 번</strong> 일어납니다.
 
+---
 ## 구조
 
 ```mermaid
@@ -53,6 +55,7 @@ public void CompleteFlagWin(int winnerSlotIndex, Color winnerColor)
 - `EndGameRoutine`: 연출 대기 → `isGameOver = true` → `DeclareWinnerClientRpc` → 로비 씬 로드
 - `isEndGamePending`이 연출 대기 중에도 다른 경로를 막음
 
+---
 ## 설계 포인트
 
 - 종료 판정은 <strong>서버에서만</strong>, 결과는 승자 좌석(`playerSlotIndex`)과 색만 RPC로 알림

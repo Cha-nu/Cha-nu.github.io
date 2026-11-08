@@ -1,3 +1,4 @@
+---
 ## 안녕하세요, Chanus입니다
 
 Unreal Engine 5와 C++로 게임 클라이언트를 만듭니다.
@@ -10,6 +11,7 @@ GAS 기반 전투, Steam 온라인 멀티플레이, 게임 물리처럼 **"왜 �
 
 만든 게임은 [프로젝트](/projects/) 페이지에 모아 두었습니다.
 
+---
 ## 기술 스택
 
 <p align="center">
@@ -26,6 +28,7 @@ GAS 기반 전투, Steam 온라인 멀티플레이, 게임 물리처럼 **"왜 �
 
 그 밖의 경험: Spring · Java · AWS · MySQL (웹 백엔드 프로젝트), C, Python
 
+---
 ## 링크
 
 - GitHub: [Cha-nu](https://github.com/Cha-nu)

@@ -1,7 +1,7 @@
 ---
 title: "[ArcRaiders: Wasp] 비행 적의 지형 회피"
 published: 2026-11-07
-description: "NavMesh는 지상 보행 기준 2D 경로만 제공해 비행 폰에 그대로 쓸 수 없었다."
+description: "NavMesh는 지상 보행 기준 2D 경로만 제공해 비행 폰에 그대로 쓸 수 없었습니다."
 category: 트러블슈팅
 project: arc-wasp
 tags: ["Unreal Engine", "AI", "NavMesh", "비행"]
@@ -12,6 +12,7 @@ draft: false
 
 적 드론이 목표 방향의 벽을 계속 밀고, 경사·높은 구조물·천장을 안정적으로 회피하지 못했습니다. 경로 탐색이 실패하면 장애물과 관계없이 목표로 직진하기도 했습니다.
 
+---
 ## 원인
 
 현재 `UpdateDroneMovement`는 `FindPathToLocationSynchronously`로 지상 NavMesh 경로를 구하고 `PathPoints[1]`을 선택한 뒤, 그 경로점의 Z를 드론의 현재 높이로 덮어씁니다.
@@ -29,6 +30,7 @@ NextPoint.Z = GetActorLocation().Z;   // 수직 장애물·지형 높이 정보�
 
 충돌 컴포넌트가 실제 관통을 막더라도 AI는 계속 벽을 밀거나 모서리에 끼일 수 있습니다.
 
+---
 ## 개선 설계
 
 기존 NavMesh는 장거리 XY 우회 방향 제공에만 쓰고 목표 고도는 별도 정책으로 관리합니다.

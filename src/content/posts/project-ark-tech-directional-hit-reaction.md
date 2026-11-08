@@ -1,7 +1,7 @@
 ---
 title: "[Project: ARK] 방향별 피격 연출"
 published: 2026-11-07
-description: "내적·외적 연산으로 공격 방향을 판정해 Front/Back/Left/Right 몽타주를 자동 재생한다."
+description: "내적·외적 연산으로 공격 방향을 판정해 Front/Back/Left/Right 몽타주를 자동 재생합니다."
 category: 핵심 기술
 project: project-ark
 tags: ["Unreal Engine", "애니메이션", "게임 수학"]
@@ -29,6 +29,7 @@ const FVector Cross = FVector::CrossProduct(EnemyForward, Direction);
 
 <iframe src="https://www.youtube-nocookie.com/embed/z_B-hS5zvZs" title="방향별 피격 결과" loading="lazy" style="width:100%;aspect-ratio:16/9;border:0;border-radius:12px" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+---
 ## 한계
 
 현재 방향 분기는 Wraith와 Howitzer의 생존 피격 반응에만 적용되어 있고, 사망은 `DeathFor` 계열 고정 모션을 사용합니다. 중복된 방향 계산과 경직 처리는 `UHitReactionComponent` 또는 `AC_EnemyBase`로 이동해 공통화할 수 있습니다.

@@ -1,7 +1,7 @@
 ---
 title: "[Project: ARK] 판정 방식별 무기 시스템"
 published: 2026-11-07
-description: "유탄(투사체)·저격(히트스캔)·근접 3종의 서로 다른 충돌·데미지 처리를 각각 구현했다."
+description: "유탄(투사체)·저격(히트스캔)·근접 3종의 서로 다른 충돌·데미지 처리를 각각 구현했습니다."
 category: 핵심 기술
 project: project-ark
 tags: ["Unreal Engine", "무기 시스템", "충돌"]
@@ -27,6 +27,7 @@ Input / AI Decision → Weapon-specific Query → Valid Target Filtering
   → ApplyDamage → Health / Hit Reaction / Death → Niagara / Sound / HUD Feedback
 ```
 
+---
 ## 중복 판정 방지
 
 무기별로 다르게 처리합니다.

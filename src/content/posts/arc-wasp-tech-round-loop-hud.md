@@ -1,7 +1,7 @@
 ---
 title: "[ArcRaiders: Wasp] 라운드 진행, 난이도 곡선과 HUD"
 published: 2026-11-07
-description: "GameState가 물자·적·시간·점수를 통합 관리하고, GameInstance와 UMG를 연결해 3단계 플레이 루프와 즉각적인 피드백을 구성했다."
+description: "GameState가 물자·적·시간·점수를 통합 관리하고, GameInstance와 UMG를 연결해 3단계 플레이 루프와 즉각적인 피드백을 구성했습니다."
 category: 핵심 기술
 project: arc-wasp
 tags: ["Unreal Engine", "UMG", "게임 루프"]
@@ -12,6 +12,7 @@ draft: false
 
 GameState가 상자·적·시간·점수를 통합 관리하고, GameInstance와 UMG를 연결해 3단계 난이도, 적 재스폰, 누적 점수, Ghost HP를 하나의 라운드 루프로 구현했습니다.
 
+---
 ## 난이도 곡선
 
 | 단계 | 상자 | 적 드론 비율 |
@@ -22,10 +23,12 @@ GameState가 상자·적·시간·점수를 통합 관리하고, GameInstance와
 
 현재 적 수는 남은 상자 수와 연동합니다. 적이 제거되거나 탈출해 수가 부족해지면 3초 뒤 새로운 적을 생성합니다. 레벨 종료 시 남은 상자의 가치를 점수에 합산하고, 누적 점수는 GameInstance에 저장합니다.
 
+---
 ## HUD
 
 HUD는 Score, Level, Remaining Time을 실시간 표시하고, 실제 HP와 늦게 따라오는 Ghost HP를 분리해 피격 임팩트를 표현합니다. 시스템 메시지는 Queue에 저장해 0.05초 타자 효과와 메시지 간 3초 대기로 순차 재생합니다.
 
+---
 ## 레벨 전환
 
 ```mermaid
