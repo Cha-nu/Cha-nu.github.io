@@ -1,6 +1,6 @@
 ---
 title: "[ProjectD] 게임이 미완성으로 남은 이유"
-published: 2026-11-08
+published: 2026-11-08T12:22:00+09:00
 description: "6명이 한 달 동안 진행한 팀 프로젝트는 왜 미완성으로 남았을까. 팀원 한 사람의 시선으로 기획, 작업 범위, 멀티플레이 전환과 쿼터뷰 전투를 돌아봅니다."
 category: 개발일지
 project: project-d
