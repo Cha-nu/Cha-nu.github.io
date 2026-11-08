@@ -28,7 +28,9 @@ if (commentConfig?.enable) {
 	}
 }
 
-const commentEnabled = post ? (post.data.comment ?? true) : true;
+// optIn이면 comment: true를 단 글에만 댓글을 연다. 소개 페이지처럼 글이 아닌 곳은 닫는다.
+const optIn = commentConfig?.optIn ?? false;
+const commentEnabled = post ? (post.data.comment ?? !optIn) : !optIn;
 ---
 
 {

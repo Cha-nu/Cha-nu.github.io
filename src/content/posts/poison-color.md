@@ -5,6 +5,7 @@ description: "게임에서 독 속성의 색을 두고 오래 이어진 보라�
 category: 게임 디자인
 tags: ["게임 디자인", "UI", "색"]
 image: /images/poison-color/03_my_rule.png
+comment: true
 draft: false
 ---
 

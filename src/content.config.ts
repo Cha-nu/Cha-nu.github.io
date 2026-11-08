@@ -17,7 +17,8 @@ const postsCollection = defineCollection({
 		category: z.string().optional().nullable().default(""),
 		lang: z.string().optional().default(""),
 		pinned: z.boolean().optional().default(false),
-		comment: z.boolean().optional().default(true),
+		// 기본값을 없앴다. 값이 없으면 commentConfig.optIn에 따라 댓글을 켜고 끈다.
+		comment: z.boolean().optional(),
 		priority: z.number().optional(),
 		author: z.string().optional().default(""),
 		sourceLink: z.string().optional().default(""),

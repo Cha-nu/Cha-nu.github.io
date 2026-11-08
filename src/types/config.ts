@@ -281,6 +281,7 @@ export interface PermalinkConfig {
 export interface CommentConfig {
 	enable: boolean; // 是否启用评论功能
 	system?: "twikoo" | "giscus"; // 评论系统选择
+	optIn?: boolean; // true면 frontmatter에 comment: true를 단 글에만 댓글을 연다 (이 저장소에서 추가)
 	twikoo?: TwikooConfig;
 	giscus?: GiscusConfig;
 }
