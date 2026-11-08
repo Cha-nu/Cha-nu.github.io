@@ -43,4 +43,29 @@ draft: true                 # 다 쓰고 검수가 끝나면 false
 
 (실험 조건, 결과 표, 그래프. 수치는 research/<slug>/ 의 스크립트로 직접 낸 값만.)
 
+## 복습 질문
+
+답을 먼저 떠올린 다음 눌러서 확인해 보세요.
+
+<details>
+<summary>1. (왜 이 기법이 필요한가)</summary>
+
+(답. 글의 수치를 근거로)
+
+</details>
+
+<details>
+<summary>2. (다른 기법 대신 이것을 고를 상황은)</summary>
+
+(답)
+
+</details>
+
+<details>
+<summary>3. (흔한 오해나 한계)</summary>
+
+(답)
+
+</details>
+
 다음 편에서는 (다음 주제)를 다룹니다.
