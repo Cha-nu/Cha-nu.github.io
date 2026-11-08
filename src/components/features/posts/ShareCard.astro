@@ -33,6 +33,7 @@ const finalAuthor = author || profileConfig.name;
 ---
 
 <div
+	data-share-card
 	class:list={[
 		"p-6 bg-(--license-block-bg) rounded-xl mb-6 onload-animation",
 		className,
@@ -40,14 +41,18 @@ const finalAuthor = author || profileConfig.name;
 >
 	<div class="flex flex-col sm:flex-row items-center justify-between gap-4">
 		<div class="flex items-center gap-3 flex-1">
-			<div
-				class="flex items-center justify-center h-12 w-12 rounded-lg bg-(--enter-btn-bg)"
+			<!-- 공유 아이콘도 '글 공유' 버튼과 같은 동작을 하도록 버튼으로 바꿈 -->
+			<button
+				type="button"
+				data-share-icon
+				aria-label={i18n(I18nKey.shareArticle)}
+				class="flex items-center justify-center h-12 w-12 rounded-lg bg-(--enter-btn-bg) cursor-pointer transition hover:brightness-110 active:scale-95"
 			>
 				<Icon
 					name="material-symbols:share"
 					class="text-3xl text-(--primary)"
 				/>
-			</div>
+			</button>
 			<div class="flex flex-col gap-1">
 				<div
 					class="text-[1.0rem] leading-tight text-black/75 dark:text-white/75"
@@ -76,3 +81,19 @@ const finalAuthor = author || profileConfig.name;
 		</div>
 	</div>
 </div>
+
+<script>
+	// 공유 아이콘을 누르면 같은 카드 안의 '글 공유' 버튼(SharePoster)을 대신 누른다.
+	// 페이지 전환(swup) 뒤에도 동작하도록 document에 위임한다.
+	document.addEventListener("click", (event) => {
+		const icon = (event.target as HTMLElement | null)?.closest(
+			"[data-share-icon]",
+		);
+		if (!icon) return;
+		const card = icon.closest("[data-share-card]");
+		const shareButton = card?.querySelector<HTMLButtonElement>(
+			'button[aria-label="Generate Share Poster"]',
+		);
+		shareButton?.click();
+	});
+</script>
