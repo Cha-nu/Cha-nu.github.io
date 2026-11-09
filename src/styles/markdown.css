@@ -134,12 +134,23 @@
 
   /* 이미지 아래 기울임 문단을 회색 작은 참고글로 보인다(사용자 요청). rehype-markdown-images.mjs가 클래스를 붙인다. */
   p.markdown-image-note {
-    margin-top: -0.75rem;
+    margin-top: 0.375rem !important;
     color: var(--tw-prose-captions, #6b7280);
-    font-size: 0.85rem;
-    line-height: 1.5;
+    font-size: 0.75rem;
+    line-height: 1.45;
     text-align: center;
     opacity: 0.85;
+  }
+
+  /* 참고글이 붙는 이미지·영상은 아래 여백을 없애 참고글과 딱 붙게 한다. */
+  img:has(+ p.markdown-image-note),
+  .markdown-image-figure:has(+ p.markdown-image-note),
+  p:has(+ p.markdown-image-note) {
+    margin-bottom: 0 !important;
+  }
+
+  p:has(+ p.markdown-image-note) > video {
+    margin-bottom: 0 !important;
   }
 
   p.markdown-image-note > em {
