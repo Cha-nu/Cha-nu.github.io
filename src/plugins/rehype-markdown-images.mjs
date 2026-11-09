@@ -125,8 +125,8 @@ function enhanceImage(image, ancestors, options) {
 		: image;
 }
 
-// 이미지 바로 다음 문단이 기울임(*...*) 하나로만 되어 있으면 참고글로 본다(사용자 요청).
-// 회색 작은 글씨로 보이도록 클래스를 붙인다.
+// ?대?吏 諛붾줈 ?ㅼ쓬 臾몃떒??湲곗슱??*...*) ?섎굹濡쒕쭔 ?섏뼱 ?덉쑝硫?李멸퀬湲濡?蹂몃떎(?ъ슜???붿껌).
+// ?뚯깋 ?묒? 湲?⑤줈 蹂댁씠?꾨줉 ?대옒?ㅻ? 遺숈씤??
 function onlyEmphasisChild(node) {
 	const meaningful = (node.children ?? []).filter(
 		(child) => !isWhitespaceText(child),
@@ -135,8 +135,17 @@ function onlyEmphasisChild(node) {
 }
 
 function isImageNode(node) {
+	// 蹂몃Ц??吏곸젒 ??<video>??臾몃떒(p) ?덉뿉 ?ㅼ뼱媛誘濡???寃?踰쀪꺼 蹂몃떎.
+	if (node?.tagName === "p") {
+		const meaningful = (node.children ?? []).filter(
+			(child) => !isWhitespaceText(child),
+		);
+		return meaningful.length > 0 && meaningful.every(isImageNode);
+	}
 	return (
 		node?.tagName === "img" ||
+		node?.tagName === "video" ||
+		(node?.type === "raw" && /^\s*<\/?video\b/i.test(node.value ?? "")) ||
 		classNames(node).includes("markdown-image-figure")
 	);
 }
