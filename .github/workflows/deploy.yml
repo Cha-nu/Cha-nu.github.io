@@ -26,6 +26,8 @@ jobs:
         with:
           node-version: 22
           package-manager: pnpm@11.5.3
+          # 콘텐츠 캐시를 쓰면 rehype 플러그인을 바꿔도 내용이 같은 글은 예전 HTML이 그대로 나간다.
+          cache: false
 
   deploy:
     needs: build
