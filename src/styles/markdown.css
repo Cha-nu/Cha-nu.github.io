@@ -132,6 +132,20 @@
     text-align: center;
   }
 
+  /* 이미지 아래 기울임 문단을 회색 작은 참고글로 보인다(사용자 요청). rehype-markdown-images.mjs가 클래스를 붙인다. */
+  p.markdown-image-note {
+    margin-top: -0.75rem;
+    color: var(--tw-prose-captions, #6b7280);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    text-align: center;
+    opacity: 0.85;
+  }
+
+  p.markdown-image-note > em {
+    font-style: normal;
+  }
+
   /* --- 表格样式 --- */
   .table-wrapper {
     @apply w-full overflow-x-auto m-0 rounded-(--radius-large);

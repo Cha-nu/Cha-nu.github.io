@@ -125,10 +125,45 @@ function enhanceImage(image, ancestors, options) {
 		: image;
 }
 
+// 이미지 바로 다음 문단이 기울임(*...*) 하나로만 되어 있으면 참고글로 본다(사용자 요청).
+// 회색 작은 글씨로 보이도록 클래스를 붙인다.
+function onlyEmphasisChild(node) {
+	const meaningful = (node.children ?? []).filter(
+		(child) => !isWhitespaceText(child),
+	);
+	return meaningful.length === 1 && meaningful[0]?.tagName === "em";
+}
+
+function isImageNode(node) {
+	return (
+		node?.tagName === "img" ||
+		classNames(node).includes("markdown-image-figure")
+	);
+}
+
 function transformChildren(parent, ancestors, options) {
 	const nextChildren = [];
 
 	for (const child of parent.children ?? []) {
+		if (
+			child.type === "element" &&
+			child.tagName === "p" &&
+			onlyEmphasisChild(child)
+		) {
+			const previous = nextChildren.findLast(
+				(node) => !isWhitespaceText(node),
+			);
+			if (isImageNode(previous)) {
+				child.properties ??= {};
+				child.properties.className = [
+					...classNames(child),
+					"markdown-image-note",
+				];
+				nextChildren.push(child);
+				continue;
+			}
+		}
+
 		if (child.type === "raw" && /<img\b/i.test(child.value ?? "")) {
 			const fragment = fromHtml(child.value, { fragment: true });
 			transformChildren(fragment, ancestors, options);
