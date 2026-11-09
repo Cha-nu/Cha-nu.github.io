@@ -222,32 +222,6 @@ C++을 고친 뒤에는 `LiveCodingToolset.CompileLiveCoding`이 쓰입니다. �
 | 노출 범위를 줄이고 싶을 때 | `AllToolsets` 대신 개별 툴셋 플러그인 | 필요한 도구만 열림 | 머티리얼 작업만 허용 |
 
 ---
-## 복습 질문
-
-답을 먼저 떠올린 다음 눌러서 확인해 보세요.
-
-<details>
-<summary>1. Unreal MCP 플러그인만 켰는데 Claude가 쓸 도구가 없다고 합니다. 왜 그럴까요.</summary>
-
-Unreal MCP는 서버와 통신만 맡고, 도구는 툴셋 플러그인이 공급합니다. `All Toolsets`를 켜거나 필요한 툴셋 플러그인을 개별로 켠 뒤 `ModelContextProtocol.RefreshTools`를 실행합니다.
-
-</details>
-
-<details>
-<summary>2. Claude Code 플러그인을 설치하지 않아도 연결이 되나요.</summary>
-
-됩니다. 연결 자체는 에디터가 만든 `.mcp.json`이 맡습니다. 플러그인은 도구를 찾는 순서와 안전 규칙을 담은 스킬, 프로젝트를 알려 주는 시작 훅을 더해서 Claude가 연결을 더 정확하게 쓰도록 돕습니다.
-
-</details>
-
-<details>
-<summary>3. 처음에 보이는 MCP 도구가 세 개뿐인 이유는 무엇인가요.</summary>
-
-도구 검색이 기본으로 켜져 있기 때문입니다. 수백 개 도구의 설명을 처음부터 보내지 않고, `list_toolsets`, `describe_toolset`으로 필요한 것만 찾아 `call_tool`로 부릅니다. 대화 공간을 아끼고 도구 목록이 중간에 바뀌지 않게 하려는 설계입니다.
-
-</details>
-
----
 ## 마치며
 
 지금 기준으로 필요한 것은 에디터의 `Unreal MCP`와 `All Toolsets` 두 플러그인, 서버 시작, `.mcp.json` 생성입니다. Claude Code 플러그인은 필수는 아니지만, 도구를 찾는 순서와 안전 규칙을 알려 주므로 함께 설치하는 편이 낫다고 생각합니다.
