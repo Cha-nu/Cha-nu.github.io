@@ -1,4 +1,4 @@
-# 그림 01~02: Claude Code와 Unreal Editor의 연결 구조, 도구 검색(tool search) 흐름
+# 그림 01, 05: Claude Code와 Unreal Editor의 연결 구조, 도구 검색(tool search) 흐름
 # 데이터가 없는 개념도다. 내용은 Epic 공식 문서와 플러그인 README(3.1.2)를 따른다.
 import matplotlib
 matplotlib.use("Agg")
@@ -72,5 +72,5 @@ ax.text(6.0, 3.15, "MCP 서버가 처음에 알려 주는 도구는 빨간 세 �
         fontsize=10, color=RED, ha="center")
 fig.suptitle("도구 검색이 켜져 있으면 Claude는 세 개의 메타 도구로 필요한 도구를 찾아 부른다",
              fontsize=13.5, fontweight="bold", y=1.04)
-fig.savefig("fig/02_tool_search.png", facecolor="white", bbox_inches="tight"); plt.close(fig)
+fig.savefig("fig/05_tool_search.png", facecolor="white", bbox_inches="tight"); plt.close(fig)
 print("ok")

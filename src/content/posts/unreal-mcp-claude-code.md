@@ -1,6 +1,7 @@
 ---
 title: "Claude Code로 언리얼 에디터 다루기: Unreal MCP 연결과 활용"
 published: 2026-11-09T12:00:00+09:00
+updated: 2026-11-09T19:45:00+09:00
 description: "Epic Games가 공개한 Claude Code 플러그인과 언리얼 5.8의 Unreal MCP로 에디터를 직접 조작하는 방법을 정리합니다. 지금 켜야 하는 플러그인은 Unreal MCP와 All Toolsets 두 개입니다."
 category: 언리얼 엔진
 tags: ["Unreal Engine", "MCP", "Claude Code", "AI"]
@@ -53,6 +54,16 @@ AI에게 언리얼 코드를 물어보면 답은 받을 수 있습니다. 하지
 
 **Edit > Plugins**에서 `Unreal MCP`와 `All Toolsets`를 검색해 켜고 에디터를 다시 시작합니다. `.uproject`를 직접 고쳐도 됩니다.
 
+![플러그인 창에서 All Toolsets를 검색한 화면. All Toolsets, Niagara Toolsets, Physics Toolsets가 나오고 All Toolsets에 빨간 표시가 있습니다.](/images/unreal-mcp-claude-code/02_plugin_all_toolsets.png)
+
+*`All Toolsets`를 검색하면 Niagara, Physics 같은 개별 툴셋도 함께 나옵니다. 켤 것은 맨 위의 `All Toolsets`입니다.*
+
+![플러그인 창에서 MCP를 검색한 화면. MCP Client Toolset과 Unreal MCP가 나오고 Unreal MCP에 빨간 표시가 있습니다.](/images/unreal-mcp-claude-code/03_plugin_unreal_mcp.png)
+
+*`MCP`로 검색하면 두 개가 나옵니다. 켤 것은 아래의 `Unreal MCP`입니다.*
+
+`MCP Client Toolset`은 이름이 비슷하지만 Claude Code 연결에는 필요 없습니다. 플러그인 설명에 따르면 언리얼 쪽이 바깥의 MCP 서버에 접속할 때 쓰는 어댑터로, Unreal MCP와 방향이 반대입니다. 공식 설정 안내에도 들어 있지 않습니다.
+
 ```json
 "Plugins": [
   { "Name": "ModelContextProtocol", "Enabled": true },
@@ -74,6 +85,12 @@ AI에게 언리얼 코드를 물어보면 답은 받을 수 있습니다. 하지
 [/Script/ModelContextProtocolEngine.ModelContextProtocolSettings]
 bAutoStartServer=True
 ```
+
+콘솔에서 서버를 켜면 Output Log에 다음과 같은 줄이 나옵니다.
+
+![콘솔에서 ModelContextProtocol.StartServer를 실행한 뒤의 Output Log. 8000번 포트에서 MCP 서버를 시작한다는 줄과 All listeners started 줄이 보입니다.](/images/unreal-mcp-claude-code/04_start_server_log.png)
+
+*`Starting MCP server on port 8000`과 `All listeners started`가 나오면 서버가 켜진 것입니다. 노란 줄은 이 플러그인으로 연결한 LLM 서비스에 데이터가 전송된다는 경고입니다. 전체 문장은 각자의 Output Log에서 확인하세요.*
 
 기본 주소는 `http://127.0.0.1:8000/mcp`입니다. 8000번 포트를 다른 프로그램이 쓰고 있으면 `ModelContextProtocol.StartServer 8100`처럼 포트를 바꿉니다.
 
@@ -139,7 +156,7 @@ Windows에서는 훅이 bash 스크립트라서 Git Bash나 WSL이 필요합니�
 
 툴셋에는 수백 개의 도구가 있습니다. 이걸 처음부터 모두 Claude에게 알려 주면 설명만으로 대화 공간(컨텍스트)을 많이 차지합니다. 그래서 Unreal MCP는 기본으로 <strong>도구 검색(tool search)</strong>을 켜 둡니다.
 
-![요청에서 list_toolsets, describe_toolset, call_tool을 거쳐 결과 확인으로 이어지는 다섯 단계 흐름도](/images/unreal-mcp-claude-code/02_tool_search.png)
+![요청에서 list_toolsets, describe_toolset, call_tool을 거쳐 결과 확인으로 이어지는 다섯 단계 흐름도](/images/unreal-mcp-claude-code/05_tool_search.png)
 
 *처음 보이는 도구는 세 개의 메타 도구뿐입니다. 실제 도구는 필요할 때 찾아서 `call_tool`로 부릅니다.*
 
