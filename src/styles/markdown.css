@@ -124,6 +124,15 @@
     margin-inline: auto;
   }
 
+  /* 본문 이미지·영상을 모두 가운데 정렬한다(사용자 요청). 제목·폭 지정이 없는 이미지는
+     figure로 감싸지지 않고 img만 남아 왼쪽에 붙었다. 문장 속 인라인 이미지는 건드리지 않는다. */
+  > img,
+  :is(li, blockquote, details) > img,
+  p > video {
+    display: block;
+    margin-inline: auto;
+  }
+
   .markdown-image-caption {
     margin-top: 0.5rem;
     color: var(--tw-prose-body);
