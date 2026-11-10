@@ -20,6 +20,17 @@ html[data-layout-variant="post"]
   margin-inline-end: auto;
 }
 
+/* figure로 감싸지지 않은 본문 이미지를 읽기 폭 안에서 가운데 정렬한다(사용자 요청).
+   위 규칙이 직계 자식의 왼쪽 여백을 0으로 고정해서 markdown.css의 margin-inline: auto가
+   글 페이지에서는 먹지 않았다. 읽기 폭의 절반만큼 밀고 자기 폭의 절반만큼 당긴다. */
+html[data-layout-variant="post"]
+  #post-container
+  :where(.markdown-content, .markdown-section)
+  > img {
+  margin-inline-start: calc(min(100%, var(--post-reading-width)) / 2);
+  translate: -50% 0;
+}
+
 html[data-layout-variant="post"]
   #post-container
   .markdown-section {
