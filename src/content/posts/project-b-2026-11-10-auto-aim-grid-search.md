@@ -6,7 +6,7 @@ category: 개발일지
 project: project-b
 tags: ["Godot", "최적화", "공간 분할", "AI", "조작", "코요테 타임"]
 image: /images/devlog/project-b/2026-11-10/02_trace_crowd.png
-draft: true
+draft: false
 ---
 
 ## 들어가며
