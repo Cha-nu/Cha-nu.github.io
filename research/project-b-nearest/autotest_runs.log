@@ -1,0 +1,15 @@
+AUTOTEST nearest en=300 mismatch=0 grid_us=8 brute_us=63 los_skipped=31/400
+AUTOTEST lab wall: no_los_pick=ru los_pick=rf
+AUTOTEST lab crowd: en=150 grid_us=13.9 grid_los_us=17.1 los_calls=1.0 brute_us=30.7 rings=2 cells=25
+AUTOTEST lab behind_wall: en=150 grid_us=42.7 grid_los_us=495.6 los_calls=150.0 cached_us=193.4 cached_los_calls=30.3 brute_us=30.8 rings=7 cells=225 pick=false
+--- run 1
+AUTOTEST nearest en=300 mismatch=0 grid_us=8 brute_us=62 los_skipped=40/400
+AUTOTEST lab wall: no_los_pick=ru los_pick=rf
+AUTOTEST lab crowd: en=150 grid_us=14.6 grid_los_us=17.6 los_calls=1.0 brute_us=31.3 rings=2 cells=25
+AUTOTEST lab behind_wall: en=150 grid_us=42.7 grid_los_us=492.5 los_calls=150.0 cached_us=189.9 cached_los_calls=30.4 brute_us=30.8 rings=7 cells=225 pick=false
+--- run 2
+AUTOTEST nearest en=300 mismatch=0 grid_us=8 brute_us=64 los_skipped=31/400
+AUTOTEST lab wall: no_los_pick=ru los_pick=rf
+AUTOTEST lab crowd: en=150 grid_us=12.0 grid_los_us=15.1 los_calls=1.0 brute_us=30.9 rings=2 cells=25
+AUTOTEST lab behind_wall: en=150 grid_us=43.1 grid_los_us=494.1 los_calls=150.0 cached_us=190.4 cached_los_calls=30.2 brute_us=30.8 rings=7 cells=225 pick=false
+--- run 3
