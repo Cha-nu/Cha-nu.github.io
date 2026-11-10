@@ -125,9 +125,10 @@
   }
 
   /* 본문 이미지·영상을 모두 가운데 정렬한다(사용자 요청). 제목·폭 지정이 없는 이미지는
-     figure로 감싸지지 않고 img만 남아 왼쪽에 붙었다. 문장 속 인라인 이미지는 건드리지 않는다. */
+     figure로 감싸지지 않고 img만 남아 왼쪽에 붙었다. 문장 속 인라인 이미지는 건드리지 않는다.
+     절 제목(##)이 있는 글은 본문이 section.markdown-section으로 한 번 더 감싸지므로 그 안의 img도 잡는다. */
   > img,
-  :is(li, blockquote, details) > img,
+  :is(section, li, blockquote, details) > img,
   p > video {
     display: block;
     margin-inline: auto;
