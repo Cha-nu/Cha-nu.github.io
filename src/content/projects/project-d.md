@@ -5,9 +5,9 @@ start: "2026-10"           # 확인 필요
 period: "한 달"            # 확인 필요: 정확한 시작·종료일
 status: 중단
 team: "6인 팀"
-role: "적 전반 디자인, 적 AI (Behavior Tree, AI Perception)"
+role: "적 전반 디자인, 적 AI (Behavior Tree, AI Perception), 전장의 안개"
 engine: "Unreal Engine"    # 확인 필요: 버전
-stack: ["C++", "Behavior Tree", "AI Perception"]
+stack: ["C++", "Behavior Tree", "AI Perception", "Fog of War"]
 cover: /images/devlog/project-d/2026-11-08/06_loading_screen.png
 order: 70
 draft: true
@@ -25,6 +25,11 @@ ProjectD는 6명이 한 달 동안 함께 개발한 쿼터뷰 익스트랙션 �
 - 적 디자인: 적의 전반적인 구성과 행동을 설계했습니다.
 - 적 AI: Behavior Tree로 적의 행동 흐름을 만들었습니다.
 - 적 감지: AI Perception으로 적이 플레이어를 보고 반응하는 부분을 만들었습니다.
+- 전장의 안개: 플레이어 시야 밖을 어둡게 가리는 전장의 안개를 만들었습니다.
+
+![ProjectD DebugLevel의 플레이 화면. 플레이어 주변 원과 손전등 빛이 닿는 부채꼴 영역만 밝고, 나머지는 어둡게 가려져 있습니다. 어두운 영역에도 지형과 함께 적과 물체의 윤곽이 보입니다.](/images/projects/project-d/01_fog_debuglevel.png)
+
+*DebugLevel에서 촬영한 전장의 안개 화면입니다. 안개 속에서 지형뿐 아니라 적과 물체까지 함께 보이는 상태입니다.*
 
 <!-- TODO: 적 종류, 행동 패턴, 감지 방식(시야·청각 등)을 받아서 구체적으로 채웁니다. -->
 
