@@ -1,11 +1,11 @@
 ---
 title: "UE 5.8 플랫폼 빌드 1편: Android Studio만 설치하고 언리얼에서 안드로이드 빌드하기"
 published: 2026-11-10
-description: "언리얼 엔진 5.8.4에서는 Android Studio를 설치해 첫 실행만 끝내면, 나머지 SDK·NDK·에뮬레이터는 에디터의 SDK Management가 엔진에 맞는 버전으로 설치합니다. 그 과정과 APK 패키징까지 정리합니다."
+description: "언리얼 엔진 5.8.4에서는 런처에서 안드로이드 타깃 플랫폼을 켜고 Android Studio를 설치해 첫 실행만 끝내면, 나머지 SDK·NDK·에뮬레이터는 에디터의 SDK Management가 엔진에 맞는 버전으로 설치합니다. 그 과정과 APK 패키징까지 정리합니다."
 category: 언리얼 엔진
 tags: ["Unreal Engine", "Android", "패키징", "모바일"]
 project: augmented-alkagi
-image: /images/ue58-build-1-android/03_sdk_management.png
+image: /images/ue58-build-1-android/04_sdk_management.png
 draft: false
 ---
 
@@ -18,7 +18,7 @@ draft: false
 
 증강 알까기(ProjectA)를 안드로이드에서 돌려 보려고 APK를 뽑았습니다. 언리얼 안드로이드 빌드라고 하면 SDK·NDK 버전을 하나하나 맞추고 환경변수를 잡는 작업부터 떠올리기 쉽습니다.
 
-실제로 제가 직접 한 일은 **Android Studio를 설치하고 첫 실행을 끝낸 것**뿐이었습니다. 엔진이 원하는 버전의 SDK·NDK와 에뮬레이터는 언리얼 에디터가 설치했습니다. 이 글에서는 그 과정을 PC에 남은 설치 시각과 엔진 코드로 확인하고, 패키징까지 정리합니다.
+실제로 제가 직접 한 일은 **런처에서 안드로이드 타깃 플랫폼을 켜고, Android Studio를 설치해 첫 실행을 끝낸 것**뿐이었습니다. 엔진이 원하는 버전의 SDK·NDK와 에뮬레이터는 언리얼 에디터가 설치했습니다. 이 글에서는 그 과정을 PC에 남은 설치 시각과 엔진 코드로 확인하고, 패키징까지 정리합니다.
 
 ---
 ## 엔진이 원하는 버전은 json에 적혀 있습니다
@@ -47,6 +47,17 @@ draft: false
 이 값을 직접 맞출 필요는 없습니다. 뒤에서 보듯 에디터가 이 json을 읽어서 그대로 설치하기 때문입니다. 다만 어떤 버전이 깔려야 하는지 알고 있으면 문제가 생겼을 때 원인을 찾기 쉽습니다.
 
 ---
+## 런처에서 안드로이드 타깃 플랫폼을 설치합니다
+
+런처로 설치한 엔진에는 기본적으로 Windows용 파일만 들어 있습니다. 안드로이드로 빌드하려면 안드로이드용 엔진 파일을 따로 받아야 합니다.
+
+Epic Games 런처의 **라이브러리**에서 엔진 버전 옆 화살표를 눌러 **옵션**을 엽니다. **타깃 플랫폼**에서 **안드로이드**를 체크하고 **적용**을 누릅니다. 5.8.4 기준으로 9.474GB입니다.
+
+![Unreal Engine 5.8.4 설치 옵션의 타깃 플랫폼 목록에서 안드로이드(9.474GB)를 체크한 화면](/images/ue58-build-1-android/01_launcher_target_platform.png)
+
+같은 목록에 리눅스(18.541GB)도 있습니다. 2편에서 Jetson용으로 빌드할 때는 이 항목도 체크해야 합니다.
+
+---
 ## Android Studio를 설치하고 첫 실행을 끝냅니다
 
 Android Studio를 설치하고 실행하면 첫 실행 마법사가 기본 SDK를 받습니다. SDK 경로는 기본값인 `C:\Users\<사용자>\AppData\Local\Android\Sdk`를 썼습니다.
@@ -60,13 +71,13 @@ Android Studio를 설치하고 실행하면 첫 실행 마법사가 기본 SDK�
 
 마법사는 그 시점의 최신 플랫폼을 받습니다. 그래서 엔진이 쓰는 36이 아니라 37(Android 17)이 먼저 깔렸습니다. 아래 화면에서 API 37.0이 체크돼 있는 이유입니다.
 
-![Android Studio Settings의 Android SDK, SDK Platforms 탭. 첫 실행 때 받은 Android 17.0 API 37.0이 체크돼 있고, Android 16.0 API 36.0은 Partially installed로 보인다](/images/ue58-build-1-android/01_sdk_platforms.png)
+![Android Studio Settings의 Android SDK, SDK Platforms 탭. 첫 실행 때 받은 Android 17.0 API 37.0이 체크돼 있고, Android 16.0 API 36.0은 Partially installed로 보인다](/images/ue58-build-1-android/02_sdk_platforms.png)
 
 37이 깔려 있어도 빌드에는 영향이 없습니다. 패키징할 때 엔진이 만든 gradle 설정을 보면 `COMPILE_SDK_VERSION=36`, `TARGET_SDK_VERSION=36`으로 json 값을 그대로 썼습니다.
 
 SDK Tools 탭은 건드리지 않아도 됩니다. 오히려 주의할 점이 하나 있습니다.
 
-![SDK Tools 탭. Build-Tools, NDK, CMake 옆에 37.0.0, 30.0.16248370, 4.1.2로 올리라는 Update Available이 표시돼 있다](/images/ue58-build-1-android/02_sdk_tools.png)
+![SDK Tools 탭. Build-Tools, NDK, CMake 옆에 37.0.0, 30.0.16248370, 4.1.2로 올리라는 Update Available이 표시돼 있다](/images/ue58-build-1-android/03_sdk_tools.png)
 
 Android Studio는 Build-Tools 37.0.0, NDK 30.0.16248370, CMake 4.1.2로 올리라고 `Update Available`을 띄웁니다. NDK 30은 엔진 허용 범위(r27c\~r29)를 벗어나므로, 언리얼용 SDK라면 이 업데이트는 따라가지 않습니다.
 
@@ -75,7 +86,7 @@ Android Studio는 Build-Tools 37.0.0, NDK 30.0.16248370, CMake 4.1.2로 올리�
 
 에디터에서 <strong>Platforms → SDK Management → Android</strong>를 열고 SDK 설치를 누릅니다. 설치가 끝나면 아래 화면처럼 허용 범위(r27c\~r29)와 설치된 버전(r27c)이 표시되고, 메뉴는 `Force Reinstall Sdk`로 바뀝니다.
 
-![Platforms → SDK Management → Android 메뉴에서 허용 범위 r27c\~r29, 설치 버전 r27c로 인식된 화면](/images/ue58-build-1-android/03_sdk_management.png)
+![Platforms → SDK Management → Android 메뉴에서 허용 범위 r27c\~r29, 설치 버전 r27c로 인식된 화면](/images/ue58-build-1-android/04_sdk_management.png)
 
 같은 메뉴에서 iOS·Linux·Mac·TVOS는 경고 아이콘으로 표시됩니다. 해당 플랫폼의 SDK를 찾지 못했다는 뜻입니다. 2편에서 Linux를 이 상태에서 켜 봅니다.
 
@@ -158,6 +169,7 @@ APK에는 실행 파일과 자바 코드가, OBB에는 쿠킹된 콘텐츠가 �
 | 증상 | 원인 | 해결 |
 | --- | --- | --- |
 | SDK 설치가 sdkmanager를 못 찾는다며 멈춥니다 | Android Studio를 설치만 하고 첫 실행을 하지 않아 SDK 경로가 없습니다 | Android Studio를 실행해 첫 실행 마법사를 끝냅니다 |
+| Platforms 메뉴에 Android 패키징 항목이 없습니다 | 런처에서 안드로이드 타깃 플랫폼을 설치하지 않았습니다 | 런처의 엔진 옵션에서 안드로이드를 체크하고 적용합니다 |
 | 설치는 끝났는데 Android가 경고 아이콘으로 남습니다 | 환경변수가 새로 등록됐지만 에디터와 런처가 예전 값을 들고 있습니다 | 런처까지 완전히 껐다가 다시 켭니다 |
 | NDK 버전 경고 | Android Studio의 Update Available을 따라 NDK 30이 깔렸습니다 | `Force Reinstall Sdk`로 json 버전을 다시 설치합니다 |
 
@@ -169,7 +181,7 @@ APK에는 실행 파일과 자바 코드가, OBB에는 쿠킹된 콘텐츠가 �
 <details>
 <summary>1. Android Studio에서 직접 해야 하는 일은 무엇인가요.</summary>
 
-설치하고 첫 실행 마법사를 끝내는 것입니다. 그러면 SDK 폴더와 기본 패키지가 생깁니다. 엔진이 원하는 `android-36`, NDK `27.2.12479018`, Command-line Tools, 에뮬레이터 이미지는 에디터의 SDK Management가 설치합니다.
+설치하고 첫 실행 마법사를 끝내는 것입니다. 그 전에 런처에서 안드로이드 타깃 플랫폼(9.474GB)을 설치해 둬야 합니다. 그러면 SDK 폴더와 기본 패키지가 생깁니다. 엔진이 원하는 `android-36`, NDK `27.2.12479018`, Command-line Tools, 에뮬레이터 이미지는 에디터의 SDK Management가 설치합니다.
 
 </details>
 
@@ -190,6 +202,6 @@ APK에는 실행 파일과 자바 코드가, OBB에는 쿠킹된 콘텐츠가 �
 ---
 ## 마치며
 
-언리얼 5.8의 안드로이드 빌드 준비는 생각보다 단순했습니다. Android Studio를 설치해 첫 실행만 끝내면, 나머지는 에디터의 SDK Management가 json에 적힌 버전 그대로 설치합니다. 제가 할 일은 Android Studio의 업데이트 알림을 따라가지 않는 것 정도였습니다.
+언리얼 5.8의 안드로이드 빌드 준비는 생각보다 단순했습니다. 런처에서 안드로이드 타깃 플랫폼을 켜고 Android Studio를 설치해 첫 실행만 끝내면, 나머지는 에디터의 SDK Management가 json에 적힌 버전 그대로 설치합니다. 제가 할 일은 Android Studio의 업데이트 알림을 따라가지 않는 것 정도였습니다.
 
 다음 편에서는 같은 프로젝트를 Windows에서 크로스컴파일해 <strong>Jetson Orin NX(ARM64 리눅스)</strong>에서 실행해 봅니다.
