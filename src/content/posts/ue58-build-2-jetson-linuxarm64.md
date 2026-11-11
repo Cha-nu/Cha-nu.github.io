@@ -8,7 +8,7 @@ project: augmented-alkagi
 draft: false
 ---
 
-> **UE 5.8 플랫폼 빌드** — [1편: Android Studio만 설치하고 언리얼에서 안드로이드 빌드하기](/posts/ue58-build-1-android/) · **2편: Windows에서 크로스컴파일해 Jetson Orin NX에서 실행하기**
+> **UE 5.8 플랫폼 빌드** — [1편: 언리얼에서 안드로이드 빌드하기](/posts/ue58-build-1-android/) · **2편: Windows에서 크로스컴파일해 Jetson Orin NX에서 실행하기**
 
 > 이 글은 언리얼 엔진 5.8.4(런처 설치판), Windows 11, Jetson Orin NX 16GB(J4012, JetPack 6.0, Ubuntu 22.04) 기준입니다. 툴체인 버전은 엔진마다 다르니 사용하는 엔진 버전의 `Engine/Config/Linux/Linux_SDK.json`에서 확인하세요.
 
