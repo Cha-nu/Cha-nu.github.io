@@ -9,7 +9,7 @@ image: /images/ue58-build-1-android/05_sdk_management.png
 draft: false
 ---
 
-> **UE 5.8 플랫폼 빌드** — **1편: Android Studio만 설치하고 언리얼에서 안드로이드 빌드하기** · 2편: Windows에서 크로스컴파일해 Jetson Orin NX에서 실행하기 (준비 중)
+> **UE 5.8 플랫폼 빌드** — **1편: Android Studio만 설치하고 언리얼에서 안드로이드 빌드하기** · [2편: Windows에서 크로스컴파일해 Jetson Orin NX에서 실행하기](/posts/ue58-build-2-jetson-linuxarm64/)
 
 > 이 글은 언리얼 엔진 5.8.4(CL 58902052, 런처 설치판)와 Windows 11 기준입니다. SDK 버전은 엔진마다 다르니 사용하는 엔진 버전의 `Engine/Config/Android/Android_SDK.json`에서 확인하세요.
 
@@ -176,32 +176,6 @@ APK에는 실행 파일과 자바 코드가, OBB에는 쿠킹된 콘텐츠가 �
 | Platforms 메뉴에 Android 패키징 항목이 없습니다 | 런처에서 안드로이드 타깃 플랫폼을 설치하지 않았습니다 | 런처의 엔진 옵션에서 안드로이드를 체크하고 적용합니다 |
 | 설치는 끝났는데 Android가 경고 아이콘으로 남습니다 | 환경변수가 새로 등록됐지만 에디터와 런처가 예전 값을 들고 있습니다 | 런처까지 완전히 껐다가 다시 켭니다 |
 | NDK 버전 경고 | Android Studio의 Update Available을 따라 NDK 30이 깔렸습니다 | `Force Reinstall Sdk`로 json 버전을 다시 설치합니다 |
-
----
-## 복습 질문
-
-답을 먼저 떠올린 다음 눌러서 확인해 보세요.
-
-<details>
-<summary>1. Android Studio에서 직접 해야 하는 일은 무엇인가요.</summary>
-
-설치하고 첫 실행 마법사를 끝내는 것입니다. 그 전에 런처에서 안드로이드 타깃 플랫폼(9.474GB)을 설치해 둬야 합니다. 그러면 SDK 폴더와 기본 패키지가 생깁니다. 엔진이 원하는 `android-36`, NDK `27.2.12479018`, Command-line Tools, 에뮬레이터 이미지는 에디터의 SDK Management가 설치합니다.
-
-</details>
-
-<details>
-<summary>2. Android Studio가 API 37을 받았는데 엔진이 36으로 빌드하는 이유는 무엇인가요.</summary>
-
-첫 실행 마법사는 그 시점의 최신 플랫폼을 받고, 엔진은 `Android_SDK.json`에 적힌 `android-36`을 쓰기 때문입니다. 실제 gradle 설정도 `COMPILE_SDK_VERSION=36`, `TARGET_SDK_VERSION=36`이었습니다.
-
-</details>
-
-<details>
-<summary>3. SetupAndroid.bat을 직접 실행하는 것과 에디터 메뉴로 설치하는 것은 무엇이 다른가요.</summary>
-
-에디터 메뉴는 `Android_SDK.json`의 버전을 인자로 넘기고, 끝난 뒤 에뮬레이터까지 만듭니다. bat을 인자 없이 직접 실행하면 build-tools 기본값 36.1.0을 받고 에뮬레이터도 만들지 않습니다.
-
-</details>
 
 ---
 ## 마치며
