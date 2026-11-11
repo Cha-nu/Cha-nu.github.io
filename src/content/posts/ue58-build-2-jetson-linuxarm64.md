@@ -1,5 +1,5 @@
 ---
-title: "UE 5.8 플랫폼 빌드 2편: Windows에서 크로스컴파일해 Jetson Orin NX에서 실행하기"
+title: "UE 5.8 플랫폼 빌드 2편: Jetson Orin NX용 LinuxArm64 빌드하기"
 published: 2026-11-10
 description: "언리얼 엔진 5.8.4 프로젝트를 Windows에서 v26 크로스컴파일 툴체인으로 LinuxArm64 패키징하고, JetPack 6.0의 Jetson Orin NX 16GB에서 실행한 과정을 정리합니다."
 category: 언리얼 엔진
@@ -8,7 +8,7 @@ project: augmented-alkagi
 draft: false
 ---
 
-> **UE 5.8 플랫폼 빌드** — [1편: 언리얼에서 안드로이드 빌드하기](/posts/ue58-build-1-android/) · **2편: Windows에서 크로스컴파일해 Jetson Orin NX에서 실행하기**
+> **UE 5.8 플랫폼 빌드** — [1편: 언리얼에서 안드로이드 빌드하기](/posts/ue58-build-1-android/) · **2편: Jetson Orin NX용 LinuxArm64 빌드하기**
 
 > 이 글은 언리얼 엔진 5.8.4(런처 설치판), Windows 11, Jetson Orin NX 16GB(J4012, JetPack 6.0, Ubuntu 22.04) 기준입니다. 툴체인 버전은 엔진마다 다르니 사용하는 엔진 버전의 `Engine/Config/Linux/Linux_SDK.json`에서 확인하세요.
 

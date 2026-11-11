@@ -9,7 +9,7 @@ image: /images/ue58-build-1-android/05_sdk_management.png
 draft: false
 ---
 
-> **UE 5.8 플랫폼 빌드** — **1편: 언리얼에서 안드로이드 빌드하기** · [2편: Windows에서 크로스컴파일해 Jetson Orin NX에서 실행하기](/posts/ue58-build-2-jetson-linuxarm64/)
+> **UE 5.8 플랫폼 빌드** — **1편: 언리얼에서 안드로이드 빌드하기** · [2편: Jetson Orin NX용 LinuxArm64 빌드하기](/posts/ue58-build-2-jetson-linuxarm64/)
 
 > 이 글은 언리얼 엔진 5.8.4(CL 58902052, 런처 설치판)와 Windows 11 기준입니다. SDK 버전은 엔진마다 다르니 사용하는 엔진 버전의 `Engine/Config/Android/Android_SDK.json`에서 확인하세요.
 
