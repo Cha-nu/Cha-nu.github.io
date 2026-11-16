@@ -1,5 +1,5 @@
 ---
-title: "[vkb2xbox] 펌웨어 플래싱과 캘리브레이션"
+title: "[VKB to Xbox] 펌웨어와 캘리브레이션"
 published: 2026-11-11
 description: "새로 산 VKB Gladiator EVO R에 펌웨어 v2.20.C를 올리고 VKBDevCfg로 캘리브레이션한 과정을 화면 캡처와 함께 기록합니다."
 category: 개발일지
@@ -99,4 +99,4 @@ VKB Gladiator EVO R을 새로 샀습니다. 쓰기 전에 초기 설정으로 �
 
 ## 다음 할 일
 
-- [x] 스틱 입력을 Xbox 패드 입력으로 바꾸는 프로그램 만들기 → [조이스틱을 Xbox 패드로 매핑](/posts/vkb2xbox-2026-11-12-joystick-to-xbox-mapping/)
+- [x] 스틱 입력을 Xbox 패드 입력으로 바꾸는 프로그램 만들기 → [Xbox 패드 매핑](/posts/vkb2xbox-2026-11-12-joystick-to-xbox-mapping/)

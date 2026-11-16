@@ -1,5 +1,5 @@
 ---
-title: "[vkb2xbox] 조이스틱을 Xbox 패드로 매핑"
+title: "[VKB to Xbox] Xbox 패드 매핑"
 published: 2026-11-12
 description: "VKB Gladiator EVO R의 축과 버튼을 가상 Xbox 360 컨트롤러 입력으로 바꾸는 프로그램을 만들었습니다. 스틱, 스로틀, 페달을 함께 쓰는 여러 장치 지원과, 화면 없는 SDL에서 장치를 꽂고 뽑는 것을 감지하지 못한 문제를 기록합니다."
 category: 개발일지
