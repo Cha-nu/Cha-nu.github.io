@@ -13,7 +13,10 @@ draft: false
 
 VKB Gladiator EVO R을 새로 샀습니다. 쓰기 전에 초기 설정으로 펌웨어 플래싱(flashing)과 캘리브레이션(calibration)을 했습니다.
 
-이 글은 그 과정을 화면 캡처 순서대로 정리한 기록입니다. VKB 공식 영상 [Gladiator NXT and NXT EVO: flashing and calibration](https://youtu.be/2ghsBvOaujg)을 따라 했습니다.
+이 글은 그 과정을 화면 캡처 순서대로 정리한 기록입니다. 아래 두 영상을 참고했습니다.
+
+- VKB Sim, [Gladiator NXT and NXT EVO: flashing and calibration](https://youtu.be/2ghsBvOaujg): VKB 공식 영상입니다. 플래싱과 캘리브레이션은 이 영상을 따라 했습니다.
+- Sim Controls, [How to Setup Your VKB Gladiator for WARDOGS | Curves & Deadzones](https://youtu.be/e5yLSJFMreU): VKB Gladiator의 커브와 데드존 설정을 다룬 영상입니다.
 
 ---
 
