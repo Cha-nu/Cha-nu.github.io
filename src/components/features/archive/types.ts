@@ -15,6 +15,9 @@ export interface Post {
 		_publishedDateOnly: boolean;
 		alias?: string;
 		permalink?: string;
+		// 카드(앨범) 보기용. 사용자 요청으로 추가.
+		description?: string;
+		image?: string;
 	};
 }
 

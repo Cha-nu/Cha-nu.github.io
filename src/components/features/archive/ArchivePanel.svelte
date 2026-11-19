@@ -111,54 +111,88 @@ onMount(async () => {
 				</div>
 			</div>
 
-			{#each group.posts as post (post.id)}
-				<a
-					href={post.url || `/posts/${post.id}/`}
-					aria-label={post.data.title}
-					class="group btn-plain block! h-10 w-full rounded-lg hover:text-[initial]"
-				>
-					<div
-						class="flex flex-row justify-start items-center h-full"
+			<!--
+				사용자 요청으로 타임라인 줄 목록을 프로젝트 목록과 같은 카드(앨범) 격자로 바꿨다.
+				테마 원본은 날짜·점·제목·태그를 한 줄로 늘어놓는 목록이다. 테마를 업데이트할 때 이 블록이 충돌 지점이다.
+			-->
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start mt-2 mb-8">
+				{#each group.posts as post (post.id)}
+					<a
+						href={post.url || `/posts/${post.id}/`}
+						aria-label={post.data.title}
+						class="archive-card group relative block rounded-xl border border-black/10 dark:border-white/10 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
 					>
-						<!-- date -->
 						<div
-							class="w-[15%] md:w-[10%] transition text-sm text-right text-50"
+							class="aspect-video overflow-hidden relative bg-linear-to-br from-(--primary)/5 to-(--primary)/10"
 						>
-							{formatDate(post.data.published, post.data._publishedDateOnly)}
+							{#if post.data.image}
+								<img
+									src={post.data.image}
+									alt=""
+									class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+									loading="lazy"
+								/>
+							{:else}
+								<div class="w-full h-full flex items-center justify-center px-4">
+									<span
+										class="text-2xl font-bold text-(--primary)/25 select-none tracking-wide text-center"
+									>
+										{post.data.category ?? ""}
+									</span>
+								</div>
+							{/if}
 						</div>
 
-						<!-- dot and line -->
-						<div
-							class="w-[15%] md:w-[10%] relative dash-line h-full flex items-center"
-						>
+						<div class="p-5">
+							<div class="flex items-center justify-between mb-2 text-xs">
+								<span class="text-50">
+									{group.year}-{formatDate(
+										post.data.published,
+										post.data._publishedDateOnly,
+									)}
+								</span>
+								{#if post.data.category}
+									<span
+										class="shrink-0 ml-3 px-2 py-0.5 rounded-md bg-(--primary)/10 text-(--primary) font-medium"
+									>
+										{post.data.category}
+									</span>
+								{/if}
+							</div>
+
+							<h3
+								class="archive-clamp font-bold text-black/90 dark:text-white/90 group-hover:text-(--primary) transition-colors duration-200 mb-2"
+							>
+								{post.data.title}
+							</h3>
+
+							{#if post.data.description}
+								<p
+									class="archive-clamp text-sm text-black/60 dark:text-white/60 mb-3"
+								>
+									{post.data.description}
+								</p>
+							{/if}
+
 							<div
-								class="transition-all mx-auto w-1 h-1 rounded group-hover:h-5
-                       bg-[oklch(0.5_0.05_var(--hue))] group-hover:bg-(--primary) outline-4 z-50
-                       outline-(--card-bg)
-                       group-hover:outline-(--btn-plain-bg-hover)
-                       group-active:outline-(--btn-plain-bg-active)"
-							></div>
+								class="text-xs text-30 whitespace-nowrap text-ellipsis overflow-hidden"
+							>
+								{formatTag(post.data.tags)}
+							</div>
 						</div>
-
-						<!-- post title -->
-						<div
-							class="w-[70%] md:max-w-[65%] md:w-[65%] text-left font-bold
-                     group-hover:translate-x-1 transition-all group-hover:text-(--primary)
-                     text-75 pr-8 whitespace-nowrap text-ellipsis overflow-hidden"
-						>
-							{post.data.title}
-						</div>
-
-						<!-- tag list -->
-						<div
-							class="hidden md:block md:w-[15%] text-left text-sm transition
-                     whitespace-nowrap text-ellipsis overflow-hidden text-30"
-						>
-							{formatTag(post.data.tags)}
-						</div>
-					</div>
-				</a>
-			{/each}
+					</a>
+				{/each}
+			</div>
 		</div>
 	{/each}
 </div>
+
+<style>
+	.archive-clamp {
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+</style>

@@ -5,12 +5,22 @@ import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 import { getSortedPostsList } from "@utils/content-utils";
+import { getCollection } from "astro:content";
 
 import { siteConfig } from "../config";
 
 const sortedPostsList = await getSortedPostsList();
 
 const showCategoryBar = siteConfig.postListLayout.categoryBar?.enable ?? false;
+
+// 아카이브를 프로젝트 목록처럼 카드(앨범)로 보여 준다(사용자 요청).
+// 카드 그림은 frontmatter의 image, 없으면 본문 첫 그림을 쓴다. 둘 다 없으면 카드가 자리만 채운다.
+const firstBodyImage = new Map(
+	(await getCollection("posts")).map((post) => [
+		post.id,
+		post.body?.match(/!\[[^\]]*\]\((\/[^)\s]+)\)/)?.[1],
+	]),
+);
 
 // 1. 修复类型兼容性：将 category 的 null 转换为 undefined
 const posts = sortedPostsList.map((post) => ({
@@ -24,6 +34,9 @@ const posts = sortedPostsList.map((post) => ({
 		_publishedDateOnly: post.data._publishedDateOnly,
 		alias: post.data.alias,
 		permalink: post.data.permalink,
+		// 카드용(사용자 요청으로 추가)
+		description: post.data.description || undefined,
+		image: post.data.image || firstBodyImage.get(post.id),
 	},
 }));
 
