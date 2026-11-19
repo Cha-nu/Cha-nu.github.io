@@ -49,7 +49,7 @@ draft: false
 | 에셋 | 역할 | 셰이딩 | 만든 방식 |
 | --- | --- | --- | --- |
 | `MM_ToonLit` | 몸·옷·머리 | Default Lit | 직접 구성 (AI 조언) |
-| `PP_Toon` | 명암 단계, 하이라이트, 림 | Post Process | AI 구현, 직접 정리·조정 |
+| `PP_Toon` | 명암 단계, 하이라이트, 림 | Post Process | 직접 구성(AI 조언) → AI 재구현 → 직접 정리 |
 | `MM_ToonFace` | 얼굴 SDF 그림자 | Unlit | 직접 구성 (AI 노드 안내·검토) |
 | `MM_ToonEye` | 눈 시차, 광택막 | Unlit | 직접 구성, 광택 2단은 AI 추가 |
 | `M_ToonOutline` | 외곽선 | Unlit, Masked | 직접 구성 (기존) |
@@ -133,7 +133,7 @@ Constant 1 → Roughness
 ---
 ## PP_Toon: 후처리 셀 셰이딩
 
-<strong>만든 사람</strong>: AI가 노드를 구성했고, 직접 Named Reroute로 정리하고 색을 조정했습니다.
+<strong>만든 사람</strong>: AI의 조언을 받아 직접 구성했습니다. 그런데 AI가 MCP로 상태를 확인하면서 머티리얼을 다시 컴파일하는 바람에, 적용하지 않은 편집이 저장본으로 되돌아갔습니다(아래 "막힌 점과 해결" 참고). 그 뒤 AI에게 같은 구조로 다시 구현해 달라고 맡겼고, 결과를 Named Reroute로 정리하고 그림자 색을 조정했습니다.
 
 Material Domain은 Post Process, Blendable Location은 `Scene Color Before DOF`입니다. 처음에는 `Before Bloom`이었습니다. 이 위치는 안티에일리어싱(TSR) 뒤라서, 프레임마다 흔들리는 스텐실 경계가 정리되지 않고 외곽선이 떨리는 원인으로 보고 TSR 앞으로 옮겼습니다.
 

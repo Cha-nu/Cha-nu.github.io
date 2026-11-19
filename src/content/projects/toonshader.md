@@ -26,7 +26,7 @@ draft: false
 
 - 셀 셰이딩: 첫 번째 셰이더(`MM_ToonShader`)와 외곽선(`M_ToonOutline`)을 직접 만들었습니다.
 - 머티리얼 구현: `MM_ToonLit`, `MM_ToonFace`, `MM_ToonEye`는 AI의 노드 안내와 검토를 받아 직접 구성했습니다.
-- 후처리: AI가 구성한 `PP_Toon`을 Named Reroute로 정리하고 그림자 색을 조정했습니다.
+- 후처리: `PP_Toon`을 AI의 조언을 받아 직접 구성했습니다. AI의 확인 작업 중 편집이 날아가 AI에게 재구현을 맡겼고, 그 결과를 Named Reroute로 정리하고 그림자 색을 조정했습니다.
 - 캐릭터 조작: 입력, 카메라, 애니메이션 블루프린트는 AI가 구현했고, 동작을 확인하며 수정을 요청했습니다.
 
 ## 기술적으로 어려웠던 점
