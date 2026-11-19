@@ -18,13 +18,13 @@ draft: false
 ---
 ## 들어가며
 
-애니메이션풍 게임의 캐릭터는 실사 게임과 다르게 명암이 두세 단계로 뚝 끊깁니다. 처음에는 유튜브 강의를 보고 Half-Lambert에 SmoothStep 두 단계를 걸어 3톤을 만들고, 림라이트를 더한 셰이더를 만들었습니다. 그런데 캐릭터에 다른 물체의 그림자가 지지 않았고, 눈은 생기 없이 어두웠고, 전체적으로 원작보다 밝게 떴습니다.
+애니메이션풍 게임의 캐릭터는 실사 게임과 다르게 명암이 두세 단계로 뚝 끊깁니다. 처음에는 유튜브 강의([Unreal Engine 5 - Toon Shader Tutorial](https://youtu.be/GAkxpwy9xtg))를 보고 Half-Lambert에 SmoothStep 두 단계를 걸어 3톤을 만들고, 림라이트를 더한 셰이더를 만들었습니다. 그런데 캐릭터에 다른 물체의 그림자가 지지 않았고, 눈은 생기 없이 어두웠고, 전체적으로 원작보다 밝게 떴습니다.
 
 이 글에서는 그 원인을 따라가며 툰 셰이더를 이루는 기법을 하나씩 정리합니다. 명암 단계, 그림자 받기, 림라이트, 얼굴 그림자, 눈, 외곽선 순서입니다. 노드로 어떻게 만들었는지는 2편에서 다룹니다.
 
 완성본은 아래 영상입니다.
 
-<iframe src="https://www.youtube-nocookie.com/embed/GAkxpwy9xtg" title="툰 셰이딩 완성본" loading="lazy" style="width:100%;aspect-ratio:16/9;border:0;border-radius:12px" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe src="https://www.youtube-nocookie.com/embed/O5YsP1ajFg8" title="툰 셰이딩 완성본" loading="lazy" style="width:100%;aspect-ratio:16/9;border:0;border-radius:12px" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <strong>AI 활용</strong>: 셰이더 구조 설계와 문제 원인 분석, 부족한 부분에 대한 조언은 AI 어시스턴트(Claude)의 도움을 받았습니다. 머티리얼은 조언을 받아 직접 노드를 구성했습니다. 후처리 머티리얼은 직접 구성하던 중 AI가 에디터 상태를 확인하다 편집 내용이 날아가, AI에게 다시 구현을 맡긴 뒤 직접 정리했습니다. 캐릭터 조작(입력, 카메라, 애니메이션 블루프린트)은 AI가 에디터에서 직접 구현했습니다. 어느 부분을 누가 만들었는지는 2편에 자세히 적었습니다.
 

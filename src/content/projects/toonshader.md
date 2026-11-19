@@ -9,7 +9,7 @@ role: "툰 셰이더 설계와 머티리얼 구현, 캐릭터 조작 구성"
 engine: "Unreal Engine 5.8"
 stack: ["Material", "Post Process", "Blueprint", "Enhanced Input", "Blender"]
 cover: /images/toon-shading-2/00_cover.png
-video: https://www.youtube.com/watch?v=GAkxpwy9xtg
+video: https://www.youtube.com/watch?v=O5YsP1ajFg8
 order: 90
 draft: false
 ---
@@ -18,7 +18,7 @@ draft: false
 
 ## 어떤 프로젝트인가
 
-애니메이션풍 캐릭터 셰이더를 공부하려고 시작한 프로젝트입니다. 처음에는 유튜브 강의를 보고 Half-Lambert와 SmoothStep으로 3톤 셀 셰이딩과 림라이트를 만들었습니다. 그런데 캐릭터에 다른 물체의 그림자가 지지 않고, 눈이 탁하고, 원작보다 밝게 뜨는 문제가 있었습니다.
+애니메이션풍 캐릭터 셰이더를 공부하려고 시작한 프로젝트입니다. 처음에는 유튜브 강의([Unreal Engine 5 - Toon Shader Tutorial](https://youtu.be/GAkxpwy9xtg))를 보고 Half-Lambert와 SmoothStep으로 3톤 셀 셰이딩과 림라이트를 만들었습니다. 그런데 캐릭터에 다른 물체의 그림자가 지지 않고, 눈이 탁하고, 원작보다 밝게 뜨는 문제가 있었습니다.
 
 그래서 몸은 엔진 조명을 받게 하고 후처리에서 명암을 단계로 자르는 구조로 바꿨습니다. 얼굴은 SDF 텍스처로, 눈은 시차와 광택막으로 따로 처리했습니다. 마지막으로 캐릭터를 직접 움직이며 볼 수 있게 입력, 카메라, 애니메이션 블루프린트를 붙였습니다.
 
