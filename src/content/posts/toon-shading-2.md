@@ -4,7 +4,7 @@ published: 2026-11-19
 description: "1편의 기법을 언리얼 엔진 5.8 머티리얼 노드로 구성한 방법입니다. 후처리 셀 셰이딩, 얼굴 SDF, 눈, 외곽선, 그리고 캐릭터 조작과 카메라까지 정리합니다."
 category: 언리얼 엔진
 tags: ["Unreal Engine", "툰 셰이딩", "머티리얼", "포스트 프로세스", "실습"]
-image: /images/toon-shading-2/00_cover.png
+image: /images/toon-shading-2/00_thumbnail.png
 project: toonshader
 draft: false
 ---
