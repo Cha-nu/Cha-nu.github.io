@@ -37,7 +37,9 @@ draft: false
 
 목표로 삼은 원작 화면은 아래와 같습니다. 명암이 두세 단계로 끊기고, 머리카락과 베일에 채도가 높게 유지됩니다.
 
-![목표로 삼은 원작 게임 화면](/images/toon-shading-2/02_reference.png)
+![목표로 삼은 원작 게임의 공명 체인 화면. 밤하늘을 배경으로 캐릭터가 팔에 얼굴을 기대고 있습니다.](/images/toon-shading-2/02_reference_1.png)
+
+![목표로 삼은 원작 게임의 필드 화면. 캐릭터가 정면을 보고 서 있습니다.](/images/toon-shading-2/02_reference_2.png)
 
 출처: 명조: 워더링 웨이브(Kuro Games) 게임 화면.
 
