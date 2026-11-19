@@ -2,8 +2,8 @@
 title: "VKB to Xbox"
 summary: "VKB 조이스틱을 비롯한 플라이트 스틱 입력을 가상 Xbox 360 컨트롤러로 바꿔 주는 Windows용 매핑 프로그램"
 start: "2026-11"
-period: "2026.11 ~"
-status: 진행 중
+period: "2026.11"
+status: 완료
 team: "개인"
 stack: ["Python", "pygame", "vgamepad", "ViGEmBus", "Tkinter"]
 cover: /images/devlog/vkb2xbox/2026-11-12/01_gui_stick_connected.png
