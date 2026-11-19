@@ -9,7 +9,7 @@ role: "툰 셰이더 설계와 머티리얼 구현, 캐릭터 조작 구성"
 engine: "Unreal Engine 5.8"
 stack: ["Material", "Post Process", "Blueprint", "Enhanced Input", "Blender"]
 cover: /images/toon-shading-2/00_cover.png
-video: https://www.youtube.com/watch?v=O5YsP1ajFg8
+video: https://www.youtube.com/watch?v=GFlwgKnN7M8
 order: 90
 draft: false
 ---

@@ -24,7 +24,7 @@ draft: false
 
 완성본은 아래 영상입니다.
 
-<iframe src="https://www.youtube-nocookie.com/embed/O5YsP1ajFg8" title="툰 셰이딩 완성본" loading="lazy" style="width:100%;aspect-ratio:16/9;border:0;border-radius:12px" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe src="https://www.youtube-nocookie.com/embed/GFlwgKnN7M8" title="툰 셰이딩 완성본" loading="lazy" style="width:100%;aspect-ratio:16/9;border:0;border-radius:12px" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <strong>AI 활용</strong>: 셰이더 구조 설계와 문제 원인 분석, 부족한 부분에 대한 조언은 AI 어시스턴트(Claude)의 도움을 받았습니다. 머티리얼은 조언을 받아 직접 노드를 구성했습니다. 후처리 머티리얼은 직접 구성하던 중 AI가 에디터 상태를 확인하다 편집 내용이 날아가, AI에게 다시 구현을 맡긴 뒤 직접 정리했습니다. 캐릭터 조작(입력, 카메라, 애니메이션 블루프린트)은 AI가 에디터에서 직접 구현했습니다. 어느 부분을 누가 만들었는지는 2편에 자세히 적었습니다.
 

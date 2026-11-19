@@ -20,7 +20,7 @@ draft: false
 
 <strong>AI 활용</strong>: 각 절 제목 아래에 누가 만들었는지 적었습니다. AI 어시스턴트(Claude)는 언리얼 에디터의 MCP 연결로 머티리얼과 블루프린트를 직접 수정하거나, 노드 구성을 안내하고 결과를 검토하는 방식으로 참여했습니다.
 
-<iframe src="https://www.youtube-nocookie.com/embed/O5YsP1ajFg8" title="툰 셰이딩 완성본" loading="lazy" style="width:100%;aspect-ratio:16/9;border:0;border-radius:12px" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe src="https://www.youtube-nocookie.com/embed/GFlwgKnN7M8" title="툰 셰이딩 완성본" loading="lazy" style="width:100%;aspect-ratio:16/9;border:0;border-radius:12px" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ![완성한 툰 셰이딩 캐릭터를 카메라로 가까이 잡은 화면](/images/toon-shading-2/00_cover.png)
 
@@ -357,7 +357,7 @@ Construction Script에서 `Outline → Set Leader Pose Component(Mesh)`를 호�
 - <strong>얼굴 줌</strong>: 카메라 거리가 250에서 80으로 줄어드는 동안 SpringArm의 Target Offset을 머리 본 위치로 옮겨, 당길수록 얼굴을 중심으로 잡습니다.
 - <strong>애니메이션</strong>: 대기(두 동작 랜덤), 걷기, 달리기를 속도로 블렌드합니다. 속도는 FInterpTo로 보간해 멈출 때 끊기지 않게 했습니다. 이동 입력이 들어오면 재생 중인 액션을 0.2초 블렌드로 멈춥니다.
 
-<iframe src="https://www.youtube-nocookie.com/embed/O5YsP1ajFg8" title="캐릭터 조작과 카메라 시연" loading="lazy" style="width:100%;aspect-ratio:16/9;border:0;border-radius:12px" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe src="https://www.youtube-nocookie.com/embed/GFlwgKnN7M8" title="캐릭터 조작과 카메라 시연" loading="lazy" style="width:100%;aspect-ratio:16/9;border:0;border-radius:12px" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 완성 영상에서 이동, 마우스 휠 줌, 카메라 회전을 볼 수 있습니다.
 
