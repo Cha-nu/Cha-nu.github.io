@@ -9,7 +9,7 @@ project: toonshader
 draft: false
 ---
 
-> **툰 셰이딩 시리즈** — **1편 셀 셰이딩의 원리** · [2편 언리얼 머티리얼 구현](/posts/toon-shading-2/) · [3편 디테일과 색감](/posts/toon-shading-3/) · [4편 애니메이션과 Kawaii Physics](/posts/toon-shading-4/)
+> **툰 셰이딩 시리즈** — **1편 셀 셰이딩의 원리** · [2편 언리얼 머티리얼 구현](/posts/toon-shading-2/) · [3편 디테일과 색감](/posts/toon-shading-3/) · [4편 애니메이션과 Kawaii Physics](/posts/toon-shading-4/) · [5편 원리와 HLSL](/posts/toon-shading-5/) · [6편 흰 조명 맞추기와 회고](/posts/toon-shading-6/)
 
 > 이 글은 [Unreal Engine 5 - Toon Shader Tutorial](https://youtu.be/GAkxpwy9xtg) 영상을 보고 AI를 통해 이론을 공부하기 위해 작성했습니다.
 >
